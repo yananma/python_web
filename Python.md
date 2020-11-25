@@ -167,19 +167,19 @@ nonlocal 就是闭包里修改外部函数的变量
 
 最重要的就是 open 函数，有了 open 函数就可以做其他的操作。open(filename, acess_mode='r', encoding='utf-8')  
 
-def open_file():
+def open_file():  
 &emsp;    f = open('test.txt', 'r', encoding='utf-8')  
 &emsp;    print(f.read())  
 
-def write_file():
+def write_file():  
 &emsp;    f = open('test.txt', 'w', encoding='utf-8')  
 &emsp;    f.write('mayanan')  覆盖写入  
 
 最好是用 with，这样不用再 close  
 
-def open_file():
-&emsp;    with open('test.txt','r',encoding='utf-8') as f:
-&emsp;        print(f.read())
+def open_file():  
+&emsp;    with open('test.txt','r',encoding='utf-8') as f:  
+&emsp;        print(f.read())  
 
 
 #### 异常和错误  
@@ -230,7 +230,7 @@ self 关键字，self 翻译过来就是我自己，指当前对象本身，谁�
 验证 self 就是实例本身代码  
 
 class Person(object):  
-&emsp;    def __init__(self):  
+&emsp;    def \_\_init__(self):  
 &emsp;&emsp;        print(id(self))  
 方法里的 self 的 id 和实例也是相同的  
 &emsp;    def say_hello(self, name):
@@ -324,15 +324,15 @@ hua.sleep()
 调用父类的其他属性和方法  
 
 class Person(object):  
-&emsp;    def __init__(self, name, age):  
+&emsp;    def \_\_init__(self, name, age):  
 &emsp;&emsp;        self.name = name  
 &emsp;&emsp;        self.age = age  
 &emsp;    def display(self):  
 &emsp;&emsp;        print(self.name, self.age)  
 
 class Manager(Person):  
-&emsp;    def __init__(self):  
-&emsp;&emsp;        super().__init__('mayanan', 26)  
+&emsp;    def \_\_init__(self):  
+&emsp;&emsp;        super().\_\_init__('mayanan', 26)  
 &emsp;    def m_display(self):  
 &emsp;&emsp;        super().display()  
 
@@ -377,7 +377,7 @@ except ImportError:
 
 
 class Person(object):  
-&emsp;    def __init__(self, name, age):   
+&emsp;    def \_\_init__(self, name, age):   
 &emsp;&emsp;        self.name = name  
 &emsp;&emsp;        self.age = age  
 
