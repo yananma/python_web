@@ -202,17 +202,360 @@ def loop(l):
 
 loop([1, 2])
 
+try except 的时候一般会 print 错误信息，否则不知道错在什么地方  
+
+finally 不管有没有异常都会执行，比如 close 文件，关闭数据库等等  
+
+#### raise 和 assert  
+
+raise 是主动抛出异常，assert 是断言  
+
+#### 自定义异常
+
+类要继承 Exception 类，要重写 \_\_init__ 和 \_\_str__ 方法，可以用 raise 抛出异常  
+
+#### 面向对象  
+
+抽象、封装、继承、多态  
+封装，比如汽车，最后留给我们的只有几个方向盘，刹车等几个接口，发动机、变速箱等都封装了起来  
+
+类是抽象的，是一个模板；对象是具体的，是类的一个实例  
+
+函数放到类里就叫做方法，其实就是函数  
+
+构造方法就是 \_\_init__，作用就是初始化实例变量，当实例化对象时，一定会调用构造方法  
+
+self 关键字，self 翻译过来就是我自己，指当前对象本身，谁调用该方法，当前对象就是谁；在类里面的方法的第一个关键字必须是 self；self 就是 this，翻译成这个实例的  
+
+验证 self 就是实例本身代码  
+
+class Person(object):  
+&emsp;    def __init__(self):  
+&emsp;&emsp;        print(id(self))  
+方法里的 self 的 id 和实例也是相同的  
+&emsp;    def say_hello(self, name):
+&emsp;&emsp;        print(id(self))
+&emsp;&emsp;        print('hello,', name)
 
 
+p = Person()  
+print(id(p))  
+
+p = Person()  
+print(id(p))  
+p.say_hello('mayanan')  
+
+id 相同，所以就验证了 self 就是这个实例本身  
+
+最开始初始化的时候，写 self.name = name 就是要区分参数和实例变量，否则分不清  
+
+#### 类方法静态方法和实例方法  
+
+实例方法必须实例化才能调用，就是最常用的那种方法  
+
+静态方法不需要实例化，通过名称就可以直接访问，静态方法不加 self  
+
+class Site(object):  
+&emsp;    @staticmethod  
+&emsp;    def get_name():  
+&emsp;&emsp;        return 'mayanan'  
+
+name = Site.get_name()  
+print(name)  
+
+不用实例化  
+
+类方法用的不多，用的是 @classmethod，第一个参数必须是 cls 类本身  
+
+#### 类属性和实例属性(属性就是变量)  
+
+实例属性就是实例变量，self.name = name，前面的 self.name 就是实例属性  
+
+下面这样的就是类属性，实例方法可以访问类属性  
+class Site(object):  
+&emsp;    name = 'mayanan'     
+&emsp;    course = 'Python'  
 
 
+#### 继承  
+
+可以继承父类里面所有的属性和方法  
+
+多重继承，可以继承多个类  
+
+非常清楚的一个例子  
+class Bird(object):  
+&emsp;    def fly(self):  
+&emsp;&emsp;        print('fly...')  
+
+class Fish(object):  
+&emsp;    def swim(self):  
+&emsp;&emsp;        print('swim...')  
+
+class FlyFish(Bird, Fish):  
+&emsp;    pass  
+
+ff = FlyFish()  
+ff.fly()  
+ff.swim()  
+
+#### 方法覆盖  
+
+必须是继承关系；子类覆盖(重写)父类里面的同名方法  
+
+class Animal(object):  
+&emsp;    def run(self):  
+&emsp;&emsp;        print('Animal run...')  
+&emsp;    def sleep(self):  
+&emsp;&emsp;        print('Animal sleep...')  
+
+class Dog(Animal):  
+&emsp;    def run(self):  
+&emsp;&emsp;        print('dog run...')  
+
+hua = Dog()  
+
+hua.run()  
+hua.sleep()  
+
+#### super 关键字 
+
+调用父类的初始化方法 super().\_\_init__()  
+调用父类的其他属性和方法  
+
+class Person(object):  
+&emsp;    def __init__(self, name, age):  
+&emsp;&emsp;        self.name = name  
+&emsp;&emsp;        self.age = age  
+&emsp;    def display(self):  
+&emsp;&emsp;        print(self.name, self.age)  
+
+class Manager(Person):  
+&emsp;    def __init__(self):  
+&emsp;&emsp;        super().__init__('mayanan', 26)  
+&emsp;    def m_display(self):  
+&emsp;&emsp;        super().display()  
+
+m = Manager()  
+m.m_display()  
 
 
+#### isinstance 
+
+isinstance(obj, cls)  
+
+判断一个实例是不是一个类的实例  
+
+#### 属性操作  
+
+hasattr()、getattr()、setattr()、delattr()  
+
+class Person(object):  
+&emsp;    def __init__(self, name):  
+&emsp;&emsp;        self.name = name  
+
+p = Person('mayanan')  
+print(hasattr(p, 'name')) True  
+print(getattr(p, 'name')) 就是 p.name  
+setattr(p, 'name', 'mayanan')  
+print(p.name)  
+delattr(p, 'name')  
+print(hasattr(p, 'name')) False   
 
 
+#### 序列化和反序列化  
+
+对象序列化就是把对象保存成文件格式，用 pickle.dumps()  
+反序列化就是把对象从文件转化为对象，用 pickle.load()  
+
+因为一般情况下，结束以后内容就消失了，所以有了序列化    
+
+try:  
+&emsp;    import cPickle as pickle  
+except ImportError:
+&emsp;    import pickle  
 
 
+class Person(object):  
+&emsp;    def __init__(self, name, age):   
+&emsp;&emsp;        self.name = name  
+&emsp;&emsp;        self.age = age  
 
+p = Person('mayanan', 26)  
+
+def write():  
+&emsp;    with open('test.data', 'wb') as f:  
+&emsp;&emsp;        b = pickle.dumps(p)  
+&emsp;&emsp;        f.write(b)  
+
+def read():  
+&emsp;    with open('test.data', 'rb') as f1:  
+&emsp;&emsp;        p = pickle.load(f1)  
+&emsp;&emsp;        print(p.name, p.age)  
+
+\# write()  
+read()  
+
+#### 多线程  
+
+多进程是系统中的多个应用程序，比如同时打开 WPS、QQ、音乐、浏览器等等；打开任务管理器，看到开的应用就是进程  
+线程是一个应用程序的多个执行线路，这样就不会产生阻塞，用户不用等待；比如 web 服务器针对不同用户的请求，启动不同的线程来相应，不用排队；  
+
+如果没有多线程，就会顺序执行，不管第一个函数执行多长时间，后面的函数都会等待  
+
+不使用线程代码，就是先打印 5 个 i，i 打印完了以后再打印 j    
+from time import ctime, sleep  
+
+def func1():  
+&emsp;    for i in range(5):  
+&emsp;&emsp;        print('i=', i)  
+&emsp;&emsp;        sleep(0.1)  
+
+def func2():  
+&emsp;    for j in range(5):  
+&emsp;&emsp;        print('j=', j)  
+&emsp;&emsp;        sleep(0.1)  
+
+def main():  
+&emsp;    print('start:', ctime)  
+&emsp;    func1()  
+&emsp;    func2()  
+&emsp;    print('end:', ctime)  
+
+if \_\_name__ == '\_\_main__':  
+&emsp;    main()  
+
+使用线程交替执行，不是顺序执行的，而是并行执行的  
+
+使用线程代码，这个 thread 模块，只能在 python2 版本中才能运行，但是可以便于理解多线程  
+import thread  
+from time import ctime, sleep  
+
+def func1():  
+&emsp;    for i in range(5):  
+&emsp;&emsp;        print('i=:', i)  
+&emsp;&emsp;        sleep(1)  
+
+def func2():  
+&emsp;    for j in range(5):  
+&emsp;&emsp;        print('j=:', j)  
+&emsp;&emsp;        sleep(1)  
+
+def main():  
+&emsp;    print('start:', ctime())  
+&emsp;    thread.start_new_thread(func1, ())  
+&emsp;    thread.start_new_thread(func2, ())  
+&emsp;    sleep(5)  
+&emsp;    print('end:', ctime)  
+
+if \_\_name__ == '\_\_main__':  
+&emsp;    main()  
+
+现实中不使用 sleep 函数，因为不知道运行多长时间，现实中使用 lock  
+
+python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 Thread 实例，为 target 函数传递一个参数；第二种是创建 Thread 实例，传递给一个可调用的类实例，需要复写 \_\_call__ 函数；第三种是继承 Thread，并创建子类的实例  
+
+#### 线程同步  
+
+多个用户同时操作一个共享资源，要对共享资源进行保护，方法就是使用 lock。  
+
+比如现实中火车站，4 个窗口卖 100 张票，就要用 lock 线程，否则会卖重复  
+
+class Window(threading.Thread):  
+&emsp;    def \_\_init__(self, n, lock):  
+&emsp;&emsp;        self.lock = lock  
+&emsp;&emsp;        threading.Thread.\_\_init__(self, name=n)  
+
+&emsp;    def take(self):  
+&emsp;&emsp;        global tickets  
+&emsp;&emsp;        while tickets >= 1:  
+&emsp;&emsp;&emsp;            self.lock.acquire()  
+&emsp;&emsp;&emsp;            print('%s :%d' % (threading.currentThread().name, tickets))  
+&emsp;&emsp;&emsp;            tickets -= 1  
+&emsp;&emsp;&emsp;            self.lock.release()  
+&emsp;&emsp;&emsp;            sleep(0.1)  
+
+&emsp;    def run(self):  
+&emsp;&emsp;        self.take()  
+
+def main():  
+&emsp;    lock = threading.Lock()  
+&emsp;    for i in range(1, 5):  
+&emsp;&emsp;        name = '窗口' + str(i)  
+&emsp;&emsp;        w = Window(name, lock)  
+&emsp;&emsp;        w.start()  
+
+if \_\_name__ == '\_\_main__':  
+&emsp;    main()  
+
+如果把程序中的 lock 去掉，就会有卖重复的现象  
+
+queue 模块使得共享数据更加方便，不用再用 lock，不用再自己控制，queue 自己内部就实现了这些功能  
+
+#### 网络编程  
+
+客户端服务器，客户端发送请求，服务器返回响应  
+
+socket 就是插座。互联网上有成千上万台机器，一台机器如何找到另一台机器呢？办法就是 IP 地址，每一台机器都有唯一的 IP 地址。另一个问题是，一台电脑有几百个应用，怎么区分应用呢？答案就是端口号。socket 由 IP 地址和端口号组成，想要请求应用程序的服务，就必须要知道 IP 地址和端口号，有了 IP 地址和端口号以后就能定位到这个应用，就能实现连接，连接以后就可以实现数据的收发。有点儿像访问阿里云的 docker  
+
+服务器先绑定一个端口号，然后 listen 监听，客户端再根据 IP 地址和端口号连接服务器，如果服务器接受了连接，就可以实现读写，数据传输  
+
+网络连接一般分为两种，一种是面向连接的 TCP，必须要先建立连接才能实现，分片段传输，传输是可靠的，使用的协议是 TCP 协议，SOCKET_STREAM；另一种是无连接的 UDP，不需要连接，整体发送，不能保证可靠性，SOCKET_DGRAM  
+
+
+#### TCP  
+
+TCP 服务器  
+from socket import *  
+from time import ctime  
+
+HOST = 'localhost'  
+PORT = 10001  
+BUFFER = 1024  
+ADDRESS = (HOST, PORT)  
+
+serverSocket = socket(AF_INET, SOCK_STREAM)  
+serverSocket.bind(ADDRESS)  
+
+serverSocket.listen(5)  
+
+while True:  
+&emsp;    print('等待连接...')  
+&emsp;    clientSocket, add = serverSocket.accept()  
+&emsp;    print('连接来自：', add)  
+&emsp;    while True:  
+&emsp;&emsp;        data = clientSocket.recv(BUFFER).decode()  
+&emsp;&emsp;        print('来自客户端的信息：', data)  
+&emsp;&emsp;        if not data:  
+&emsp;&emsp;            break  
+&emsp;&emsp;        clientSocket.send(('[%s] %s' %(ctime(), data)).encode())  
+&emsp;    clientSocket.close()  
+
+serverSocket.close()  
+
+
+TCP 客户端  
+
+from socket import *  
+
+HOST = 'localhost'  
+PORT = 10001  
+BUFFER = 1024  
+ADDRESS = (HOST, PORT)  
+
+clientSocket = socket(AF_INET, SOCK_STREAM)  
+clientSocket.connect(ADDRESS)  
+while True:  
+&emsp;    data = input('>')  
+&emsp;    if not data:  
+&emsp;&emsp;        break  
+&emsp;    clientSocket.send(data.encode())  
+&emsp;    data = clientSocket.recv(BUFFER).decode()  
+&emsp;    if not data:  
+&emsp;&emsp;        break  
+&emsp;    print(data)  
+
+clientSocket.close()  
 
 
 
