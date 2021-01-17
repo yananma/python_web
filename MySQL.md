@@ -43,7 +43,7 @@ SELECT * FROM table_name;
 
 就是设置查询条件  
 
-SELECT *(column_name) FROM Custmers WHERE Country='Mexico';  
+SELECT \*(column_name) FROM Custmers WHERE Country='Mexico';  
 
 条件可以设置 AND OR 等，设置多个条件  
 
@@ -58,6 +58,8 @@ SELECT * FROM CustomerTbl order by age ASC(DESC);
 #### SQL 增删改  
 
 INSERT INTO table_name VALUES (value1, value2, value3...)  
+
+删除数据库：DROP DATABASE xxkt_db;   
 
 #### 通配符  
 
