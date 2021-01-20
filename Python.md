@@ -95,9 +95,9 @@ l = ['享学', 'Python', 'mayanan']
 
 it = iter(l)  这个就是迭代器  
 
-print(next(it))    享学
-print(next(it))    Python
-print(next(it))    mayanan    
+print(next(it))&emsp;    享学  
+print(next(it))&emsp;    Python  
+print(next(it))&emsp;    mayanan    
 就是有一个指针一样  
 
 
@@ -129,7 +129,7 @@ loop(1, 3, 5, 7, 9)
 
 局部的和全局的  
 def f(x):  
-&emsp;    laocal_var = 200  
+&emsp;    lacal_var = 200  
 
 print(local_var) 就会报错，因为局部变量只能在函数内部使用  
 如果是在函数外面定义，就是全局变量，在哪里都可以调用  
@@ -181,7 +181,7 @@ def write_file():
 
 def open_file():  
 &emsp;    with open('test.txt','r',encoding='utf-8') as f:  
-&emsp;        print(f.read())  
+&emsp;&emsp;      print(f.read())  
 
 
 #### 异常和错误  
