@@ -79,3 +79,58 @@ INSERT INTO table_name VALUES (value1, value2, value3...)
 
 
 
+### 原来笔记  
+
+数据库常用语句：  
+
+删除数据库：DROP DATABASE xxxx;  
+
+创建表：CREATE TABLE mytable (name char(20));  
+
+插入数据：INSERT INTO mytable(name) VALUES ('马亚南');  
+
+
+
+增：  
+创建一张表  
+CREATE table qsbk_tbl(qid integer primary key auto_increment, author varchar(100), text text, vote integer, comments integer);  
+
+插入一条  
+INSERT INTO myapp_person (id,name) VALUES (1, 'mayanan');  
+
+
+删：  
+删除一条  
+DELETE FROM myapp_person WHERE id=1  
+
+删除连续多条  
+DELETE FROM myapp_person WHERE id BETWEEN 4 and 15;  
+
+删除一张表里的全部内容  
+DELETE FROM myapp_person  
+
+
+查：  
+查询所有记录：  
+SELECT * FROM person  
+
+相等条件查询：  
+SELECT * FROM person WHERE age=20   
+
+使用查询操作符：  
+SELECT * FROM person WHERE salary in (6000, 8000)   
+
+AND条件  
+SELECT * FROM   
+
+连接数据库  
+    conn = MySQLdb.connect(  
+        user = 'root',  
+        passwd = '123456',  
+        port = 3306,  
+        db = 'spider_db',  
+        host = 'localhost',  
+        charset = 'utf-8',  
+    )  
+
+
