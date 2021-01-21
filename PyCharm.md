@@ -12,6 +12,8 @@
 
 可以配置 interpreter，就是不同版本的 python  
 
+搜 pycharm interpreter，弄明白  
+
 #### 其他设置
 
 pycharm 非常强大，可以窗帘 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
@@ -21,8 +23,6 @@ pycharm 非常强大，可以窗帘 Django flask 项目、可以连接数据库�
 Alt + Enter 快速修复错误  
 
 格式化代码样式  Ctrl + Alt + l  
-
-可以打开 pycharm 的 terminal，不用再开 cmd 了，cmd 要切换输入法，要进入虚拟环境，很麻烦  
 
 
 
