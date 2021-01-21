@@ -76,7 +76,8 @@ INSERT INTO table_name VALUES (value1, value2, value3...)
 #### 事务  
 
 
-
+<br>  
+<br>  
 
 
 ### 原来笔记  
@@ -84,6 +85,7 @@ INSERT INTO table_name VALUES (value1, value2, value3...)
 数据库常用语句：  
 
 删除数据库：DROP DATABASE xxxx;  
+删除表：DROP TABLE xxxx;  
 
 创建表：CREATE TABLE mytable (name char(20));  
 
