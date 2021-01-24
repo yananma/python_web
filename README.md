@@ -3,7 +3,9 @@
 
 最强大的学习方法，可以学会任何知识  
 
-I will do everything I have to do, 无论要承受怎样的痛苦  
+I will do everything I have to do, 无论要承受怎样的痛苦   
+
+聚焦一切力量，攻击一个‘城墙口’，实施战略突破。————任正非  
 
 
 工作计划：  
