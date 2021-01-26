@@ -1,4 +1,25 @@
 
+#### 已经安装软件
+
+create database xxkt_db;  
+use xxkt_db;  
+
+python manage.py makemigrations  
+python manage.py migrate  
+
+python manage.py createsuperuser  
+admin  
+test@qq.com  
+password1234  
+password1234  
+
+python manage.py runserver  
+
+
+
+
+#### 未安装软件版
+
 1、百度网盘下载 mysql-5.7.17.msi  
 
 2、安装 MySQL，选 Server only  
