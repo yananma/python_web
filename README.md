@@ -20,4 +20,5 @@ I will do everything I have to do, 无论要承受怎样的痛苦
 工作清单：  
 1、多写注释  
 2、改一改，看变化，比如 models.py 中的 verbose_name 的作用  
-3、  
+3、在报错位置使用 pysnooper  
+4、
