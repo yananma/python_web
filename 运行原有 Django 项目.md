@@ -9,7 +9,7 @@ python manage.py migrate
 
 python manage.py createsuperuser  
 admin  
-test@qq.com  
+admin@qq.com  
 password1234  
 password1234  
 
@@ -40,7 +40,7 @@ python manage.py migrate
 
 9、python manage.py createsuperuser  
 admin  
-test@qq.com  
+admin@qq.com  
 password1234  
 password1234  
 
