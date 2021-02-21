@@ -17,8 +17,12 @@ I will do everything I have to do, 无论要承受怎样的痛苦
 
 
 
-工作清单：  
+方法工具：  
+0、核心是读文档，flask 也是这样  
 1、多写注释  
 2、改一改，看变化，比如 models.py 中的 verbose_name 的作用  
 3、在报错位置使用 pysnooper  
-4、
+4、用 python manage.py -h 查看命令  
+5、print(Banner.objects.all().query) 看 sql 命令  
+
+
