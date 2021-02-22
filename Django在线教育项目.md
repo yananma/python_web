@@ -61,7 +61,9 @@ python manage.py makemigrations 生成 banner 中间表
 #### 4、重写用户模型  
 DROP DATABASE xxkt_db;  
 
-DESC myapp_xxuser;  
+create database xxkt_db;  
+
+这里一定要注意，在 makemigrations 的时候，后面一定要加上 myapp，否则一直报错  
 
 
 #### 5、创建博客相关模型  
