@@ -24,5 +24,7 @@ I will do everything I have to do, 无论要承受怎样的痛苦
 3、在报错位置使用 pysnooper  
 4、用 python manage.py -h 查看命令  
 5、print(Banner.objects.all().query) 看 sql 命令  
-
+6、可以在 views 中使用 pysnooper  
+7、可以看别人的网站的源码  
+8、
 
