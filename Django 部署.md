@@ -64,7 +64,7 @@ sites-avaliable 可用文件
 sites-enable 已经启用文件  
 
 先在 sites-avaliable 中创建 xxkt.conf 文件  
-vim xxkt.conf  
+vim /etc/nginx/sites-available/xxkt.conf  
 server {  
     
     listen 80;
