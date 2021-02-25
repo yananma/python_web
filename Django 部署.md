@@ -122,10 +122,12 @@ pip3 install uwsgi
 
 mkdir xxkt_uwsgi  
 vim xxkt_uwsgi.ini  
-uwsgi --ini xxkt_uwsgi.ini   
+
+uwsgi --ini /home/xxkt_uwsgi/xxkt_uwsgi.ini   
+
 ps -aux | grep uwsgi  
 
-uwsgi stop /home/xxkt_uwsgi/master.pid  
+uwsgi --stop /home/xxkt_uwsgi/master.pid  
 uwsgi --reload /home/xxkt_uwsgi/master.pid  
 
 uwsgi \-\-chdir /home/elearning/xxkt \-\-http :80 \-\-module xxkt.wsgi:application  
