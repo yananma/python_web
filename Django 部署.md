@@ -114,6 +114,7 @@ service nginx start
 service nginx stop  
 service nginx restart  
 
+history | grep nginx  
 
 
 5、安装配置 uwsgi  
@@ -123,6 +124,9 @@ mkdir xxkt_uwsgi
 vim xxkt_uwsgi.ini  
 uwsgi --ini xxkt_uwsgi.ini   
 ps -aux | grep uwsgi  
+
+uwsgi stop /home/xxkt_uwsgi/master.pid  
+uwsgi --reload /home/xxkt_uwsgi/master.pid  
 
 uwsgi \-\-chdir /home/elearning/xxkt \-\-http :80 \-\-module xxkt.wsgi:application  
 uwsgi 参数：  
@@ -144,4 +148,9 @@ python3 manage.py collectstatic
 vim /etc/nginx/sites-enabled/xxkt.conf   
 
 
+
+
+settings.py 把 debug 改为 False  
+
+chmod 777 -R images/  
 
