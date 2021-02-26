@@ -1,5 +1,13 @@
 
-大体如此，操作的时候出现问题再修改补充
+service nginx start  
+service nginx stop  
+service nginx restart  
+
+uwsgi --ini /home/xxkt_uwsgi/xxkt_uwsgi.ini   
+ps -aux | grep uwsgi  
+uwsgi --stop /home/xxkt_uwsgi/master.pid  
+uwsgi --reload /home/xxkt_uwsgi/master.pid  
+
 
 ### 安装软件：
 
@@ -149,11 +157,15 @@ mkdir static_collected
 python3 manage.py collectstatic  
 vim /etc/nginx/sites-enabled/xxkt.conf   
 
-
-settings.py 把 debug 改为 False  
-
 chmod 777 -R images/  
 
 视频播放：  
 <a href="javascript:play_video('http://localhost:8000/{{video.video}}')">  
 要把 localhost:8000 改成 mayanan.top, 不加端口号  
+
+settings.py  
+把 debug 改为 False  
+ALLOW_HOST = \['mayanan.top']  
+
+
+
