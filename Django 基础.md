@@ -7,7 +7,9 @@ python manage.py createsuperuser
 python manage.py makemigration  
 python manage.py migrate  
 
-xxkt settings.py 最下面 LANGUAGE_CODE = 'zh-hans'; TIME_ZONE = 'Asia/Shanghai'  
+xxkt settings.py 最下面   
+LANGUAGE_CODE = 'zh-hans';  
+TIME_ZONE = 'Asia/Shanghai'  
 
 python manage.py startapp polls  
 
