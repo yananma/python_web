@@ -38,7 +38,7 @@ ll 权限
 
 file 文件名 查看 file 类型  
 
-less /etc/passwd 查看内容  
+less /etc/passwd 查看内容；查看的时候 h 查看其它命令   
 
 
 
