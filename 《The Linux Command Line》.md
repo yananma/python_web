@@ -1,9 +1,9 @@
 
-#### 1-What Is the Shell  
+### 1-What Is the Shell  
 
 df: disk file 查看剩余内存  
 
-#### 2-Navigation  
+### 2-Navigation  
 
 pwd: print working directory  
 ls: list short  
@@ -20,7 +20,7 @@ cd - 跳转到 previous working directory
 文件命名不要用空格，用下划线替代  
 
 
-#### 3-Exploring the System  
+### 3-Exploring the System  
 
 ls 可能是 Linux 上用得最多的命令  
 ls 当前目录下文件  
@@ -43,7 +43,7 @@ less /etc/passwd 查看内容；查看的时候 h 查看其它命令
 这一章有文件目录，和目录作用表格  
 
 
-#### 4-Manipulating Files and Directories  
+### 4-Manipulating Files and Directories  
 
 
 
