@@ -34,12 +34,16 @@ options 会 modify command 的行为，经常会带有一个 -
 ls -lh h 是 human readable 的意思，会把大小转化成 K、M  
 
 ll 权限  
-第一个 d 代表文件夹 directory，- 代表单个文件  
+第一个 d 代表文件夹 directory，- 代表单个文件，l 代表软链接  
 
 file 文件名 查看 file 类型  
 
 less /etc/passwd 查看内容；查看的时候 h 查看其它命令   
 
+这一章有文件目录，和目录作用表格  
+
+
+#### 4-Manipulating Files and Directories  
 
 
 
