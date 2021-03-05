@@ -1,5 +1,5 @@
 
-要学习的内容：Django 源码书、Django 功能书、Restful API 文档、Django 文档、Flask项目代码、Flask 书、Flask 文档、Redis、JavaScript、MySQL 书、Linux Shell、数据结构与算法、Vue、  
+要学习的内容：Django 源码书、Django 功能书、Restful API 文档、Django 文档、Flask项目代码、Flask 书、Flask 文档、HTTP、Redis、JavaScript、MySQL 书、Linux Shell、数据结构与算法、Vue、  
 
 
 怎么学会，怎么记住呢？就是重复  
