@@ -99,18 +99,18 @@ vim xxkt.ini
 chdir = /home/elearning/xxkt 
 module = xxkt.wsgi:application 
 
-master = True 
-processes = 2 
-harakiri = 60
-max-requests = 5000 
+master = True   
+processes = 2   
+harakiri = 60  
+max-requests = 5000  
 
-socket = 127.0.0.1:8001
-uid = 1000 
-gid = 2000 
+socket = 127.0.0.1:8001  
+uid = 1000  
+gid = 2000  
 
-pidfile = /home/xxkt_uwsgi/master.pid 
-daemonize = /home/xxkt_uwsgi/xxkt.log 
-vacuum = True 
+pidfile = /home/xxkt_uwsgi/master.pid  
+daemonize = /home/xxkt_uwsgi/xxkt.log  
+vacuum = True  
 
 配置完成以后，启动 uwsgi：uwsgi --ini xxkt_uwsgi.ini   
 
@@ -142,7 +142,6 @@ uwsgi \-\-chdir /home/elearning/xxkt \-\-http :80 \-\-module xxkt.wsgi:applicati
 uwsgi 参数：  
 \-\-chdir 指定文件目录  
 \-\-home:/home/django_env/ 指定虚拟环境  
-
 
 
 chmod 777 banner  
