@@ -228,6 +228,30 @@ unalias foo; remove alias
 使用 alias 命令，不带参数，就可以查看所有的 alias  
 
 ### 6-Redirection  
+In this lession we are going to unleash what may be the coolest feature of command line.It's called I/O rediction, I/O 代表 input/output  
+
+cat: concatenate files  
+sort: sort lines of text  
+uniq: report or omit repeated lines  
+grep: print lines matching a patten; Global Regular Expression Print 全局正则表达式搜索  
+wc: print newline, word, and byte counts for each file  
+head: output the first part of a file  
+tail: output the last part of a file  
+tee: read from standard input and write to satandard output and files  
+
+output 一般是两类：运行结果 standard output(stdout)，或者是 status and error(stderr)    
+
+stdout 和 stderr linked to the screen, and not saved into disk file, stdin attached to the keyboard  
+
+I/O rediction 可以让我们 redefine where standard output goes, 可以 redirect standard output to another file instead of the screen，我们可以使用 \> redirection operator followed by the name of the file.  
+
+ls -l /usr/bin \> ls-output.txt  
+history \> history_command.txt  
+
+
+
+
+
 
 
 
