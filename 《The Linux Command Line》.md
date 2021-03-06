@@ -2,40 +2,41 @@
 一次整理，终生使用  
 
 
-### 1-What Is the Shell  
+## 1-What Is the Shell  
 
 The shell is a program that takes keyboard commands and passes them to the operating system to carry out.  
 
 
-### 2-Navigation  
+## 2-Navigation  
 
 **pwd: print working directory  
 cd:change directory  
 ls: list short  
 ll: list long**  
+
 ls 和 ll 实际上并不是各自这两个单词的缩写，不过自己可以这么记  
 
 目录文件按字母排序  
 
 绝对路径和相对路径，哪一个 typing 最少就用哪一个  
 
-cd 可以直接跳转到该用户的 home 文件下  
-cd - 跳转到 previous working directory  
+`cd` 可以直接跳转到该用户的 home 文件下  
+`cd -` 跳转到 previous working directory  
 
 以 . 开头的文件，用 ls 命令看不到  
 文件命名不要用空格，用下划线替代  
 
 
-### 3-Exploring the System  
+## 3-Exploring the System  
 
-ls: list directory contents  
+**ls: list directory contents  
 file: determine file type  
-less: view file contents  
+less: view file contents**  
 
 ls 可能是 Linux 上用得最多的命令  
-ls 当前目录下文件  
-ls /usr  
-ls /usr /tmp; 可以展示两个文件夹下的 content  
+`ls 当前目录下文件`  
+`ls /usr`  
+`ls /usr /tmp` 可以展示两个文件夹下的 content  
 
 更常见的命令模式：  
 command -options arguments  
@@ -53,12 +54,12 @@ less /etc/passwd; 查看内容；查看的时候 h 查看其它命令; q 退出
 这一章有文件目录，和目录作用表格  
 
 
-### 4-Manipulating Files and Directories  
-cp: copy files and directories  
+## 4-Manipulating Files and Directories  
+**cp: copy files and directories  
 mv: move/rename files and directories  
 mkdir: create directories  
 rm: remove files and directories  
-ln: create hard and symbolic links  
+ln: create hard and symbolic links**  
 
 用命令行可以做到图形界面所无法完成的功能，比如复制一个文件夹中所有的 HTML 文件到另一个文件夹，只复制目的地文件夹下没有的文件，或新的版本的文件。在图形界面很难做到，在 Linux 中一行命令就可以  
 因为 Linux 中一切皆文件，考虑到其使用文件名是如此之多，所以提供了通配符，可以使用模式，来快速查找符合条件的文件集合  
@@ -165,14 +166,14 @@ rm -r playground
 It is important to get a good understanding of basic file manipulation commands and wildcards  
 
 
-### 5-Working with Commands  
-type: indicate how a command name is interpreted  
+## 5-Working with Commands  
+**type: indicate how a command name is interpreted  
 which: display which executable program will be executed  
 help: get help for shell builins  
 man: display a command's manual page  
 info: display a command's info entry  
 whatis: display one-line manual page descriptions  
-alias: create an alias for a command  
+alias: create an alias for a command**  
 
 
 command can be four different things:  
@@ -228,17 +229,17 @@ unalias foo; remove alias
 
 使用 alias 命令，不带参数，就可以查看所有的 alias  
 
-### 6-Redirection  
+## 6-Redirection  
 In this lession we are going to unleash what may be the coolest feature of command line.It's called I/O rediction, I/O 代表 input/output  
 
-cat: concatenate files  
+**cat: concatenate files  
 sort: sort lines of text  
 uniq: report or omit repeated lines  
 grep: print lines matching a patten; Global Regular Expression Print 全局正则表达式搜索  
 wc: print newline, word, and byte counts for each file  
 head: output the first part of a file  
 tail: output the last part of a file  
-tee: read from standard input and write to satandard output and files  
+tee: read from standard input and write to satandard output and files**  
 
 output 一般是两类：运行结果 standard output(stdout)，或者是 status and error(stderr)    
 
