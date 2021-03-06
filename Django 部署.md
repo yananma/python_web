@@ -73,44 +73,45 @@ sites-enable 已经启用文件
 
 先在 sites-avaliable 中创建 xxkt.conf 文件  
 vim /etc/nginx/sites-available/xxkt.conf  
-server {  
-    
-    listen 80;
-    server_name mayanan.top;
-    charset utf-8;
 
-    client_max_body_size 75M;
+    server {   
+        listen 80;
+        server_name mayanan.top;
+        charset utf-8;
 
-    location /static {
-        alias /home/elearning/xxkt/static_collected;
+        client_max_body_size 75M;
+
+        location /static {
+            alias /home/elearning/xxkt/static_collected;
+        }
+
+        location / {
+            uwsgi_pass 127.0.0.1:8001;
+            include /etc/nginx/uwsgi_params;
+        }
     }
-
-    location / {
-        uwsgi_pass 127.0.0.1:8001;
-        include /etc/nginx/uwsgi_params;
-    }
-
-}
 
 cd /home 
 mkdir xxkt_uwsgi   
 vim xxkt.ini  
-\[uwsgi]
-chdir = /home/elearning/xxkt 
-module = xxkt.wsgi:application 
 
-master = True   
-processes = 2   
-harakiri = 60  
-max-requests = 5000  
+    \[uwsgi]
+    chdir = /home/elearning/xxkt 
+    module = xxkt.wsgi:application 
 
-socket = 127.0.0.1:8001  
-uid = 1000  
-gid = 2000  
+    master = True   
+    processes = 2   
+    harakiri = 60  
+    max-requests = 5000  
 
-pidfile = /home/xxkt_uwsgi/master.pid  
-daemonize = /home/xxkt_uwsgi/xxkt.log  
-vacuum = True  
+    socket = 127.0.0.1:8001  
+    uid = 1000  
+    gid = 2000  
+
+    pidfile = /home/xxkt_uwsgi/master.pid  
+    daemonize = /home/xxkt_uwsgi/xxkt.log  
+    vacuum = True  
+
 
 配置完成以后，启动 uwsgi：uwsgi --ini xxkt_uwsgi.ini   
 
