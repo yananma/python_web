@@ -95,7 +95,7 @@ cd /home
 mkdir xxkt_uwsgi   
 vim xxkt.ini  
 
-    \[uwsgi]
+    [uwsgi]
     chdir = /home/elearning/xxkt 
     module = xxkt.wsgi:application 
 
