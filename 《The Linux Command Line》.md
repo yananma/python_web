@@ -27,6 +27,7 @@ ls 和 ll 实际上并不是各自这两个单词的缩写，不过自己可以�
 文件命名不要用空格，用下划线替代  
 
 
+
 ## 3-Exploring the System  
 
 **ls: list directory contents  
@@ -40,7 +41,7 @@ ls 可能是 Linux 上用得最多的命令
 
 更常见的命令模式：  
 command -options arguments  
-options 会 modify command 的行为，经常会带有一个 -  
+options 会 modify command 的行为，经常会带有一个 -   
 
 `ls -lh` h 是 human readable 的意思，会把大小转化成 K、M  
 
@@ -169,7 +170,6 @@ It is important to get a good understanding of basic file manipulation commands 
 which: display which executable program will be executed  
 help: get help for shell builins  
 man: display a command's manual page  
-info: display a command's info entry  
 whatis: display one-line manual page descriptions  
 alias: create an alias for a command**  
 
@@ -210,9 +210,6 @@ manual 一般很难读懂，不是 tutorial
 whatis: display one-line manual page discriptions  
 `whatis ls`  
 
-info: display a program's info entry  
-`info coreutils`  
-
 我们 install 的 software 的 documentation file 一般都放在 /usr/share/doc 文件夹下  
 
 creating our own commands with alias  
@@ -245,24 +242,61 @@ stdout 和 stderr linked to the screen, and not saved into disk file, stdin atta
 
 I/O rediction 可以让我们 redefine where standard output goes, 可以 redirect standard output to another file instead of the screen，我们可以使用 \> redirection operator followed by the name of the file.  
 
-`history \> history_command.txt`  
-`ls -l /usr/bin \> ls-output.txt`  
+`history > history_command.txt`  
+`ls -l /usr/bin > ls-output.txt`  
 `less ls-output.txt`  
 
-`\>\> append`
-`ls -l /usr/bin \>\> ls-output.txt`  
+`>> append`
+`ls -l /usr/bin >> ls-output.txt`  
 
 要 redirect error，我们必须要使用文件描述符(file descriptor)  
 standard input, output 和 error 分别对应 0, 1, 2  
-`ls -l /bin/usr 2\> ls-error.txt`  
+`ls -l /bin/usr 2> ls-error.txt`  
 
 Redirecting standard output and standard error to one file  
 有两种办法：  
-1、比较 traditional 的方法，在 old version shell 上运行，`ls -l /bin/usr \> ls-output.txt 2\>&1`  
+1、比较 traditional 的方法，在 old version shell 上运行，`ls -l /bin/usr > ls-output.txt 2\>&1`  
 这条命令里有两个 redirections，第一个是 redirect standard output to the file ls-output.txt，然后是 redirect standard error to standard output  
 这条命令中两个 redirection 的顺序是重要的，调换顺序 error 会在屏幕显示  
 
-2、新的方法：`ls -l /bin/usr &\> ls-output.txt`  
+2、新的方法：`ls -l /bin/usr &> ls-output.txt`  
+&\> redirect both standard output and standard error  
+同样也可以 append，`ls -l /bin/usr/ &>> ls-output.txt`  
+
+Somethimes silence is golden, and we don't want output from a command, we just want to throw it away, 可以 redirect output to a special file called "/dev/null", this file is a system device often referred to as a bit bucket, which accepts input and does noting with it.  
+
+`ls -l /bin/usr 2> /dev/null`  
+
+cat: concatenate files  
+cat 会显示完整的文件内容  
+`cat ls-output.txt`  
+cat 还可以用来 join files together  
+如果下载的文件被 split into multiple parts 了，比如 movie.mpeg.001 movie.mpeg.002 ... movie.mpeg.099, 就可以使用命令 `cat movie.mpeg.0* > movie.mpeg` 将文件 join back together  
+
+输入 `cat` 命令，且不带参数，就可以接受输入，按 Ctrl + d 结束  
+`cat > lazy_dog.txt` 然后输入的内容就会被写入 lazy_dog.txt 文件中  
+输入完成以后，可以使用 `cat lazy_dog.txt` 来查看写入的内容  
+
+pipeline  
+管道是将第一个命令的输出传给第二个命令  
+`ls -l /usr/bin | less`  
+这个命令非常有用！我们使用这个命令可以非常方便地 examine the output of any command that produces standard output.  
+
+\> 和 | 的区别：\> 后面接的是文件，| 后面接的是命令  
+command1 > file1  
+command1 | command2  
+
+管道命令经常被用于 complex operations on data, 可以组合多个命令，经常被称为 filters  
+
+`ls /bin /usr/bin | sort | less`  
+
+uniq: report or omit repeated lines  
+uniq 经常和 sort 一起使用，可以去重  
+
+`ls /bin /usr/bin | sort | uniq | less`  
+如果想看重复项，可以使用命令：`ls /bin /usr/bin | sort | uniq -d | less`  
+
+wc(word count): print line, word, and byte counts  
 
 
 
