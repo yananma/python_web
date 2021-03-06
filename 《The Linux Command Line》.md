@@ -86,7 +86,7 @@ mkdir dir1
 mkdir dir1 dir2 dir3  
 <br>
 cp: copy files and directories  
-cp 源文件 目标文件夹  
+cp 源文件 目的地  
 cp file1 file2; file2 不存在就创建，file2 存在就覆盖  
 cp -i file1 file2; 如果 file2 存在，会有提示信息，询问是否覆盖  
 cp file1 file2 dir1  
@@ -245,10 +245,24 @@ stdout 和 stderr linked to the screen, and not saved into disk file, stdin atta
 
 I/O rediction 可以让我们 redefine where standard output goes, 可以 redirect standard output to another file instead of the screen，我们可以使用 \> redirection operator followed by the name of the file.  
 
-ls -l /usr/bin \> ls-output.txt  
 history \> history_command.txt  
+ls -l /usr/bin \> ls-output.txt  
+less ls-output.txt  
 
+\>\> append
+ls -l /usr/bin \>\> ls-output.txt  
 
+要 redirect error，我们必须要使用文件描述符(file descriptor)  
+standard input, output 和 error 分别对应 0, 1, 2  
+ls -l /bin/usr 2\> ls-error.txt  
+
+Redirecting standard output and standard error to one file  
+有两种办法：  
+1、比较 traditional 的方法，在 old version shell 上运行，ls -l /bin/usr \> ls-output.txt 2\>&1  
+这条命令里有两个 redirections，第一个是 redirect standard output to the file ls-output.txt，然后是 redirect standard error to standard output  
+这条命令中两个 redirection 的顺序是重要的，调换顺序 error 会在屏幕显示  
+
+2、新的方法：ls -l /bin/usr 
 
 
 
