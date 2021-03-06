@@ -9,10 +9,10 @@ The shell is a program that takes keyboard commands and passes them to the opera
 
 ### 2-Navigation  
 
-pwd: print working directory  
+**pwd: print working directory  
 cd:change directory  
 ls: list short  
-ll: list long  
+ll: list long**  
 ls 和 ll 实际上并不是各自这两个单词的缩写，不过自己可以这么记  
 
 目录文件按字母排序  
