@@ -82,12 +82,13 @@ ls /bin/c* 所有以 c 开头的文件
 cp、mv、mkdir、rm、ln 这些命令都是 Linux 中最常用的命令  
 
 mkdir: create directories  
-mkdir dir1  
-mkdir dir1 dir2 dir3  
+`mkdir dir1`  
+`mkdir dir1 dir2 dir3`  
 <br>
 cp: copy files and directories  
 cp 源文件 目的地  
-cp file1 file2; file2 不存在就创建，file2 存在就覆盖  
+`cp file1 file2`  
+file2 不存在就创建，file2 存在就覆盖  
 cp -i file1 file2; 如果 file2 存在，会有提示信息，询问是否覆盖  
 cp file1 file2 dir1  
 cp dir1/* dir2; 复制 dir1 下的所有文件到 dir2
