@@ -386,10 +386,95 @@ Command Substitution
 这里 pipeline 的结果成为了 file 的参数  
 
 Quoting  
-`echo this is a    test`  
+`echo this is a  有空格  test`  
 `echo The total is $100.00`  
+第一个例子，会自动把空格取消，第二个例子会把 1 当做变量  
+
+Double Quotes  
+`touch "two words.txt"`  
+`ls -l two words.txt`  
+这里会把 two 和 words.txt 当做两个文件名  
+正确的写法是：`ls -l "two words.txt"`  
+`move "two words.txt" two_words.txt`  
+double quotes 不影响 parameter expansion, arithmetic expansion, and command substitution  
+
+`echo "$USER $((2+2)) $(cal)"`  
+
+`echo "this is a 有空格 test"`  
+`echo $(cal)` 没有换行  
+`echo "$(cal)"`  
+
+Single Quotes  
+single quotes 会 supress all expansions  
+`echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER`  
+`echo "text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER"`  
+`echo 'text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER'`  
+
+Escaping Characters  
+`echo "The balance for user $USER is: \$5.00"`  
+可以使用转义字符来消除 the special meaning of a character  
+`mv bad\&filename good_filename`  
+
+expansions 和 quoting 在 shell 中用得非常多，如果对 expansion 没有一个 good understanding，学 shell 的时候回经常感到 confusing  
 
 
+## 8-Advanced Keyboard Tricks  
+
+One of the most cherished goals of the command line is laziness; doing the most work with the fewest number of keystrokes. Another goal is never having to lift out fingers from keyboard and reach for the mouse.  
+
+**clear: clear the screen  
+history: display the contents of the history list**  
+
+Cursor Movement  
+`ctrl-a` 移动光标到行首  
+`Ctrl-e` 移动光标当行尾(e 代表 end)  
+`Ctrl-f` 右移一个字符(f forward)  
+`Ctrl-b` 左移一个字符(b backward)  
+`Alt-f` 右移一个单词  
+`Alt-b` 左移一个单词  
+`Ctrl-l` 清屏  
+
+Modifying Text  
+`Ctrl-d` 删除光标处的字符(d delete)  
+`Ctrl-t` Transpose the character with the one preceding it.调换和前一个字符的顺序  
+`Alt-t` 调换单词  
+`Alt-l` 单词变小写(lower)  
+`Alt-u` 单词变大写(upper)  
+
+Cutting and Pasting(Killing and Yanking) Text  
+`Ctrl-k` Kill 到行尾  
+`Ctrl-u` Kill 到行首  
+`Alt-d` Kill 到词尾  
+`Alt-Backspace` Kill 到词首，如果 cursor 在词首，就 kill 前一个单词  
+`Ctrl-y` Yank 缓存中的内容在 cursor 所处的位置  
+
+Completion  
+Tab 键自动补全  
+
+Seaching History  
+`history | less`  
+`history | sort -r | less` r reverse  
+`history | grep /usr/bin`  
+
+可以使用 !数字 来执行这一条 history 命令，这就是 history expansion  
+
+`Ctrl-r` 然后输入内容就可以逆向搜索历史命令，找到按 Enter 就可以执行，查找下一条接着按 `Ctrl-r`，`Ctrl-j` copy 命令，`Ctrl-c` 退出搜索  
+
+
+## 9-Permissions  
+
+Unix 系统不但是 multitasking，而且还是 multi-user system.  所以就有了权限系统，保证 the actions of one user could not be allowed to crash the computer, nor could one user interfere with the files belonging to another user.  
+
+**id: display user identity  
+chmod: change a file's mode  
+umask: set the default file permissions  
+su: run a shell as another user  
+sudo: execute a command as another user  
+chown: change a file's owner  
+chgrp: change a file's group ownership  
+passwd: change a user's password**  
+
+Owners, Group Members, and Everybody Else  
 
 
 
