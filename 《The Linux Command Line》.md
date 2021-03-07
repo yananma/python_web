@@ -199,7 +199,7 @@ help: get help for shell builtins
 square brackets indicate optional items, | 代表或的意思  
 
 \-\-help: display Usage information  
-`mkdir \-\-help`  
+`mkdir --help`  
 try 这个 command anyway，总会得到有用的信息  
 
 man: display a program's munual page  
@@ -246,7 +246,7 @@ I/O rediction 可以让我们 redefine where standard output goes, 可以 redire
 `ls -l /usr/bin > ls-output.txt`  
 `less ls-output.txt`  
 
-`>> append`
+\>\> append
 `ls -l /usr/bin >> ls-output.txt`  
 
 要 redirect error，我们必须要使用文件描述符(file descriptor)  
@@ -298,8 +298,96 @@ uniq 经常和 sort 一起使用，可以去重
 
 wc(word count): print line, word, and byte counts  
 
+`wc ls-output.txt`  
+会打印三个数字，分别代表：lines, words and bytes.  
 
+`ls /bin /usr/bin | sort | uniq | wc -l`  
+\-l 参数，只 print lines  
 
+grep: print lines matching a pattern  
+grep is a powerful program used to find text patterns within files  
+grep pattern \[file...]  
+when grep encounters a "pattern" in the file, it prints out the lines containing it.  
+`ls /bin /usr/bin | sort | uniq | grep zip`  
+grep 对大小写敏感，可以使用参数 \-i 来 ignore  
+参数 \-v invert 打印 those lines that do not match the pattern.  
+
+head/tail: print first/last part of files  
+有时候我们并不需要查看全部内容，就可以使用 head 和 tail, 默认显示 10 行，可以用 \-n 改变显示行数  
+`head -n 5 ls-output.txt`  
+`tail ls-output.txt`  
+
+也可以使用 pipeline：`ls /usr/bin | tail -n 5`  
+
+tail 命令可以 view files in real time，可以用来查看 log  
+`tail -f /var/log/syslog`  
+\-f follow 当内容更新的时候，会 append 在后面  
+
+tee: read from stdin and output to stdout and files  
+tee 命令 reads standard input and copies it to both standard out and to one or more files  
+`ls /usr/bin | tee ls.txt | grep zip`  
+在 grep 之前，会先写入 ls.txt  
+
+As we gain Linux experience, we will see that the redirection feature of the command line is extemely useful for solving specialized problems.  
+
+Windows 像是买的别人做好的玩具，你想增加一些简单的功能，他们会说市场需求少，他们不会去做；而 Linux 则像是一个工具材料店，it's just a huge collection of parts. There's a lot of steel struts, screws, nuts, gears, pulleys, motors, and a few suggestions on what to build. 你照着 suggestions 做了一会以后，you discover that you have your own ideas of what to make. You don't ever have to go back to the store, as you already have everything you need.  
+
+## 7-Seeing the World as the Shell Sees It  
+
+**echo: display a line of text**  
+echo is a shell builtin that performs a very simple task, it prints its text arguments on standards output.  
+
+expansion
+
+` echo this is a test`  
+`echo *`  
+会 print current directory 下的所有的文件名，当按 Enter 键的时候，shell 会在 echo 命令执行前，先 expand 通配符 \*, 所以 echo 看不到 \*  
+
+`echo l*` 显示 l 开头的文件名  
+`echo *t`  
+`echo [[:lower:]]*`  
+`echo /usr/*/share`  
+
+Tilde Expansion  
+`echo ~` 会显示 the name of the home directory of the named user  
+
+Arithmetic Expansion  
+
+`echo $((2 + 2))`  
+$((expression))  
+
+% remainder 余数  
+
+Brace Expansion  
+`echo Front-{A,B,C}-Back`  
+`echo Number_{1..5}`  
+`echo {01..15}`  
+`echo {001..15}`  
+`echo {Z..A}`  
+`echo a{A{1,2},B{3,4}}B`  
+
+So what is this good for? The most common application is to make lists of files or directories to be created.  
+
+`mkdir Photos`  
+`cd Photos`  
+`mkdir {2007..2009}-{01..12}`  
+`ls`  
+
+Parameter Expansion  
+$ variables  
+
+`echo $USER`  
+`printenv | less`  
+
+Command Substitution  
+`echo $(ls)`  
+`ls -l $(which cp)`  
+`file $(ls -d /usr/bin* | grep zip)`  
+这里 pipeline 的结果成为了 file 的参数  
+
+Quoting  
+`echo this is a    test`  
+`echo The total is $100.00`  
 
 
 
