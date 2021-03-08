@@ -246,6 +246,8 @@ I/O rediction 可以让我们 redefine where standard output goes, 可以 redire
 `ls -l /usr/bin > ls-output.txt`  
 `less ls-output.txt`  
 
+`> ls-output.txt` 这条命令可以清空文件，如果文件不存在则是创建新的文件  
+
 \>\> append
 `ls -l /usr/bin >> ls-output.txt`  
 
@@ -463,7 +465,7 @@ Seaching History
 
 ## 9-Permissions  
 
-Unix 系统不但是 multitasking，而且还是 multi-user system.  所以就有了权限系统，保证 the actions of one user could not be allowed to crash the computer, nor could one user interfere with the files belonging to another user.  
+Unix 系统不但是 multitasking，而且还是 multi-user system.  所以就有了权限系统，保证 the actions of one user could not be allowed to crash the computer, nor could one user interfere with the files belonging to another user.(和现实社会是一样的，你不能不经别人同意，随便动别人的东西)  
 
 **id: display user identity  
 chmod: change a file's mode  
@@ -475,6 +477,88 @@ chgrp: change a file's group ownership
 passwd: change a user's password**  
 
 Owners, Group Members, and Everybody Else  
+`id`  
+uid: user id  
+gid: group id  
 
+user accounts 存放在 /etc/passwd 中，groups 存放在 /etc/group 里  
+
+Reading, Writing, and Executing  
+权限指的就是 reading access, write access, and execution access  
+`> foo.txt` 创建文件  
+`ll foo.txt`  
+前面的 10 个 characters are file attributes. 第一个是 file type  
+\- A regular file  
+d A directory  
+l A symbolic. 当文件类型是 symbolic 的时候，file attributes 都是 "rwxrwxrwx", 这个是没什么意义的，重要的还是 real file 的权限，那个权限才是真实的权限  
+
+后面的 9 个叫做 file mode, represent the read, write and execute permissions for the file's owner, the file's group owner, and everybody else.  
+
+后面有两张表格，详细介绍了各种权限类型和组合的含义  
+
+chmod: change file mode  
+只有文件所有者和 superuser 可以 chmod，有两种方式：octal number(8 进制) representation, or symbolic representation.  
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Octal</th>
+      <th>Binary</th>
+      <th>File Mode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>000</td>
+      <td>---</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>001</td>
+      <td>--x</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>010</td>
+      <td>-w-</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>011</td>
+      <td>-wx</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>100</td>
+      <td>r--</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>101</td>
+      <td>r-x</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>110</td>
+      <td>rw-</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>111</td>
+      <td>rwx</td>
+    </tr>
+  </tbody>
+</table>
+
+
+`> foo.txt`  
+`ls -l foo.txt`  
+`chmod 600 foo.txt`  
+`ls -l foo.txt`  
+
+r 4  
+w 2  
+x 1  
 
 
