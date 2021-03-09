@@ -562,3 +562,29 @@ w 2
 x 1  
 
 
+也可以使用 symbolic notation  
+u: short for "user" but means the file or directory owner.  
+g: group owner  
+o: short for "others" but means world.  
+a: short for "all" this is the combination of "u", "g" and "o".  
+
+"+" 表示增加权限，"-" 表示取消权限，"=" 只设置等号后面的权限，其他的权限被移除  
+
+u+x: 增加用户执行权限  
+u-x: remove 用户执行权限  
++x: add execute permission for the owner, group and world. 等于 a+x  
+o-rw: remove others read and write permissions  
+go=rw  
+u+x, go=rx  
+
+Change Identities  
+su 和 sudo  
+
+su: run a shell with substitute user and group IDs  
+sudo: execute a command as another user  
+
+## 整理太多了，不如遇到问题直接查书更有效，书上还更详细  
+
+
+
+
