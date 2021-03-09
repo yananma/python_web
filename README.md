@@ -1,4 +1,6 @@
 
+疯狂编程，找到工作，找到工作，疯狂编程  
+
 要学习的内容：Django 源码书、Django 功能书、Restful API 文档、Django 文档、Flask项目代码、Flask 书、Flask 文档、HTTP、Redis、JavaScript、MySQL 书、Linux Shell、数据结构与算法、Vue、  
 
 
@@ -21,6 +23,7 @@ I will do everything I have to do, 无论要承受怎样的痛苦
 
 
 方法工具：  
+后端学习最主要的方式是看视频，多敲代码，其次是读文档，其次是听书，最后读书，读书效率比看视频慢 10 倍。  
 0、核心是读文档，flask 也是这样  
 1、多写注释  
 2、改一改，看变化，比如 models.py 中的 verbose_name 的作用  
