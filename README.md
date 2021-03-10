@@ -8,6 +8,8 @@ RESTful 文档、shell 程序、多线程例子、TCP 程序、
 
 疯狂编程，找到工作，找到工作，疯狂编程  
 
+只看健身视频练不出肌肉  
+
 要学习的内容：Django 源码书、Django 功能书、Restful API 文档、Django 文档、Flask项目代码、Flask 书、Flask 文档、HTTP、Redis、JavaScript、MySQL 书、Linux Shell、数据结构与算法、Vue、  
 
 
