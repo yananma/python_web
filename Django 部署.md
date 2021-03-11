@@ -27,7 +27,6 @@ ln -s python3.6 python
 删除软连接和删除快捷方式是一样的：rm python  
 
 pip -V  
-版本高的可能已经装好了，如果需要安装pip，可以使用命令：apt-get install python3-pip  
 pip install --upgrade pip  
 
 创建虚拟环境  
@@ -44,7 +43,6 @@ dpkg -i mysql-apt-config_0.8.16-1_all.deb(安装包)
 ps -aux | grep mysql  
 apt-get install mysql-server  
 (选择版本，输入密码)  
-
 
 在本地项目文件中，在 manage.py 所在目录的上级目录，执行命令 mysqldump -u root -p xxkt_db > data.sql  
 
