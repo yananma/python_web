@@ -112,12 +112,14 @@ print(next(it))&emsp;    mayanan
 默认参数是说定义的时候指定的  
 
 不定长参数，就是加 *  
-def loop(\*args):   
-&emsp;    for x in args:  
-&emsp;&emsp;        print(x)  
 
-loop(1, 2, 3)  
-loop(1, 3, 5, 7, 9)  
+    def loop(\*args):   
+        for x in args:  
+            print(x)  
+
+    loop(1, 2, 3)  
+    loop(1, 3, 5, 7, 9)  
+    
 
 #### 递归函数  
 
@@ -128,20 +130,22 @@ loop(1, 3, 5, 7, 9)
 #### 变量的作用域
 
 局部的和全局的  
-def f(x):  
-&emsp;    lacal_var = 200  
+
+    def f(x):  
+        lacal_var = 200  
 
 print(local_var) 就会报错，因为局部变量只能在函数内部使用  
 如果是在函数外面定义，就是全局变量，在哪里都可以调用  
 
 闭包就是，内部函数引用了外部函数的变量(不是全局变量)，那么内部函数就是闭包  
-def outer():  
-&emsp;    num = 100  
-&emsp;    def inner():  
-&emsp;&emsp;        print(num)  
-&emsp;    inner()  
 
-outer()  
+    def outer():  
+        num = 100  
+        def inner():  
+            print(num)  
+        inner()  
+
+    outer()  
 
 在这里 inner 可以调用 num 变量  
 查找顺序：局部 闭包 全局 内建  
@@ -169,19 +173,20 @@ nonlocal 就是闭包里修改外部函数的变量
 
 最重要的就是 open 函数，有了 open 函数就可以做其他的操作。open(filename, acess_mode='r', encoding='utf-8')  
 
-def open_file():  
-&emsp;    f = open('test.txt', 'r', encoding='utf-8')  
-&emsp;    print(f.read())  
+    def open_file():  
+        f = open('test.txt', 'r', encoding='utf-8')  
+        print(f.read())  
 
-def write_file():  
-&emsp;    f = open('test.txt', 'w', encoding='utf-8')  
-&emsp;    f.write('mayanan')  覆盖写入  
+    def write_file():  
+        f = open('test.txt', 'w', encoding='utf-8')  
+        f.write('mayanan')  覆盖写入  
+
 
 最好是用 with，这样不用再 close  
 
-def open_file():  
-&emsp;    with open('test.txt','r',encoding='utf-8') as f:  
-&emsp;&emsp;      print(f.read())  
+    def open_file():  
+        with open('test.txt','r',encoding='utf-8') as f:  
+            print(f.read())  
 
 
 #### 异常和错误  
