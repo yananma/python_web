@@ -91,13 +91,13 @@ break 就是不跑了，回宿舍，continue 就是这一圈没跑完，后面�
 
 iter(序列)， next(迭代器)  
 
-l = ['享学', 'Python', 'mayanan']  
+`l = ['享学', 'Python', 'mayanan']`  
 
-it = iter(l)  这个就是迭代器  
+`it = iter(l)`  这个就是迭代器  
 
-print(next(it))&emsp;    享学  
-print(next(it))&emsp;    Python  
-print(next(it))&emsp;    mayanan    
+`print(next(it))`    享学  
+`print(next(it))`    Python  
+`print(next(it))`    mayanan    
 就是有一个指针一样  
 
 
@@ -377,31 +377,31 @@ print(hasattr(p, 'name')) False
 
 因为一般情况下，结束以后内容就消失了，所以有了序列化    
 
-try:  
-&emsp;    import cPickle as pickle  
-except ImportError:
-&emsp;    import pickle  
+    try:  
+        import cPickle as pickle  
+    except ImportError:
+        import pickle  
 
 
-class Person(object):  
-&emsp;    def \_\_init__(self, name, age):   
-&emsp;&emsp;        self.name = name  
-&emsp;&emsp;        self.age = age  
+    class Person(object):  
+        def __init__(self, name, age):   
+            self.name = name  
+            self.age = age  
 
-p = Person('mayanan', 26)  
+    p = Person('mayanan', 26)  
 
-def write():  
-&emsp;    with open('test.data', 'wb') as f:  
-&emsp;&emsp;        b = pickle.dumps(p)  
-&emsp;&emsp;        f.write(b)  
+    def write():  
+        with open('test.data', 'wb') as f:  
+            b = pickle.dumps(p)  
+            f.write(b)  
 
-def read():  
-&emsp;    with open('test.data', 'rb') as f1:  
-&emsp;&emsp;        p = pickle.load(f1)  
-&emsp;&emsp;        print(p.name, p.age)  
+    def read():  
+        with open('test.data', 'rb') as f1:  
+            p = pickle.load(f1)  
+            print(p.name, p.age)  
 
-\# write()  
-read()  
+    # write()  
+    read()  
 
 #### 多线程  
 
@@ -437,28 +437,29 @@ if \_\_name__ == '\_\_main__':
 相当于买票的时候，原来只有一个窗口，只能这一队人排完以后，才能开始另一队；多线程就是有多个窗口买票  
 
 使用线程代码，这个 thread 模块，只能在 python2 版本中才能运行，但是可以便于理解多线程  
-import thread  
-from time import ctime, sleep  
 
-def func1():  
-&emsp;    for i in range(5):  
-&emsp;&emsp;        print('i=:', i)  
-&emsp;&emsp;        sleep(1)  
+    import thread  
+    from time import ctime, sleep  
 
-def func2():  
-&emsp;    for j in range(5):  
-&emsp;&emsp;        print('j=:', j)  
-&emsp;&emsp;        sleep(1)  
+    def func1():  
+        for i in range(5):  
+            print('i=:', i)  
+            sleep(1)  
 
-def main():  
-&emsp;    print('start:', ctime())  
-&emsp;    thread.start_new_thread(func1, ())  
-&emsp;    thread.start_new_thread(func2, ())  
-&emsp;    sleep(5)  
-&emsp;    print('end:', ctime)  
+    def func2():  
+        for j in range(5):  
+            print('j=:', j)  
+            sleep(1)  
 
-if \_\_name__ == '\_\_main__':  
-&emsp;    main()  
+    def main():  
+        print('start:', ctime())  
+        thread.start_new_thread(func1, ())  
+        thread.start_new_thread(func2, ())  
+        sleep(5)  
+        print('end:', ctime)  
+
+    if __name__ == '__main__':  
+        main()  
 
 现实中不使用 sleep 函数，因为不知道运行多长时间，现实中使用 lock  
 
