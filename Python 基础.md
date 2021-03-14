@@ -411,26 +411,27 @@ print(hasattr(p, 'name')) False
 如果没有多线程，就会顺序执行，不管第一个函数执行多长时间，后面的函数都会等待  
 
 不使用线程代码，就是先打印 5 个 i，i 打印完了以后再打印 j    
-from time import ctime, sleep  
 
-def func1():  
-&emsp;    for i in range(5):  
-&emsp;&emsp;        print('i=', i)  
-&emsp;&emsp;        sleep(0.1)  
+    from time import ctime, sleep  
 
-def func2():  
-&emsp;    for j in range(5):  
-&emsp;&emsp;        print('j=', j)  
-&emsp;&emsp;        sleep(0.1)  
+    def func1():  
+        for i in range(5):  
+            print('i=', i)  
+            sleep(0.1)  
 
-def main():  
-&emsp;    print('start:', ctime)  
-&emsp;    func1()  
-&emsp;    func2()  
-&emsp;    print('end:', ctime)  
+    def func2():  
+        for j in range(5):  
+            print('j=', j)  
+            sleep(0.1)  
 
-if \_\_name__ == '\_\_main__':  
-&emsp;    main()  
+    def main():  
+        print('start:', ctime)  
+        func1()  
+        func2()  
+        print('end:', ctime)  
+
+    if __name__ == '__main__':  
+        main()  
 
 使用线程交替执行，不是顺序执行的，而是并行执行的  
 
@@ -471,32 +472,32 @@ python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 
 
 比如现实中火车站，4 个窗口卖 100 张票，就要用 lock 线程，否则会卖重复  
 
-class Window(threading.Thread):  
-&emsp;    def \_\_init__(self, n, lock):  
-&emsp;&emsp;        self.lock = lock  
-&emsp;&emsp;        threading.Thread.\_\_init__(self, name=n)  
+    class Window(threading.Thread):  
+        def \_\_init__(self, n, lock):  
+            self.lock = lock  
+            threading.Thread.\_\_init__(self, name=n)  
 
-&emsp;    def take(self):  
-&emsp;&emsp;        global tickets  
-&emsp;&emsp;        while tickets >= 1:  
-&emsp;&emsp;&emsp;            self.lock.acquire()  
-&emsp;&emsp;&emsp;            print('%s :%d' % (threading.currentThread().name, tickets))  
-&emsp;&emsp;&emsp;            tickets -= 1  
-&emsp;&emsp;&emsp;            self.lock.release()  
-&emsp;&emsp;&emsp;            sleep(0.1)  
+        def take(self):  
+            global tickets  
+            while tickets >= 1:  
+                self.lock.acquire()  
+                print('%s :%d' % (threading.currentThread().name, tickets))  
+                tickets -= 1  
+                self.lock.release()  
+                sleep(0.1)  
 
-&emsp;    def run(self):  
-&emsp;&emsp;        self.take()  
+        def run(self):  
+            self.take()  
 
-def main():  
-&emsp;    lock = threading.Lock()  
-&emsp;    for i in range(1, 5):  
-&emsp;&emsp;        name = '窗口' + str(i)  
-&emsp;&emsp;        w = Window(name, lock)  
-&emsp;&emsp;        w.start()  
+    def main():  
+        lock = threading.Lock()  
+        for i in range(1, 5):  
+            name = '窗口' + str(i)  
+            w = Window(name, lock)  
+            w.start()  
 
-if \_\_name__ == '\_\_main__':  
-&emsp;    main()  
+    if __name__ == '__main__':  
+        main()  
 
 如果把程序中的 lock 去掉，就会有卖重复的现象  
 
@@ -516,56 +517,57 @@ socket 就是插座。互联网上有成千上万台机器，一台机器如何�
 #### TCP  
 
 TCP 服务器  
-from socket import *  
-from time import ctime  
 
-HOST = 'localhost'  
-PORT = 10001  
-BUFFER = 1024  
-ADDRESS = (HOST, PORT)  
+    from socket import *  
+    from time import ctime  
 
-serverSocket = socket(AF_INET, SOCK_STREAM)  
-serverSocket.bind(ADDRESS)  
+    HOST = 'localhost'  
+    PORT = 10001  
+    BUFFER = 1024  
+    ADDRESS = (HOST, PORT)  
 
-serverSocket.listen(5)  
+    serverSocket = socket(AF_INET, SOCK_STREAM)  
+    serverSocket.bind(ADDRESS)  
 
-while True:  
-&emsp;    print('等待连接...')  
-&emsp;    clientSocket, add = serverSocket.accept()  
-&emsp;    print('连接来自：', add)  
-&emsp;    while True:  
-&emsp;&emsp;        data = clientSocket.recv(BUFFER).decode()  
-&emsp;&emsp;        print('来自客户端的信息：', data)  
-&emsp;&emsp;        if not data:  
-&emsp;&emsp;            break  
-&emsp;&emsp;        clientSocket.send(('[%s] %s' %(ctime(), data)).encode())  
-&emsp;    clientSocket.close()  
+    serverSocket.listen(5)  
 
-serverSocket.close()  
+    while True:  
+        print('等待连接...')  
+        clientSocket, add = serverSocket.accept()  
+        print('连接来自：', add)  
+        while True:  
+            data = clientSocket.recv(BUFFER).decode()  
+            print('来自客户端的信息：', data)  
+            if not data:  
+                break  
+            clientSocket.send(('[%s] %s' %(ctime(), data)).encode())  
+        clientSocket.close()  
+
+    serverSocket.close()  
 
 
 TCP 客户端  
 
-from socket import *  
+    from socket import *  
 
-HOST = 'localhost'  
-PORT = 10001  
-BUFFER = 1024  
-ADDRESS = (HOST, PORT)  
+    HOST = 'localhost'  
+    PORT = 10001  
+    BUFFER = 1024  
+    ADDRESS = (HOST, PORT)  
 
-clientSocket = socket(AF_INET, SOCK_STREAM)  
-clientSocket.connect(ADDRESS)  
-while True:  
-&emsp;    data = input('>')  
-&emsp;    if not data:  
-&emsp;&emsp;        break  
-&emsp;    clientSocket.send(data.encode())  
-&emsp;    data = clientSocket.recv(BUFFER).decode()  
-&emsp;    if not data:  
-&emsp;&emsp;        break  
-&emsp;    print(data)  
+    clientSocket = socket(AF_INET, SOCK_STREAM)  
+    clientSocket.connect(ADDRESS)  
+    while True:  
+        data = input('>')  
+        if not data:  
+            break  
+        clientSocket.send(data.encode())  
+        data = clientSocket.recv(BUFFER).decode()  
+        if not data:  
+            break  
+        print(data)  
 
-clientSocket.close()  
+    clientSocket.close()  
 
 
 
@@ -578,6 +580,8 @@ clientSocket.close()
 
 并发：交替执行，比如一个 CPU 执行多个任务  
 并行：任务量小于或等于 CPU 核数  
+
+不使用多进程和多线程的时候，就是顺序执行，先执行完 sing 函数，再执行 dance 函数  
 
 #### 进程  
 
