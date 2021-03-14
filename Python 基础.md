@@ -570,6 +570,56 @@ TCP 客户端
     clientSocket.close()  
 
 
+UDP 服务器 
+
+    from socket import *
+    from time import ctime
+
+    HOST = 'localhost'
+    PORT = 10001
+    BUFFER = 1024
+    ADDRESS = (HOST, PORT)
+
+    udpSocket = socket(AF_INET, SOCK_DGRAM)
+    udpSocket.bind(ADDRESS)
+
+    while True:
+        print('等待信息...')
+        data, addr = udpSocket.recvfrom(BUFFER)
+        if not data:
+            break
+        print(data.decode())
+        udpSocket.sendto(('[%s] %s' %(ctime(), data.decode())).encode(), addr)
+        print('返回给：', addr)
+
+    udpSocket.close()
+
+
+UDP 客户端  
+
+    from socket import *
+
+    HOST = 'localhost'
+    PORT = 10001
+    BUFFER = 1024
+    ADDRESS = (HOST, PORT)
+
+    udpClient = socket(AF_INET, SOCK_DGRAM)
+
+    while True:
+        data = input('>')
+        if not data:
+            break
+        udpClient.sendto(data.encode(), ADDRESS)
+        data, ADDRESS = udpClient.recvfrom(BUFFER)
+        if not data:
+            break
+        print(data.decode())
+        print(ADDRESS)
+
+    udpClient.close()
+
+
 
 ### Python 多进程和多线程  
 
