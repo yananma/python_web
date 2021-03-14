@@ -26,3 +26,4 @@ Alt + Enter 快速修复错误
 
 
 
+进入全屏：View -> Appearance -> Enter Full Screen    
