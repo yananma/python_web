@@ -1,5 +1,5 @@
 
-# Talk is Cheap, show me the code.  
+# Talk is Cheap. Show me the code.  
 
 学习后端开发，最重要的学习方法是每天写代码  
 每天 10 个程序，一年 3650 个，三年 10000 个程序  
