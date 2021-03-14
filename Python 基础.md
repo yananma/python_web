@@ -569,4 +569,84 @@ clientSocket.close()
 
 
 
+### Python 多进程和多线程  
+
+多任务，比如百度网盘同时下载多部电影  
+好处：提高 CPU 资源利用率，降低时间  
+
+多任务是指在**同一时间**执行**多个任务**  
+
+并发：交替执行，比如一个 CPU 执行多个任务  
+并行：任务量小于或等于 CPU 核数  
+
+#### 进程  
+
+进程是资源分配的最小单位，它是操作系统进行资源分配和调度运行的基本单位。通俗地说，一个正在运行的程序就是一个进程；Windows 任务管理器  
+
+使用 pysnooper 可以看到这两个函数是同时执行的  
+
+    import time
+    import multiprocessing
+
+    def sing(num):
+        for i in range(num):
+            print('唱歌......')
+            time.sleep(0.5)
+
+    def dance(num):
+        for i in range(num):
+            print('跳舞......')
+            time.sleep(0.5)
+
+
+    if __name__ == "__main__":
+        # 通过进程类，创建进程对象
+        sing_process = multiprocessing.Process(target=sing, args=(3, ))
+        dance_process = multiprocessing.Process(target=dance, kwargs={'num': 3})
+
+        sing_process.start()
+        dance_process.start()  
+        
+        
+主进程会等待子进程执行结束以后才结束，可以设置 daemon=True 守护主进程，使得主进程执行结束以后，子进程自动销毁，程序结束  
+
+
+#### 线程  
+为什么要使用线程？  
+进程是分配资源的最小单位，一旦创建一个进程就会分配一定的资源，有时是比较浪费资源  
+
+线程是程序执行的最小单位，实际上进程只负责分配资源，而利用这些资源执行程序的是线程。进程是线程的容器，一个进程中最少有一个线程来负责执行程序。同时线程自己不拥有系统资源，只需要一点必不可少的资源，它可以和同属一个进程的其他线程共享进程所拥有的全部资源。  
+
+    import time
+    import threading
+
+
+    def sing(num):
+        for i in range(num):
+            print("唱歌......")
+            time.sleep(0.5)
+
+
+    def dance(num):
+        for i in range(num):
+            print("跳舞......")
+            time.sleep(0.5)
+
+
+    if __name__ == "__main__":
+        sing_thread = threading.Thread(target=sing, args=(3, ))
+        dance_thread = threading.Thread(target=dance, kwargs={'num': 3})
+
+        sing_thread.start()
+        dance_thread.start()
+
+线程之间的执行是无序的，是由 CPU 调度决定的  
+
+进程可以使用多核，线程不可以使用多核  
+
+
+
+
+
+
 
