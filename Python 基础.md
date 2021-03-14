@@ -11,7 +11,7 @@ type() 看类型
 
 4 个空格缩进；顶级定义之间空两行，比如 class，类中的方法之间空一行；二元操作符前后空格，比如四则运算符号，用 = 指定参数默认值的时候，前后不要有空格。 
 
-类名称大写，其他除全局变量外都是小写加下划线  
+类名称首字母大写，其他除全局变量外都是小写加下划线  
 
 
 #### 注释  
@@ -27,7 +27,12 @@ type() 看类型
 
 #### 编程基础
 
-占位符，name = 'mayanan' age = 30  print('%s, %d' % (name, age))  
+占位符，
+
+    name = 'mayanan' 
+    age = 30  
+    print('%s, %d' % (name, age))  
+
 占位符的读法是，读到哪一个就把后面的名字提到前面来读  
 
 #### 数字  
@@ -41,8 +46,10 @@ type() 看类型
 可变对象：列表、字典、自定义类创建的对象  
 
 不可变对象：数字、字符串、元组  
-数字不可以被修改是说，赋值以后 id 会变，是重新创建了一个新的对象。
-t = (1, 2, 3)  t[0] = 100 会报错，元组不可修改。  
+数字不可以被修改是说，赋值以后 id 会变，是重新创建了一个新的对象。  
+`t = (1, 2, 3)  
+t[0] = 100`
+会报错，元组不可修改。  
 
 #### 序列  
 
@@ -51,12 +58,12 @@ t = (1, 2, 3)  t[0] = 100 会报错，元组不可修改。
 
 序列操作函数：enumerate、len、reversed、sorted、zip、  
 
-l = [(3, 'cat'), (1, 'bag'), (2, 'apple')]  
+`l = [(3, 'cat'), (1, 'bag'), (2, 'apple')]`  
 
-print(sorted(l, key=lambda x:x[0]))  
+`print(sorted(l, key=lambda x:x[0]))`  
 lambda 是 key 的 lambda，这个是按数字排序  
 
-print(sorted(l, key=lambda x:x[1]))  
+`print(sorted(l, key=lambda x:x[1]))`  
 这个是按字母排序  
 
 #### 字符串
@@ -67,7 +74,7 @@ r 就是 raw，按照原始的字符串输出，读路径的时候常用
 
 列表方法：append、insert、remove、pop、clear、count、sort、reverse、  
 
-列表推导式：[x\*\*2 for x in range(5)]  
+列表推导式：`[x**2 for x in range(5)]`  
 
 
 #### 集合
@@ -107,13 +114,18 @@ iter(序列)， next(迭代器)
 
 #### 函数
 
-关键字参数说的是调用的时候指定，可以不用管定义的时候的顺序。比如 def about(name, course, site): print(name, course, site)  调用的时候可以指定，about(site='网址', name='名字', course='课程') 可以打乱顺序  
+关键字参数说的是调用的时候指定，可以不用管定义的时候的顺序。比如 
+
+    def about(name, course, site): 
+        print(name, course, site)  
+    
+调用的时候可以指定，`about(site='网址', name='名字', course='课程')` 可以打乱顺序  
 
 默认参数是说定义的时候指定的  
 
 不定长参数，就是加 *  
 
-    def loop(\*args):   
+    def loop(*args):   
         for x in args:  
             print(x)  
 
@@ -189,6 +201,13 @@ nonlocal 就是闭包里修改外部函数的变量
             print(f.read())  
 
 
+    def write_file():
+        with open('test.py', 'w', encoding='utf-8') as f:
+            f.write('Hello World!')
+
+    write_file()
+
+
 #### 异常和错误  
 
 错误是在编译期间出现的，比如语法错误，逻辑错误，  
@@ -201,13 +220,13 @@ nonlocal 就是闭包里修改外部函数的变量
 
 程序也是这样，不能因为一个小毛病就崩溃了  
 
-def loop(l):  
-&emsp;    try:  
-&emsp;&emsp;        print(l[3])  
-&emsp;    except Exception as e:  
-&emsp;&emsp;        print('error')  
+    def loop(l):  
+        try:  
+            print(l[3])  
+        except Exception as e:  
+            print('error')  
 
-loop([1, 2])
+    loop([1, 2])
 
 try except 的时候一般会 print 错误信息，否则不知道错在什么地方  
 
@@ -215,7 +234,7 @@ finally 不管有没有异常都会执行，比如 close 文件，关闭数据�
 
 #### raise 和 assert  
 
-raise 是主动抛出异常，assert 是断言  
+raise 是主动抛出异常，assert 是断言，满足条件才往下执行  
 
 #### 自定义异常
 
@@ -236,21 +255,22 @@ self 关键字，self 翻译过来就是我自己，指当前对象本身，谁�
 
 验证 self 就是实例本身代码  
 
-class Person(object):  
-&emsp;    def \_\_init__(self):  
-&emsp;&emsp;        print(id(self))  
-方法里的 self 的 id 和实例也是相同的  
-&emsp;    def say_hello(self, name):
-&emsp;&emsp;        print(id(self))
-&emsp;&emsp;        print('hello,', name)
+    class Person(object):  
+        def __init__(self):  
+            print(id(self))  
+    
+    # 方法里的 self 的 id 和实例也是相同的  
+        def say_hello(self, name):
+            print(id(self))
+            print('hello,', name)
 
 
-p = Person()  
-print(id(p))  
+    p = Person()  
+    print(id(p))  
 
-p = Person()  
-print(id(p))  
-p.say_hello('mayanan')  
+    p = Person()  
+    print(id(p))  
+    p.say_hello('mayanan')  
 
 id 相同，所以就验证了 self 就是这个实例本身  
 
@@ -262,13 +282,13 @@ id 相同，所以就验证了 self 就是这个实例本身
 
 静态方法不需要实例化，通过名称就可以直接访问，静态方法不加 self  
 
-class Site(object):  
-&emsp;    @staticmethod  
-&emsp;    def get_name():  
-&emsp;&emsp;        return 'mayanan'  
+    class Site(object):  
+        @staticmethod  
+        def get_name():  
+            return 'mayanan'  
 
-name = Site.get_name()  
-print(name)  
+    name = Site.get_name()  
+    print(name)  
 
 不用实例化  
 
@@ -279,72 +299,83 @@ print(name)
 实例属性就是实例变量，self.name = name，前面的 self.name 就是实例属性  
 
 下面这样的就是类属性，实例方法可以访问类属性  
-class Site(object):  
-&emsp;    name = 'mayanan'     
-&emsp;    course = 'Python'  
+
+    class Site(object):  
+        name = 'mayanan'     
+        course = 'Python'  
 
 
 #### 继承  
 
-可以继承父类里面所有的属性和方法  
+可以继承父类里面所有的属性和方法，不用再从头构建    
 
 多重继承，可以继承多个类  
 
 非常清楚的一个例子  
-class Bird(object):  
-&emsp;    def fly(self):  
-&emsp;&emsp;        print('fly...')  
 
-class Fish(object):  
-&emsp;    def swim(self):  
-&emsp;&emsp;        print('swim...')  
+    class Bird(object):  
+        def fly(self):  
+            print('fly...')  
 
-class FlyFish(Bird, Fish):  
-&emsp;    pass  
+    class Fish(object):  
+        def swim(self):  
+            print('swim...')  
 
-ff = FlyFish()  
-ff.fly()  
-ff.swim()  
+    class FlyFish(Bird, Fish):  
+        pass  
+
+    ff = FlyFish()  
+    ff.fly()  
+    ff.swim()  
+    
 
 #### 方法覆盖  
 
 必须是继承关系；子类覆盖(重写)父类里面的同名方法  
 
-class Animal(object):  
-&emsp;    def run(self):  
-&emsp;&emsp;        print('Animal run...')  
-&emsp;    def sleep(self):  
-&emsp;&emsp;        print('Animal sleep...')  
+既可以复用，又可以保证灵活性，可以根据实际情况修改定制  
 
-class Dog(Animal):  
-&emsp;    def run(self):  
-&emsp;&emsp;        print('dog run...')  
+    class Animal(object):  
+        def run(self):  
+            print('Animal run...')  
+            
+        def sleep(self):  
+            print('Animal sleep...')  
 
-hua = Dog()  
 
-hua.run()  
-hua.sleep()  
+    class Dog(Animal):  
+        def run(self):  
+            print('dog run...')  
+
+
+    hua = Dog()  
+
+    hua.run()  
+    hua.sleep()  
+
 
 #### super 关键字 
 
 调用父类的初始化方法 super().\_\_init__()  
 调用父类的其他属性和方法  
 
-class Person(object):  
-&emsp;    def \_\_init__(self, name, age):  
-&emsp;&emsp;        self.name = name  
-&emsp;&emsp;        self.age = age  
-&emsp;    def display(self):  
-&emsp;&emsp;        print(self.name, self.age)  
+    class Person(object):  
+        def __init__(self, name, age):  
+            self.name = name  
+            self.age = age  
+        
+        def display(self):  
+            print(self.name, self.age)  
 
-class Manager(Person):  
-&emsp;    def \_\_init__(self):  
-&emsp;&emsp;        super().\_\_init__('mayanan', 26)  
-&emsp;    def m_display(self):  
-&emsp;&emsp;        super().display()  
+    class Manager(Person):  
+        def __init__(self):  
+            super().__init__('mayanan', 26)  
+    
+        def m_display(self):  
+            super().display()  
 
-m = Manager()  
-m.m_display()  
+    m = Manager()  
+    m.m_display()  
 
 
 #### isinstance 
@@ -357,17 +388,17 @@ isinstance(obj, cls)
 
 hasattr()、getattr()、setattr()、delattr()  
 
-class Person(object):  
-&emsp;    def __init__(self, name):  
-&emsp;&emsp;        self.name = name  
+    class Person(object):  
+        def __init__(self, name):  
+            self.name = name  
 
-p = Person('mayanan')  
-print(hasattr(p, 'name')) True  
-print(getattr(p, 'name')) 就是 p.name  
-setattr(p, 'name', 'mayanan')  
-print(p.name)  
-delattr(p, 'name')  
-print(hasattr(p, 'name')) False   
+    p = Person('mayanan')  
+    print(hasattr(p, 'name')) True  
+    print(getattr(p, 'name')) 就是 p.name  
+    setattr(p, 'name', 'mayanan')  
+    print(p.name)  
+    delattr(p, 'name')  
+    print(hasattr(p, 'name')) False   
 
 
 #### 序列化和反序列化  
@@ -402,6 +433,7 @@ print(hasattr(p, 'name')) False
 
     # write()  
     read()  
+    
 
 #### 多线程  
 
@@ -466,6 +498,36 @@ print(hasattr(p, 'name')) False
 
 python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 Thread 实例，为 target 函数传递一个参数；第二种是创建 Thread 实例，传递给一个可调用的类实例，需要复写 \_\_call__ 函数；第三种是继承 Thread，并创建子类的实例  
 
+    import threading
+    from time import ctime, sleep
+
+    def func1():
+        for i in range(5):
+            print('i=%d \n' % i)
+            sleep(0.1)
+
+    def func2():
+        for j in range(5):
+            print('j=%d \n' % j)
+            sleep(0.1)
+
+    def main():
+        print('start:', ctime())
+        t1 = threading.Thread(target=func1)
+        t2 = threading.Thread(target=func2)
+
+        t1.start()
+        t2.start()
+
+        t1.join()
+        t2.join()
+
+        print('end:', ctime())
+
+    if __name__ == '__main__':
+        main()
+
+
 #### 线程同步  
 
 多个用户同时操作一个共享资源，要对共享资源进行保护，方法就是使用 lock。  
@@ -473,9 +535,9 @@ python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 
 比如现实中火车站，4 个窗口卖 100 张票，就要用 lock 线程，否则会卖重复  
 
     class Window(threading.Thread):  
-        def \_\_init__(self, n, lock):  
+        def __init__(self, n, lock):  
             self.lock = lock  
-            threading.Thread.\_\_init__(self, name=n)  
+            threading.Thread.__init__(self, name=n)  
 
         def take(self):  
             global tickets  
@@ -498,16 +560,76 @@ python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 
 
     if __name__ == '__main__':  
         main()  
+        
 
 如果把程序中的 lock 去掉，就会有卖重复的现象  
 
 queue 模块使得共享数据更加方便，不用再用 lock，不用再自己控制，queue 自己内部就实现了这些功能  
 
+    from queue import Queue
+    from time import sleep
+    from random import randint
+    from threading import Thread
+
+
+    class Producer(object):
+        def __init__(self, q):
+            self.q = q
+
+        def put(self):
+            print('为 Q 添加对象...')
+            self.q.put('xxx', 1)
+            print('当前 Q 大小：%d' % self.q.qsize())
+
+        def produce(self):
+            for i in range(5):
+                self.put()
+                sleep(randint(1, 2))
+
+        def __call__(self):
+            self.produce()
+
+    class Consumer(object):
+        def __init__(self, q):
+            self.q = q
+
+        def get(self):
+            val = self.q.get(1)
+            print('从 Q 取对象...')
+            print('当前 Q 大小：%d' % self.q.qsize())
+
+        def consume(self):
+            for i in range(5):
+                self.get()
+                sleep(randint(2, 5))
+
+        def __call__(self):
+                self.consume()
+
+
+    def main():
+        q = Queue(32)
+        p = Producer(q)
+        c = Consumer(q)
+
+        t1 = Thread(target=p)
+        t1.start()
+
+        t2 = Thread(target=c)
+        t2.start()
+
+        t1.join()
+        t2.join()
+
+    if __name__ == '__main__':
+        main()
+
+
 #### 网络编程  
 
 客户端服务器，客户端发送请求，服务器返回响应  
 
-socket 就是插座。互联网上有成千上万台机器，一台机器如何找到另一台机器呢？办法就是 IP 地址，每一台机器都有唯一的 IP 地址。另一个问题是，一台电脑有几百个应用，怎么区分应用呢？答案就是端口号。socket 由 IP 地址和端口号组成，想要请求应用程序的服务，就必须要知道 IP 地址和端口号，有了 IP 地址和端口号以后就能定位到这个应用，就能实现连接，连接以后就可以实现数据的收发。有点儿像访问阿里云的 docker  
+socket 就是插座，4 个部分连接上以后才是一个 socket，ip 端口 ip 端口。互联网上有成千上万台机器，一台机器如何找到另一台机器呢？办法就是 IP 地址，每一台机器都有唯一的 IP 地址。另一个问题是，一台电脑有几百个应用，怎么区分应用呢？答案就是端口号。socket 由 IP 地址和端口号组成，想要请求应用程序的服务，就必须要知道 IP 地址和端口号，有了 IP 地址和端口号以后就能定位到这个应用，就能实现连接，连接以后就可以实现数据的收发。有点儿像访问阿里云的 docker  
 
 服务器先绑定一个端口号，然后 listen 监听，客户端再根据 IP 地址和端口号连接服务器，如果服务器接受了连接，就可以实现读写，数据传输  
 
