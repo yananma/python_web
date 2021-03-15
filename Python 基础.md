@@ -638,6 +638,30 @@ socket 就是插座，4 个部分连接上以后才是一个 socket，ip 端口 
 
 #### TCP  
 
+TCP 客户端  
+
+    from socket import *  
+
+    HOST = 'localhost'  
+    PORT = 10001  
+    BUFFER = 1024  
+    ADDRESS = (HOST, PORT)  
+
+    clientSocket = socket(AF_INET, SOCK_STREAM)  
+    clientSocket.connect(ADDRESS)  
+    while True:  
+        data = input('>')  
+        if not data:  
+            break  
+        clientSocket.send(data.encode())  
+        data = clientSocket.recv(BUFFER).decode()  
+        if not data:  
+            break  
+        print(data)  
+
+    clientSocket.close()  
+
+
 TCP 服务器  
 
     from socket import *  
@@ -668,28 +692,29 @@ TCP 服务器
     serverSocket.close()  
 
 
-TCP 客户端  
+UDP 客户端  
 
-    from socket import *  
+    from socket import *
 
-    HOST = 'localhost'  
-    PORT = 10001  
-    BUFFER = 1024  
-    ADDRESS = (HOST, PORT)  
+    HOST = 'localhost'
+    PORT = 10001
+    BUFFER = 1024
+    ADDRESS = (HOST, PORT)
 
-    clientSocket = socket(AF_INET, SOCK_STREAM)  
-    clientSocket.connect(ADDRESS)  
-    while True:  
-        data = input('>')  
-        if not data:  
-            break  
-        clientSocket.send(data.encode())  
-        data = clientSocket.recv(BUFFER).decode()  
-        if not data:  
-            break  
-        print(data)  
+    udpClient = socket(AF_INET, SOCK_DGRAM)
 
-    clientSocket.close()  
+    while True:
+        data = input('>')
+        if not data:
+            break
+        udpClient.sendto(data.encode(), ADDRESS)
+        data, ADDRESS = udpClient.recvfrom(BUFFER)
+        if not data:
+            break
+        print(data.decode())
+        print(ADDRESS)
+
+    udpClient.close()
 
 
 UDP 服务器 
@@ -716,30 +741,6 @@ UDP 服务器
 
     udpSocket.close()
 
-
-UDP 客户端  
-
-    from socket import *
-
-    HOST = 'localhost'
-    PORT = 10001
-    BUFFER = 1024
-    ADDRESS = (HOST, PORT)
-
-    udpClient = socket(AF_INET, SOCK_DGRAM)
-
-    while True:
-        data = input('>')
-        if not data:
-            break
-        udpClient.sendto(data.encode(), ADDRESS)
-        data, ADDRESS = udpClient.recvfrom(BUFFER)
-        if not data:
-            break
-        print(data.decode())
-        print(ADDRESS)
-
-    udpClient.close()
 
 
 
