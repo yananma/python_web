@@ -5,7 +5,7 @@ Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数
 
 数据类型：数字(整数浮点数)、字符串 ''、列表 []，列表可以遍历、元组()、字典 {} 括起来的键值对、类的实例和函数等
 
-type() 看类型  
+type() 看类型   
 
 #### 编码规范  
 
@@ -641,30 +641,6 @@ socket 就是插座，4 个部分连接上以后才是一个 socket，ip 端口 
 要先运行服务器，先 listen，再运行客户端  
 要打开端口  
 
-TCP 客户端  
-
-    from socket import *  
-
-    HOST = 'localhost'  
-    PORT = 10001  
-    BUFFER = 1024  
-    ADDRESS = (HOST, PORT)  
-
-    clientSocket = socket(AF_INET, SOCK_STREAM)  
-    clientSocket.connect(ADDRESS)  
-    while True:  
-        data = input('>')  
-        if not data:  
-            break  
-        clientSocket.send(data.encode())  
-        data = clientSocket.recv(BUFFER).decode()  
-        if not data:  
-            break  
-        print(data)  
-
-    clientSocket.close()  
-
-
 TCP 服务器  
 
     from socket import *  
@@ -694,30 +670,28 @@ TCP 服务器
 
     serverSocket.close()  
 
+TCP 客户端  
 
-UDP 客户端  
+    from socket import *  
 
-    from socket import *
+    HOST = 'localhost'  
+    PORT = 10001  
+    BUFFER = 1024  
+    ADDRESS = (HOST, PORT)  
 
-    HOST = 'localhost'
-    PORT = 10001
-    BUFFER = 1024
-    ADDRESS = (HOST, PORT)
+    clientSocket = socket(AF_INET, SOCK_STREAM)  
+    clientSocket.connect(ADDRESS)  
+    while True:  
+        data = input('>')  
+        if not data:  
+            break  
+        clientSocket.send(data.encode())  
+        data = clientSocket.recv(BUFFER).decode()  
+        if not data:  
+            break  
+        print(data)  
 
-    udpClient = socket(AF_INET, SOCK_DGRAM)
-
-    while True:
-        data = input('>')
-        if not data:
-            break
-        udpClient.sendto(data.encode(), ADDRESS)
-        data, ADDRESS = udpClient.recvfrom(BUFFER)
-        if not data:
-            break
-        print(data.decode())
-        print(ADDRESS)
-
-    udpClient.close()
+    clientSocket.close()  
 
 
 UDP 服务器 
@@ -743,6 +717,32 @@ UDP 服务器
         print('返回给：', addr)
 
     udpSocket.close()
+
+
+
+UDP 客户端  
+
+    from socket import *
+
+    HOST = 'localhost'
+    PORT = 10001
+    BUFFER = 1024
+    ADDRESS = (HOST, PORT)
+
+    udpClient = socket(AF_INET, SOCK_DGRAM)
+
+    while True:
+        data = input('>')
+        if not data:
+            break
+        udpClient.sendto(data.encode(), ADDRESS)
+        data, ADDRESS = udpClient.recvfrom(BUFFER)
+        if not data:
+            break
+        print(data.decode())
+        print(ADDRESS)
+
+    udpClient.close()
 
 
 
