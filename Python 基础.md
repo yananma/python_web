@@ -638,6 +638,9 @@ socket 就是插座，4 个部分连接上以后才是一个 socket，ip 端口 
 
 #### TCP  
 
+要先运行服务器，先 listen，再运行客户端  
+要打开端口  
+
 TCP 客户端  
 
     from socket import *  
