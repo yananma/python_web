@@ -3,19 +3,18 @@
 
 SQL 结构化查询语言 Structured Query Language  
 
-数据库就是行列表  
+数据库就是行列表，每一行是一个 record 记录，每一列是一个 field 字段  
 
-每一行是一个 record 记录，每一列是一个 field 字段  
+
+数据库是先创建 database 再创建 table，一个库里可以有多张表(一个数据库就是一个盒子，一张表就是一张纸)  
 
 先创建数据库 create database xxkt_db;  
 
-数据库是先有库后有表，一个库里可以有多张表(一个数据库就是一个盒子，一张表就是一张纸)  
-
 show databases;  
 
-再 use xxkt_db;  
+use xxkt_db;  
 
-再 create table UserTbl(uid integer primary key auto_increment, name varchar(20), pwd varchar(20));  
+create table UserTbl(uid integer primary key auto_increment, name varchar(20), pwd varchar(20));  
 
 show tables;  
 
@@ -35,7 +34,7 @@ delete from UserTbl where uid=1;
 
 #### SELECT 语句  
 
-SELECT column_name, column_name FROM table_name;  
+SELECT column_name1, column_name2 FROM table_name;  
 或
 SELECT * FROM table_name;  
 
@@ -92,7 +91,6 @@ INSERT INTO table_name VALUES (value1, value2, value3...)
 插入数据：INSERT INTO mytable(name) VALUES ('马亚南');  
 
 
-
 增：  
 创建一张表  
 CREATE table qsbk_tbl(qid integer primary key auto_increment, author varchar(100), text text, vote integer, comments integer);  
@@ -126,6 +124,7 @@ AND条件
 SELECT * FROM   
 
 连接数据库  
+
     conn = MySQLdb.connect(  
         user = 'root',  
         passwd = '123456',  
