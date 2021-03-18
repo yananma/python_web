@@ -149,7 +149,7 @@ chmod 777 banner
 ### Django 项目配置  
 
 安装完 Nginx 和 uwsgi 之前可以先测试一下   
-python manage.py runserver 0.0.0.0:8000(安全组要打卡 8000 端口)，要在 settings.py 中设置 allow_host=\['*']，即允许所有网站访问，然后输入：ip:8000 访问  
+python manage.py runserver 0.0.0.0:8000(安全组要打开 8000 端口)，要在 settings.py 中设置 allow_host=\['*']，即允许所有网站访问，然后输入：ip:8000 访问  
 
 mkdir static_collected  
 python3 manage.py collectstatic  
