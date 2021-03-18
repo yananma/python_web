@@ -91,7 +91,8 @@ vim /etc/nginx/sites-available/xxkt.conf
 
 cd /home 
 mkdir xxkt_uwsgi   
-vim xxkt.ini  
+cd xxkt_uwsgi  
+vim xxkt_uwsgi.ini  
 
     [uwsgi]
     chdir = /home/elearning/xxkt 
@@ -112,6 +113,8 @@ vim xxkt.ini
 
 
 配置完成以后，启动 uwsgi：uwsgi --ini xxkt_uwsgi.ini   
+
+可以查看 xxkt.log 文件  
 
 ln -s /etc/nginx/sites-available/xxkt.conf /etc/nginx/sites-enabled/xxkt.conf  
 
