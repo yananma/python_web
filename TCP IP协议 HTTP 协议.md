@@ -58,6 +58,36 @@ acknowledgement number 解决丢包问题
 URG，不用在缓存区保留，直接传至对方  
 
 
+## 《TCP/IP 协议及其应用》  
+
+TCP/IP 协议是目前最完整的、被普遍接受的通信协议标准，无论是局域网还是广域网，TCP/IP 协议都是使用最为广泛的网络协议。  
+
+### 第 1 章 TCP/IP 协议基础  
+
+RFC Request For Comment，是关于 Internet 的一系列注解和文件，是学习和掌握 Internet 知识的最重要的资料。  
+
+看似是对等层交流，本质上还是通过物理通信的  
+
+ARP Adress Resolution Protocol 用于根据 IP 地址获取物理地址  
+
+每台主机都有一个唯一的 IP 地址  
+
+TCP 和 UDP 协议使用端口号来识别应用程序  
+
+排查网络问题的第一步常常是使用 ping 命令来测试网络的连通性。  
+
+
+
+### 第 2 章 网络接口层 
+最终传输的是电信号  
+
+MAC Media Access Control 介质访问控制  
+
+在生产网卡时，MAC 地址已经被固化在网卡的只读存储器(ROM)中，因此 MAC 地址也常常被称为硬件地址或物理地址。  
+
+
+
+
 
 # HTTP 协议  
 
