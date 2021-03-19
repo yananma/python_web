@@ -1,8 +1,8 @@
 
-[正向代理和反向代理](https://www.zhihu.com/question/24723688/answer/128105528)
+1、[正向代理和反向代理](https://www.zhihu.com/question/24723688/answer/128105528)  
 正向代理隐藏真实客户端，反向代理隐藏真实服务端。  
 
-[root 和 alias 的区别](https://blog.csdn.net/CodeLixj/article/details/107859266?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242)  
+2、[root 和 alias 的区别](https://blog.csdn.net/CodeLixj/article/details/107859266?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242)  
 
         location = /test {
                 root /home/nginx/nginx/html;
