@@ -111,6 +111,7 @@ vim xxkt_uwsgi.ini
     daemonize = /home/xxkt_uwsgi/xxkt.log  
     vacuum = True  
 
+[Django 文档，看 uwsgi 参数意义和配置](https://docs.djangoproject.com/zh-hans/3.1/howto/deployment/wsgi/uwsgi/)  
 
 配置完成以后，启动 uwsgi：uwsgi --ini xxkt_uwsgi.ini   
 
