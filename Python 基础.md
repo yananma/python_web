@@ -799,7 +799,7 @@ UDP 客户端
         conn.send(response)
         conn.close()
 
-
+改变 index 返回的内容，比如改成 HTML 表单，就可以看到表单是如何提交数据的  
 
 ### Python 多进程和多线程  
 
