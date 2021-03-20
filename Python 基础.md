@@ -629,7 +629,7 @@ queue 模块使得共享数据更加方便，不用再用 lock，不用再自己
 
 客户端服务器，客户端发送请求，服务器返回响应  
 
-socket 就是插座，4 个部分连接上以后才是一个 socket，ip 端口 ip 端口。互联网上有成千上万台机器，一台机器如何找到另一台机器呢？办法就是 IP 地址，每一台机器都有唯一的 IP 地址。另一个问题是，一台电脑有几百个应用，怎么区分应用呢？答案就是端口号。socket 由 IP 地址和端口号组成，想要请求应用程序的服务，就必须要知道 IP 地址和端口号，有了 IP 地址和端口号以后就能定位到这个应用，就能实现连接，连接以后就可以实现数据的收发。有点儿像访问阿里云的 docker  
+socket 就是插座，5 个部分连接上以后才是一个 socket，协议 ip 端口 ip 端口。互联网上有成千上万台机器，一台机器如何找到另一台机器呢？办法就是 IP 地址，每一台机器都有唯一的 IP 地址。另一个问题是，一台电脑有几百个应用，怎么区分应用呢？答案就是端口号。socket 由 IP 地址和端口号组成，想要请求应用程序的服务，就必须要知道 IP 地址和端口号，有了 IP 地址和端口号以后就能定位到这个应用，就能实现连接，连接以后就可以实现数据的收发。有点儿像访问阿里云的 docker  
 
 服务器先绑定一个端口号，然后 listen 监听，客户端再根据 IP 地址和端口号连接服务器，如果服务器接受了连接，就可以实现读写，数据传输  
 
@@ -764,35 +764,39 @@ UDP 客户端
 
     import socket
 
-    def f2():
-        return b'f2'
-
+    def index():
+        return b'index page!'
+        
     urls = [
-      ('/f2', f2)
+        ('/index', index)
     ]
-
+    
     sock = socket.socket()
-    sock.bind(('127.0.0.1', 80))
+    sock.bind(('127.0.0.1', 10001))
     sock.listen(5)
-
+    
     while True:
-      conn, addr = sock.accept()
-      data = conn.recv(8096)
-      conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
-
-      f_body = None
-      for u in urls:
-        if u[0] == url:
-          f_body = u[1]
-          break
-
-      if f_body:
-        response = f_body()
-      else:
-        response = b'404'
-
-      conn.sed(response )
-      conn.close()
+        conn, addr = sock.accept()
+        data = conn.recv(8096).decode()
+        print(data)  # 浏览器就是客户端，可以清楚地看到，客户端发送了什么内容到服务器，彻底理解了客户端和服务器是怎么交互的；彻底理解了 cookie 和 session 是如何发挥作用的  
+        print(data[4:10])
+        url = data[4:10]
+        conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
+        
+        page_content = None
+        for u in urls:
+            print(u[0])
+            if u[0] == url:  # 可以清楚地看到，是 url 是怎么发挥作用的  
+                page_content = u[1]
+                break
+        
+        if page_content:
+            response = page_content()
+        else:
+            response = b'404 page not found!'
+      
+        conn.send(response)
+        conn.close()
 
 
 
