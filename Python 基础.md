@@ -744,6 +744,55 @@ UDP 客户端
 
     udpClient.close()
 
+#### 服务器  
+
+    import socket
+
+    sock = socket.socket()
+    sock.bind(('127.0.0.1', 80))
+    sock.listen(5)
+
+    while True:
+      conn, addr = sock.accept()
+      data = conn.recv(8096)
+      conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
+      conn.send(b'123')
+      conn.close()
+
+
+#### url 访问  
+
+    import socket
+
+    def f2():
+        return b'f2'
+
+    urls = [
+      ('/f2', f2)
+    ]
+
+    sock = socket.socket()
+    sock.bind(('127.0.0.1', 80))
+    sock.listen(5)
+
+    while True:
+      conn, addr = sock.accept()
+      data = conn.recv(8096)
+      conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
+
+      f_body = None
+      for u in urls:
+        if u[0] == url:
+          f_body = u[1]
+          break
+
+      if f_body:
+        response = f_body()
+      else:
+        response = b'404'
+
+      conn.sed(response )
+      conn.close()
 
 
 
