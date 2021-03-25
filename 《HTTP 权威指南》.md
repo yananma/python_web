@@ -129,7 +129,7 @@ Cache-Control 缓存指示
 
 Accept 首部，对客户端和服务器都是有益的，服务器不用浪费时间发送无用的格式；比如 Accept-Charset、Accept-Encoding、Accept-Language  
 
-HOST 是要请求的服务器的 IP 和端口  
+Host 是要请求的服务器的 IP 和端口  
 
 响应首部，有助于客户端处理响应，并在将来发送更好的请求  
 
@@ -175,7 +175,7 @@ Web 代理(proxy) 位于客户端和服务器之间，代理既是服务器又�
 
 TRACE 可以追踪链路，对于代理流的调试非常有用  
 
-via 首部  
+Via 首部  
 
 OPTIONS 返回 Allow 首部，显示服务器支持的方法  
 
@@ -320,7 +320,7 @@ Allow
 Expire，过了过期时间以后，就不应当认为它还是最新的    
 
 
-使用表单 POST 的时候，使用 Content-Type：multipart/from-data 首部  
+使用表单 POST 的时候，使用 Content-Type：application/x-www-form-urlencoded 首部，上传文件使用 Content-Type：multipart/from-data 首部  
 
 Transfer-Encoding：chunked 分块  
 
