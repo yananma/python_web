@@ -41,6 +41,10 @@ exempt 免除，豁免
 继承 serializers.ModelSerializer 就非常简洁，指定 model 指定 fields 就可以了  
 
 
+server can receive data from applications，可以是电脑端、iOS 和 Android  
+
+前面是序列化一条数据，想要序列化所有的数据，要用 many=True  
+
 
 
 
