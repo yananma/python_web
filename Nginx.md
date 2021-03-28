@@ -117,13 +117,13 @@ http 块：
 通过 location 配置来访问静态资源  
 
 
-    location /www/ {
-        root /data/;
-    }
+        location /www/ {
+            root /data/;
+        }
 
-    location /image/ {
-        root /data/;
-    }
+        location /image/ {
+            root /data/;
+        }
     
 第一个访问 data/www/ 下的内容，比如 HTML，第二个访问 data/image/ 下的内容，比如图片  
 
@@ -136,5 +136,7 @@ nginx 运行原理：
 
 一般来说 worker 数要和 CPU 数量一致  
 
+每个 worker 的连接数，如果只是访问静态资源，就是 2 个，如果还访问动态资源，就是 4 个  
 
+4 个 workers，每个最大连接数是 1024，那么并发请求量是：4 \* 1024 再除以 2 或 4   
 
