@@ -1,4 +1,7 @@
 
+在 cmd 命令行中输入 pycharm . 可以打开 pycharm  
+
+
 #### 基本概念
 
 项目是 pycharm 的最大的管理单元  
@@ -16,7 +19,7 @@
 
 #### 其他设置
 
-pycharm 非常强大，可以窗帘 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
+pycharm 非常强大，可以创建 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
 
 代开 settings，可以使用快捷键 Ctrl + Alt + s，可以配置  
 
