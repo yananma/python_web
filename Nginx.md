@@ -82,5 +82,59 @@ Nginx 三个功能：反向代理、负载均衡、动静分离
 查看版本号：./nginx -v  
 
 
+全局块：  
+work_processes 并发数量  
+
+events 块：  
+worker_connections 1024 支持的最大连接数 1024 个  
+
+http 块：  
+配置最多的部分，反向代理、负载均衡、动静分离都是在这里配置，还有缓存、日志等  
+
+主要是其中的 server 块，location 位置路径，注释的部分都是例子，不能运行，用作参考  
+
+反向代理，输入 server_name 网址，转发到 proxy_pass 网址  
+
+        server {   
+            listen 80;
+            server_name mayanan.top;
+
+            location ~ /django/ {
+                proxy_pass 127.0.0.1:8000;
+            }
+            
+            location ~ /flask/ {
+                proxy_pass 127.0.0.1:5000;
+            }
+            
+        }
+
+
+负载均衡：轮询、weight、ip_hash、fair(按照后端响应时间分配)  
+
+动静分离：动态请求，比如请求数据库内容；静态请求，比如图片和 HTML；  
+
+通过 location 配置来访问静态资源  
+
+
+    location /www/ {
+        root /data/;
+    }
+
+    location /image/ {
+        root /data/;
+    }
+    
+第一个访问 data/www/ 下的内容，比如 HTML，第二个访问 data/image/ 下的内容，比如图片  
+
+nginx 运行原理：
+有一个 master 有很多 workers；master 是领导，worker 是员工；master 做的事情就是分配任务，调度  
+
+这样重新启动的时候，有任务的可以执行任务，不受影响，其他的重新启动就行  
+
+每一个 worker 都是一个独立的进程，一个出现异常，其他的不受影响  
+
+一般来说 worker 数要和 CPU 数量一致  
+
 
 
