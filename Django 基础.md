@@ -1,20 +1,29 @@
 
 
-django-admin startproject mysite  
+    django-admin startproject mysite  
 
-python manage.py runserver  
-python manage.py createsuperuser  
-python manage.py makemigration  
-python manage.py migrate  
+    python manage.py runserver  
+    python manage.py createsuperuser  
+    python manage.py makemigration  
+    python manage.py migrate  
+
+    django-admin startapp polls  
+
 
 xxkt settings.py 最下面   
 LANGUAGE_CODE = 'zh-hans';  
 TIME_ZONE = 'Asia/Shanghai'  
 
-python manage.py startapp polls  
-
-每个模型对应数据库里的一张表  
-
-
 admin.site.site_header = '在线教育平台后台管理系统'  
+
+
+
+
+多写注释  
+改一改，看变化，比如 models.py 中的 verbose_name 的作用  
+在报错位置使用 pysnooper  
+用 python manage.py -h 查看命令  
+print(Banner.objects.all().query) 看 sql 命令  
+可以在 views 中使用 pysnooper  
+可以看别人的网站的源码  
 
