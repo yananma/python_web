@@ -1,4 +1,7 @@
 
+
+在文件夹地址栏中输入 pycharm . 可以打开 pycharm  
+
 在 cmd 命令行中输入 pycharm . 可以打开 pycharm  
 
 
