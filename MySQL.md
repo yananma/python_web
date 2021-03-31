@@ -47,17 +47,18 @@ SQL 简单易学
                 列名 列类型, 
         );    
 
-`show tables;`  
-`desc stuinfo;` 查看表结构  
 
-`select * from stuinfo`  
-`insert into stuinfo (id, name) values(1, 'tom');`  
-`insert into stuinfo (id, name) values(2, 'kite');`  
-`select * from stuinfo`  
-`update stuinfo set name='rose' where id=1;`  
-`select * from stuinfo;`  
-`delete from stuinfo where id=1;`  
-`select * from stuinfo`  
+show tables;  
+desc stuinfo; 查看表结构  
+
+    select * from stuinfo
+    insert into stuinfo (id, name) values(1, 'tom');  
+    insert into stuinfo (id, name) values(2, 'kite');
+    select * from stuinfo;
+    update stuinfo set name='rose' where id=1;
+    select * from stuinfo;
+    delete from stuinfo where id=1;
+    select * from stuinfo;
 
 MySQL 语法规范  
 1. 不区分大小写
