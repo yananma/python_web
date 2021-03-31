@@ -1,7 +1,80 @@
 
-#### SQL 简介  
+## MySQL 基础  
 
-SQL 结构化查询语言 Structured Query Language  
+MySQL 占比第一，学就对了  
+
+MySQL 学好学精了，就不愁找不到工作了  
+
+其他类型也可以存储，为什么要用数据库？其他的不好查询  
+
+数据库有一套完整的管理系统  
+
+垃圾场里的东西是不要了的，可以随便扔，但是仓库里的东西是要再次使用的，所以一定是有组织存储的  
+
+### 数据库的相关概念
+
+SQL 结构化查询语言 Structured Query Language，是专门用于和数据库进行通信的一门语言  
+
+SQL 是通用的语言，不是一个软件专有的  
+
+SQL 简单易学  
+
+虽然简单，但是功能强大，非常灵活  
+
+数据库和文件柜一样，一层摞一层  
+
+
+一个数据库有多张表，每张表都有自己唯一的名字来标识自己  
+
+每张表都是由列组成的，每个列称为一个字段，和机器学习里的属性是一样的  
+
+数据库最终还是把数据存成电脑上的文件了，只不过是可以通过数据库来管理  
+
+### 常见命令介绍
+
+`mysql (-h主机名 -P端口号) -u用户名 -p没有空格输密码`  
+
+`show databases;`  
+`use xxkt_db;`  
+`show tables;`  
+
+    mysql> create table stuinfo(
+        -> id int,
+        -> name varchar(20));
+        
+        create table 表名(
+                列名 列类型, 
+                列名 列类型, 
+        );    
+
+`show tables;`  
+`desc stuinfo;` 查看表结构  
+
+`select * from stuinfo`  
+`insert into stuinfo (id, name) values(1, 'tom');`  
+`insert into stuinfo (id, name) values(2, 'kite');`  
+`select * from stuinfo`  
+`update stuinfo set name='rose' where id=1;`  
+`select * from stuinfo;`  
+`delete from stuinfo where id=1;`  
+`select * from stuinfo`  
+
+MySQL 语法规范  
+1. 不区分大小写
+2. 以 ; 结尾  
+3. 命令很长，可以缩进或换行  
+
+
+
+
+
+
+
+
+*** 
+
+
+#### SQL 简介  
 
 数据库就是行列表，每一行是一个 record 记录，每一列是一个 field 字段  
 
@@ -76,8 +149,8 @@ INSERT INTO table_name VALUES (value1, value2, value3...)
 
 
 <br>  
-<br>  
 
+*** 
 
 ### 原来笔记  
 
