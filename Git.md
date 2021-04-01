@@ -58,16 +58,10 @@ Git 非常简单
 `git reset` 从 commit 回滚过来  
 `git checkout` 从暂存区减除  
 
-![Git1](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git1.png)  
-
 `git init` 初始化文件目录  
 
 
 ### Git 的基本操作命令  
-
-文件的 4 种状态，了解就行，工作中写几次就清楚了    
-
-![Git2](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git2.png)
 
 `git status`  
 
@@ -75,9 +69,6 @@ Git 非常简单
 
 
 .gitignore  
-
-![Git3](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git3.png)  
-
 
 
 
