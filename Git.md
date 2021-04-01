@@ -40,10 +40,10 @@ Git 非常简单
 
 ### Git 工作原理  
 
-工作目录(Working Directory) 本地目录  
-暂存区(Stage/Index) 临时存放改动  
-资源库(Repository) 本地  
-远程仓库(Remote Directory)  
+工作目录(Working Directory) 本地目录; 自己的工作台  
+暂存区(Stage/Index) 临时存放改动; 座位旁边的箱子  
+资源库(Repository) 本地; 工厂成品库房  
+远程仓库(Remote Directory); 商店出售区  
 
 ![Git](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git.png)  
 
