@@ -1,4 +1,7 @@
 
+    a = [1, 2, 3]  
+    isinstance(a, list)
+
 Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数   
 
 #### 变量和数据类型  
