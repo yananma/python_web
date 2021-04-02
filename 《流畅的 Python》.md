@@ -1,4 +1,6 @@
 
+元类(metaclass)、静态方法和类方法、字典推导式、单下划线和双下划线、迭代器和生成器、装饰器、\_\_new__ 和 \_\_init__、作用域、闭包、copy 和 deepcopy、垃圾回收机制、== 和 is、
+
 ### 第1章 Python数据模型  
 
 访问属性，调用方法的时候，就会调用 \_\_getitem__ ,   
@@ -27,7 +29,7 @@ for 循环背后调用的是 iter(), 背后是 \_\_iter__
 
 对象一旦建立，标识就不会再变，就是 id，就是内存地址，就是身份证  
 
-is 比较的是 id  
+is 比较的是地址，是身份证号; == 比较的是值，是名字  
 
 元组如果有可变的元素，那么元组元素是可变的，元组不可变说的是元组的标识不会变  
 
@@ -46,5 +48,19 @@ is 比较的是 id
 
 在 [pythontutor](http://www.pythontutor.com/live.html#mode=edit) 上跑一遍就完全明白什么是深复制，什么是浅复制了  
 
+
+
+
+
+
+## 其他  
+
+python 自省就是运行时能够获得对象的类型。比如type()，dir()，getattr()，hasattr()，isinstance()  
+
+字典推导式 
+
+    d = {key: value for (key, value) in iterable}
+    
+GIL 对于 IO 密集型，python 多线程会提高速度，但是对于 CPU 密集型，很可能会降低速度  
 
 
