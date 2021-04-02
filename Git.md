@@ -9,7 +9,16 @@
 
 ## 视频教程  
 
-1、[Git最新教程通俗易懂](https://www.bilibili.com/video/BV1FE411P7B3?from=search&seid=14100441261883488493)  
+### 1、  
+
+
+分支的好处：多线开发，提高效率；一个错误，其他不受影响  
+
+
+
+
+
+2、[Git最新教程通俗易懂](https://www.bilibili.com/video/BV1FE411P7B3?from=search&seid=14100441261883488493)  
 
 ### 版本迭代
 Git 非常简单  
@@ -40,9 +49,9 @@ Git 非常简单
 
 ### Git 工作原理  
 
-工作目录(Working Directory) 本地目录; 自己的工作台  
+工作目录(Working Directory) 本地目录; 自己的工作台; 写代码  
 暂存区(Stage/Index) 临时存放改动; 座位旁边的箱子  
-资源库(Repository) 本地; 工厂成品库房  
+资源库(Repository) 本地; 工厂成品库房; 历史版本  
 远程仓库(Remote Directory); 商店出售区  
 
 ![Git](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git.png)  
