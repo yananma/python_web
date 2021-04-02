@@ -63,16 +63,71 @@ desc stuinfo; 查看表结构
 MySQL 语法规范  
 1. 不区分大小写
 2. 以 ; 结尾  
-3. 命令很长，可以缩进或换行  
+3. 命令长的时候，可以缩进或换行  
+
+**学习内容**
+
+查; DQL(Data Query Language) 主要就是 select   
+1. 基础查询
+2. 条件查询
+3. 排序查询
+4. 常见函数
+5. 分组函数
+6. 连接查询
+7. 子查询
+8. 分页查询
+9. union 联合查询
+
+增删改; DML(Data Manipulation Language) 
+* 插入语句
+* 修改语句
+* 删除语句
+
+DDL(Data Define Language) 
+* 库和表的管理
+* 常见数据类型介绍
+* 常见约束
+
+TCL(Transaction Control Language) 
+* 事务和事务处理
+
+
+### 基础查询  
+
+select 语句使用率占了 80% 以上  
+
+要查什么，就在 select 后面跟什么 from 表名  
+
+查询结果是一个虚拟表格，并不是真实存在的  
+
+查询单个字段      
+`select last_name from employees;`  
+
+查询多个字段  
+`select last_name, salary, email from employees;`  
+
+查询所有字段  
+`select * from employees;`  
+`*` 代表所有，就是通配符，和正则表达式里是一样的  
+
+
+别名; 便于理解; 多张表联合查询的时候有重名可以区分    
+`select last_name as 姓, first_name as 名 from emplyees;`  
+
+
+去重; 比如部门编号，不需要重复显示  
+`select distinct department_id from employees;`  
 
 
 
 
 
 
-
+<br>
 
 *** 
+
+<br>
 
 
 #### SQL 简介  
