@@ -94,6 +94,8 @@ TCL(Transaction Control Language)
 
 ### 基础查询  
 
+select 查询列表 from 表名  
+
 select 语句使用率占了 80% 以上  
 
 要查什么，就在 select 后面跟什么 from 表名  
@@ -117,6 +119,59 @@ select 语句使用率占了 80% 以上
 
 去重; 比如部门编号，不需要重复显示  
 `select distinct department_id from employees;`  
+
+
+拼接  
+`select concat(last_name, ' ', first_name) as 姓名 from employees;`  
+
+
+### 条件查询  
+
+select 查询列表 from 表名 where 筛选条件  
+
+这里的 where 和 if 是一样的，作用就是筛选，结果是 true 或 false  
+
+执行顺序是先执行 from 表名，然后是 where 条件，最后是 select 查询列表  
+
+分类：  
+* 按条件表达式筛选，条件运算符：`> < = <>(不等于) >= <=`  
+* 按逻辑表达式筛选，逻辑运算符：`and(&&) or(|) not(!)`  
+* 模糊查询，like、between and、in、is null  
+
+select 后面跟的，就是一句话最后的部分  
+
+案例  
+条件表达式  
+1. 筛选出工资大于 12000 的员工信息  
+`select * from employees where salary>12000;`  
+
+2. 查询部门编号不等于 90 的员工名和部门编号  
+`select last_name, department_id from employees where department_id<>90;`  
+
+逻辑表达式，逻辑表达式的作用就是条件比较多的时候连接条件表达式    
+3. 查询工资在 10000 到 20000 之间的员工名字、工资和奖金  
+`select last_name, commission_pct, salary from employees where salary >= 10000 and salary <= 20000 ;`  
+
+4. 查询部门编号不再 90 到 110 之间的，或者工资大于 15000 的员工信息  
+`select * from employees where department_id<90 or department>110 or salary>15000;`  
+
+模糊查询; like 
+5. 查询员工名中包含字符 a 的员工信息  
+`select * from employees where last_name like '%a%';`  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
