@@ -286,7 +286,7 @@ select 后面跟的，就是一句话最后的部分
 `select database();`  
 `select user();`  
 
-#### 分组函数
+#### 聚合函数
 
 sum 求和、avg  平均值、max 最大值、min 最小值、count 计算个数  
 
@@ -352,7 +352,18 @@ sum 求和、avg  平均值、max 最大值、min 最小值、count 计算个数
 
 笛卡尔乘积现象：表 1 有 m 行，表 2 有 n 行，结果为 m * n 行  
 
+解决办法：添加有效的连接条件，找两张表中意义相同的条件  
 
+* 内连接：等值连接、非等值连接、自连接  
+* 外连接：左外连接、右外连接、全外连接  
+* 交叉连接  
+
+1. 查询员工名和对应的部门名  
+`select last_name, department_name from employees, departments where employees.department_id = departments.department_id;`  
+
+2. 查询员工名、工种号、工种名  
+表名较长，联合查询一般都要起别名，一个是简洁，一个是区分多个重名字段; 起了别名就不能再用原来的表名限定，因为先执行 from 后面，执行完以后就已经变成了别名    
+`select e.last_name, e.job_id, j.job_title from employees as e, jobs as j where e.job_id=j.job_id;`  
 
 
 
