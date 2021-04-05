@@ -1,4 +1,12 @@
 
+select 跟的是一句话最后的部分  
+from 表名是永远不变的  
+where 永远在 from 后面，有条件运算符 > < = 的就很可能要用 where  
+group by 关注的是每个后面的内容  
+order by 关注的是从按到排序之间的内容  
+
+
+
 ## MySQL 基础  
 
 MySQL 占比第一，学就对了  
@@ -23,7 +31,7 @@ SQL 简单易学
 
 数据库和文件柜一样，一层摞一层  
 
-数据放在表中，表放在库中  
+数据放在表中，表放在库中；就像一个大库房里，像是晒床单一样，挂着一张张表格；use 数据库名，就是进入了库房，可以查询库房里的所有表的数据  
 
 一个数据库有多张表，每张表都有自己唯一的名字来标识自己  
 
@@ -131,7 +139,9 @@ select 语句使用率占了 80% 以上
 ### 2、条件查询  
 
     select 查询列表 from 表名 where 筛选条件  
-    
+
+select 跟的是一句话最后的部分  
+
 where 无论在什么情况下都要放在 from 之后  
 
 这里的 where 和 if 是一样的，作用就是筛选，结果是 true 或 false  
@@ -143,9 +153,6 @@ where 无论在什么情况下都要放在 from 之后
 * 按逻辑表达式筛选，逻辑运算符：`and(&&) or(||) not(!)`  
 * 模糊查询，like、between and、in、is null  
 
-select 后面跟的，就是一句话最后的部分  
-
-案例  
 条件表达式  
 
 1. 筛选出工资大于 12000 的员工信息  
@@ -159,31 +166,37 @@ select 后面跟的，就是一句话最后的部分
 3. 查询工资在 10000 到 20000 之间的员工名字、工资和奖金  
 `select last_name, commission_pct, salary from employees where salary >= 10000 and salary <= 20000 ;`  
 
-4. 查询部门编号不再 90 到 110 之间的，或者工资大于 15000 的员工信息  
+4. 查询部门编号不在 90 到 110 之间的，或者工资大于 15000 的员工信息  
 `select * from employees where department_id<90 or department>110 or salary>15000;`  
 
 模糊查询  
 
-5. 查询员工名中包含字符 a 的员工信息; like，经常和转义字符结合使用，转义字符 % 表示任意多字符，包含 0 个，_ 表示任意单个字符   
+5. 查询员工名中包含字符 a 的员工信息  
+like，经常和转义字符结合使用，转义字符 % 表示任意多字符，包含 0 个，_ 表示任意单个字符   
 `select * from employees where last_name like '%a%';`  
 
 6. 查询员工名中第 3 个字母为 n 第 5 个字符为 l 的员工名和工资  
 `select last_name, salary from employees where last_name like '__n_l%';`  
 如果是查名字中包含下划线的，就要用转义字符  
 
-7. 查询员工编号在 100 到 120 之间的员工信息; between and 更简洁，包含临界值; 
+7. 查询员工编号在 100 到 120 之间的员工信息  
+between and 更简洁，包含临界值;   
 `select * from employees where employee_id between 100 and 120;`  
 
-8. 查询员工的工种编号是 IT_PROG 或 AD_VP 的员工名和工种编号; in 用来判断某字段是否属于 in 列表中的某一项，更简洁，列表中的类型必须统一，不支持通配符   
+8. 查询员工的工种编号是 IT_PROG 或 AD_VP 的员工名和工种编号  
+in 用来判断某字段是否属于 in 列表中的某一项，更简洁，列表中的类型必须统一，不支持通配符   
 `select last_name, job_id from employees where job_id in ('IT_PROG', 'AD_VP')`  
 
-9. 查询没有奖金的员工名和奖金率; is null 条件运算符=不能判断 null，要判断 null 只能用 is 或 is not   
+9. 查询没有奖金的员工名和奖金率  
+is null 条件运算符=不能判断 null，要判断 null 只能用 is 或 is not   
 `select last_name, commission_pct from employees where commission_pac is null;`  
 
 
 ### 3、排序查询
 
     select 查询列表 from 表名 where 筛选条件 order by 排序列表 asc | desc  
+
+order by 关注的是从按到排序之间的内容  
 
 1. 按工资从高到底排序  
 `select * from employees order by salary desc;`  
@@ -201,13 +214,13 @@ select 后面跟的，就是一句话最后的部分
 `select length(last_name) as 姓名长度, last_name, salary from employees order by length(last_name) desc;`  
 
 6. 按工资升序，再按员工编号降序(多字段排序)  
-`select * from employees order by salary asc, employee desc;`  
+`select * from employees order by salary asc, employee_id desc;`  
 
 ### 4、常见函数
 
 将一组逻辑封装在方法体中，对外显示方法名; 好处：1 隐藏函数实现细节，简洁 2 提高代码复用性  
 
-    select 函数名(实参列表) (from 表;)
+    select 函数名(实参列表) from 表;
     
 要关注的就是两点：①叫什么(函数名) ②干什么(函数功能)  
 
@@ -245,7 +258,7 @@ select 后面跟的，就是一句话最后的部分
 `select instr('铁马冰河入梦来', '冰河') as output;`  
 
 6. replace 替换
-`select replace('僧推月下门', '推', '敲') AS output;`  
+`select replace('僧推月下门', '推', '敲') as output;`  
 
 7. trim 去除前后空格  
 
@@ -306,6 +319,8 @@ sum 求和、avg  平均值、max 最大值、min 最小值、count 计算个数
 ### 5、分组函数  
 
     select 列, 分组函数(列) from 表名 where 筛选条件 group by 分组表达式 order by 排序列表 asc | desc  
+
+group by 关注的是每个后面的内容  
 
 比如要查询每个部门的平均工资  
 
