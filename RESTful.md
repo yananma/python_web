@@ -1,7 +1,14 @@
 
 方法：视频看很多遍，代替读文档的文字，自己只敲代码，不再读文档  
 
-视频 2 遍  
+视频完成 2 遍  
+代码完成 1 遍  
+
+
+## 文档  
+
+
+
 
 
 
@@ -28,6 +35,9 @@ exempt 免除，豁免
 继承 serializers.Serializer，要自己定义各个 field，和 model 的形式差不多  
 
 继承 serializers.ModelSerializer 就非常简洁，指定 model 指定 fields 就可以了  
+
+继承 serializers.HyperlinkedModelSerializer 可以实现使用超链接点击跳转  
+
 
 
 <br>  
