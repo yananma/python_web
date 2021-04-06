@@ -5,17 +5,6 @@
 
 
 
-
-## Quickstart  
-
-先找 url，其中 include(router.urls) 就包含了上面 register 的 users 和 groups；  
-可以从这两个 url 找到各自的 view，view 中定义了 queryset，从数据库取值，定义了寻找的 serializer，可以关联到 serializer，定义了 permission；  
-serializer 定义了绑定的 model 和要使用的 model 的 fields。  
-
-
-
-
-
 ## 视频课程  
 
 URL 非常简洁，非常规范  
@@ -41,6 +30,10 @@ exempt 免除，豁免
 继承 serializers.ModelSerializer 就非常简洁，指定 model 指定 fields 就可以了  
 
 
+<br>  
+
+*** 
+
 server can receive data from applications，可以是电脑端、iOS 和 Android，allows one software talk to another    
 
 前面是序列化一条数据，想要序列化所有的数据，要用 many=True  
@@ -49,6 +42,15 @@ REST API pretty works like web does
 
 
 
+
+
+## Quickstart，不再写 quickstart 的代码    
+
+url -> views -> models 数据库取值 -> serializer 序列化成 json 格式 -> 返回响应到浏览器  
+
+先找 url，其中 include(router.urls) 就包含了上面 register 的 users 和 groups；  
+可以从这两个 url 找到各自的 view，view 中定义了 queryset，从数据库取值，定义了寻找的 serializer，可以关联到 serializer，定义了 permission；  
+serializer 定义了绑定的 model 和要使用的 model 的 fields。  
 
 
 ## 文章  
