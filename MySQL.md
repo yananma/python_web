@@ -1,7 +1,7 @@
 
 select 跟的是一句话最后的部分  
 from 表名是永远不变的  
-where 永远在 from 后面，有条件运算符 > < = 的就很可能要用 where  
+where 永远在 from 后面，where 修饰的是 select 后面的内容，有条件运算符 > < = 还有模糊查询的首先就想到 where  
 group by 关注的是每个后面的内容  
 order by 关注的是从按到排序之间的内容  
 
@@ -373,6 +373,10 @@ group by 关注的是每个后面的内容
 * 外连接：左外连接、右外连接、全外连接  
 * 交叉连接  
 
+#### 6.1 等值连接  
+
+使用表中交集部分作为连接条件，两张表都有的字段  
+
 1. 查询员工名和对应的部门名  
 `select last_name, department_name from employees, departments where employees.department_id = departments.department_id;`  
 
@@ -380,12 +384,63 @@ group by 关注的是每个后面的内容
 表名较长，联合查询一般都要起别名，一个是简洁，一个是区分多个重名字段; 起了别名就不能再用原来的表名限定，因为先执行 from 后面，执行完以后就已经变成了别名    
 `select e.last_name, e.job_id, j.job_title from employees as e, jobs as j where e.job_id=j.job_id;`  
 
+加筛选条件用 and，因为 where 已经被占用了  
+3. 查询有奖金的员工名、部门名、奖金  
+`select last_name, department_name, commission_pct from employees as e, departments as d where e.department_id = d.department_id and e.commission_pct is not null;`  
+
+4. 查询城市名中第二个字母为 o 的部门名和城市名  
+`select department_name, city from departments as d, locations as l where d.location_id = l.location_id and city like '_o%';`  
+
+添加分组  
+5. 查询每个城市的部门个数  
+`select count(*) as 个数, city from departments as d, locations as l where d.location_id = l.location_id group by city;`  
+
+添加排序  
+6. 查询每个工种的工种名和员工个数，并且按员工个数降序排列  
+`select job_title, count(*) from employees as e, jobs as j where e.job_id = j.job_id group by job_title order by count(*) desc;`  
+
+三张表连接  
+7. 查询员工名、部门名和所在的城市中以 s 开头的城市，并且按部门名字母排序  
+`select last_name, department_name, city from employees as e, departments as d, locations as l where e.department_id = d.department_id and d.location_id = l.location_id and city like 's%' order by department_name asc;`   
 
 
+#### 6.2 非等值连接  
 
+1. 查询员工的工资和工资级别  
+先创建工资等级表，复制执行下面代码  
 
+    CREATE TABLE job_grades 
+    (grade_level VARCHAR(3), 
+    lowest_sal INT, 
+    highest_sal INT); 
 
+    INSERT INTO job_grades 
+    VALUES('A', 1000, 2999); 
 
+    INSERT INTO job_grades 
+    VALUES('B', 3000, 5999); 
+
+    INSERT INTO job_grades 
+    VALUES('C', 6000, 9999); 
+
+    INSERT INTO job_grades 
+    VALUES('D', 10000, 14999); 
+
+    INSERT INTO job_grades 
+    VALUES('E', 15000, 24999); 
+
+    INSERT INTO job_grades 
+    VALUES('F', 25000, 40000); 
+
+`select salary, grade_level from employees as e, job_grades as g where salary between g.lowest_sal and g.highest_sal;`  
+
+2. 查询员工的工资和工资级别，刷选出级别等于 A 的  
+`select salary, grade_level from employees as e, job_grades as g where salary between g.lowest_sal and g.highest_sal and AND g.`grade_level`='A';`  
+
+    ```python
+    #!/usr/bin/env python3
+    print("Hello, World!");
+    ```
 
 
 
