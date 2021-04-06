@@ -9,18 +9,208 @@
 
 ## 视频教程  
 
-### 1、  
+## 1、[Git与GitHub基础全套完整版教程](https://www.bilibili.com/video/BV1pW411A7a5)  
+
+数据备份保存所有历史版本、版本管理可以切换到历史版本、查看修改时间，修改人，修改内容的历史记录、多人协同修改、权限控制、分支管理多线开发，提高效率；一个错误，其他不受影响  
+
+git logo 上就是一个分支，课件分支是其引以为傲的一个特性  
+
+git 在本地开发，不需要联网，与 Linux 全面兼容  
+
+git 用 hash 保证数据的完整性  
 
 
-分支的好处：多线开发，提高效率；一个错误，其他不受影响  
+fork 以后就是改变了所有者了，复制一份，改成自己的名字，就有了所有的权限；可以发起 pull request 审核以后 merge 到原来的版本  
+
+### git 本地配置  
+
+右键，git bash here  
+
+`git init` 初始化本地库  
+
+.git 目录下存放的是和本地库相关的子目录和文件，不要修改  
+
+签名的作用就是区分不同的开发人员的身份，所以要求很弱，这个签名和 GitHub 登录账号没有任何关系    
+
+签名级别  
+* 项目级别/仓库级别，仅在本地库范围内生效，就是当前文件夹下: `git config user.name tom` 和 `git config user.email tom@gmail.com`  
+* 系统用户级别，就是在当前操作系统的范围。`git config --global user.name tom` 和 `git config --global user.email tom@gmail.com`    
+
+
+### git 基本命令  
+
+`git status` 查看工作区、暂存区状态，会显示在哪个分支上，会显示待提交的内容；这个命令和 Linux 里的 ll 一样的作用，用的最多  
+
+以下命令执行完以后，可以经常使用 `git status` 查看状态  
+`vim hello.txt` 创建文件，里面写两行 aaaaa 和 bbbbbb  
+
+`git add hello.txt` 将文件从工作区放入暂存区   
+
+`git commit -m 'add hello.txt file' hello.txt` 写注释，因为是团队合作，自己看历史记录也更清楚  
+
+`cat hello.txt`  
+
+`vim hello.txt` 添加一行 ccccc，修改文件  
+
+`git add hello.txt`  
+
+`git commit -m 'modify hello.txt' hello.txt`  
+
+`git log` 查看历史版本，从而可以实现前进后退，head 就是指针  
+
+多添加几次 commit，添加一行提交一次，一直到 h  
+
+再用 `git log` 命令，内容就非常多了，要使用 `git log --oneline`  
+
+`git reflog` 会显示移动指针的相对次数，在 head 后面的花括号里  
+
+版本前进后退的本质就是移动指针  
+
+有三种移动方式  
+* 基于索引值，最方便，推荐方式
+* 使用 ^，一个 ^ 后退一步  
+* 使用 ~，指定数值，不用写很多 ^，就好像一万写'万'字就行了，不用写一万条横线  
+
+`git reset --hard [局部索引值，就是 git reflog 后每一行最前面的一段 hash 值]`  
+比如 `git reset --hard c5fc5b9`  
+使用 `git reflog` 可以看到 head 已经改变了位置  
+使用 `cat hello.txt` 可以看到，内容变成了之前版本的内容  
+
+`git reset --hard HEAD^`  
+`git reset --hard HEAD~n`  
+
+
+删除恢复命令  
+`vim a.txt` 创建新的文件，写入 aaaaa  
+`git add a.txt`  
+`git commit -m 'create new file a.txt' a.txt` 删除文件可以再次恢复的前提就是删除之前提交过，就是有这一步  
+
+`rm a.txt` 删除文件  
+`git status`  
+
+`git add a.txt`  
+`git commit -m 'delete a.txt' a.txt`  
+`git reflog`  
+`git reset --hard HEAD^` 删除的文件就恢复了  
+
+
+比较文件的差异，查看修改的内容  
+`vim apple.txt` 写入 5 行 apple  
+`git add apple.txt`  
+`git commit -m 'add apple.txt' apple.txt`  
+
+`vim apple.txt` 在第三行后面添加一个 apple  
+`git diff apple.txt`  
+
+`git add apple.txt` 添加到暂存区  
+`git diff` 不会有内容显示  
+`git diff HEAD apple.txt`  
+
+### git 分支  
+
+git 分支功能是用的最多的  
+
+`git brance -v` 查看所有分支  
+`git branch bugFix` 创建分支  
+`git branch -v`  
+`git checkout bugFix`  
+`git branch -v`  
+
+`ll` 可以看到 bugFix 分支下的文件和 master 分支下的文件一模一样  
+
+`vim apple.txt` 在第五行添加 edit by bugFix  
+`git add apple.txt`  
+`git commit -m 'modify apple.txt by bugFix branch' apple.txt`  
+
+这时候 bugFix 分支就已经比 master 分支前进了一步了，比如说已经修复了 bug 了，要让 master 分支上也生效，首先要先切换到 master 分支上  
+`git checkout master`  
+`git branch -v`  
+`git merge bugFix`  
+`cat apple.txt` 就可以看到修改内容已经合并到 master 分支上了  
+
+合并冲突  
+如果修改的是同一文件的同一位置，而内容又不一样，就会产生冲突  
+`git branch -v` 可以看到合并以后，两个分支的 hash 值是一样的，说明指向的是同一个内容  
+`vim hello.txt` 在最后一行最后添加 edit by master  
+`git add hello.txt`  
+`git commit -m 'edit by master' hello.txt`  
+`git branch -v` 可以看到 master 分支已经比 bugFix 分支领先一步了  
+`git checkout bugFix`  
+`git branch -v`  
+`vim hello.txt` 在最后一行最后添加 edit by bugFix  
+`git add hello.txt`  
+`git commit -m 'edit by bugFix' hello.txt`  
+`git merge master` 会显示产生冲突，命令行最后会显示分支处于 merging 状态  
+`vim hello.txt` 会显示冲突内容，然后和同事交流沟通，看看怎么解决  
+
+`git status`  
+`git add hello.txt`  
+`git commit -m 'solve conflict'`  
+
+
+### git 基本原理  
+
+
+hash 操作，hash 就是一个函数，输入没变，输出一直不变，如果输入改了一点，输出就完全不同，git 靠这种机制从根本上保证数据的完整性  
+
+git 是基于快照流来管理文件的  
+
+创建分支，本质上就是切换了指针，并没有复制整套内容，所以效率极高  
+
+
+### github 
+
+new respository 创建新的远程仓库  
+
+创建的时候不要添加 README，因为添加 README 时会自动创建分支 main，而后面用的分支叫 master  
+
+复制地址，就是在 clone 地址的位置：https://github.com/yananma/10programs.git    
+
+`git remote -v` 查看远程库  
+`git remote add [别名] [远程地址]` 比如 `git add origin https://github.com/yananma/10programs.git` origin 就是别名  
+
+`git push [别名] [分支]` 比如 `git push origin master`  
+
+`git clone` 命令有 3 个效果，把完整的远程库下载到本地; 创建 origin 远程库别名; 初始化本地库  
+
+`git pull` 等于 `git fetch + git merge`  
+
+如果修改的是同一个地方，内容又不相同，先 push 的会被接受，后 push 的 push 失败，要先 pull 下来，在本地 merge  
+
+冲突以后商量解决  
+
+跨团队协作，比如需要别人帮忙，而这个人是别的公司的，不能跳槽过来，就要先 fork，修改以后在 github 页面，选择 Pull requests，点 New pull request，点 Create pull requests  
+
+可以聊天交流，审核代码  
+
+使用用户密码，每次 push 都要输入用户名和密码  
+
+先删除原内容 `rm -r ~/.ssh/`  
+
+`ssh-keygen -t rsa -C 邮箱@qq.com` 然后一路回车，使用默认值  
+
+`ll ~/.ssh/`  
+`cat ~/.ssh/id_rsa.pub` 复制内容  
+
+到 github settings 里，点 SSH and GPG keys，new SSH key，粘贴，title 随便取，比如 mykey  
+
+`git remote -v` 用的还是原来的密码的地址  
+在 github 上 clone 地址的地方选择 ssh 方式，复制内容 git@github.com:yananma/10programs.git  
+在本地使用 `git remote add origin_ssh git@github.com:yananma/10programs.git` 创建 ssh 登录方式  
+`git remote -v` 就有了 ssh 方式  
+修改文件，add commit 以后使用 `git push origin_ssh master` 第一次输入 yes 确认，就不用再每次输入用户名密码了  
+
+
+搜 pycharm 配置 git
+
+gitlab 局域网搭建 github 速度快  
 
 
 
 
 
-2、[Git最新教程通俗易懂](https://www.bilibili.com/video/BV1FE411P7B3?from=search&seid=14100441261883488493)  
+## 2、[Git最新教程通俗易懂](https://www.bilibili.com/video/BV1FE411P7B3?from=search&seid=14100441261883488493)  
 
-### 版本迭代
 Git 非常简单  
 
 版本迭代 新的版本创建了，但是老的版本也要保留  
@@ -29,14 +219,9 @@ Git 非常简单
 
 多人协同开发、统计工作量、跟踪开发过程  
 
-### 版本控制  
-本地版本控制  
+集中版本控制，比如 SVN，所有的版本都保存在服务器上；缺点是服务器出问题，就没法用了  
 
-集中版本控制，比如 SVN  
-所有的版本都保存在服务器上；缺点是服务器出问题，就没法用了  
-
-分布式版本控制 Git  
-每台电脑本地都有自己的版本控制中心，每个人都拥有全部的代码；工作时不需要联网  
+分布式版本控制 Git，每台电脑本地都有自己的版本控制中心，每个人都拥有全部的代码；工作时不需要联网  
 
 
 ### Git 必要配置
@@ -74,7 +259,7 @@ Git 非常简单
 
 `git status`  
 
-`git commit -m` m message  
+`git commit -m` m 就是 message 备注  
 
 
 .gitignore  
