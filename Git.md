@@ -2,12 +2,8 @@
 [Git 相关大全](https://gitee.com/all-about-git)  
 
 [learn-git-branching](https://oschina.gitee.io/learn-git-branching/)  
-练习 10 遍  
-第一遍：03.28-  
 
 
-
-## 视频教程  
 
 ## 1、[Git与GitHub基础全套完整版教程](https://www.bilibili.com/video/BV1pW411A7a5)  
 
@@ -16,9 +12,6 @@
 git logo 上就是一个分支，课件分支是其引以为傲的一个特性  
 
 git 在本地开发，不需要联网，与 Linux 全面兼容  
-
-git 用 hash 保证数据的完整性  
-
 
 fork 以后就是改变了所有者了，复制一份，改成自己的名字，就有了所有的权限；可以发起 pull request 审核以后 merge 到原来的版本  
 
@@ -181,7 +174,7 @@ new respository 创建新的远程仓库
 
 跨团队协作，比如需要别人帮忙，而这个人是别的公司的，不能跳槽过来，就要先 fork，修改以后在 github 页面，选择 Pull requests，点 New pull request，点 Create pull requests  
 
-可以聊天交流，审核代码  
+可以聊天交流，说明问题，详细解释自己的想法，审核代码  
 
 使用用户密码，每次 push 都要输入用户名和密码  
 
