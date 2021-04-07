@@ -1,9 +1,9 @@
 
-select 跟的是一句话最后的部分  
+select 跟的是一句话最后的部分，统计个数一律用 count(\*)  
 from 表名是永远不变的  
 where 永远在 from 后面，where 修饰的是 select 后面的内容，有条件运算符 > < = 还有模糊查询的首先就想到 where  
 group by 关注的是每个后面的内容  
-order by 关注的是从按到排序之间的内容  
+order by 关注的是从按到排序之间的内容，order by 一般放在最后    
 
 
 
@@ -228,9 +228,9 @@ order by 关注的是从按到排序之间的内容
 * 单行函数，比如 concat、length、ifnull，输入一个值，返回一个值  
 * 分组函数，也叫统计函数、聚合函数、组函数，主要功能是做统计使用，输入一组值，返回一个值  
 
-#### 单行函数  
+#### 4.1 单行函数  
 
-字符函数  
+##### 4.1.1 字符函数  
 
 1. length 获取参数值的字节个数(utf8 英文字母占 1 个字节，汉字占 3 个字节)  
 `select length('john')`  
@@ -265,7 +265,7 @@ order by 关注的是从按到排序之间的内容
 8. lpad 左填充，rpad 右填充  
 
 
-数字函数  
+##### 4.1.2 数字函数  
 * round 四舍五入
 * ceil 向上取整
 * floor 向下取整
@@ -278,12 +278,19 @@ order by 关注的是从按到排序之间的内容
 * curtime 时间 `select distinct(year(hiredate)) as 入职年份 from employees;`  
 * str_to_date 前端网页用户输入的日期是字符串格式的  `select * from employees where hiredate = str_to_date('4-3 1992', '%m-%d %Y');`   
 * date_format `select date_format(now(), '%Y年%m月%d日') as 日期`  
+* datediff 返回两个日期相差的天数  
 
 
-
-流程控制函数  
+##### 4.1.3 流程控制函数  
 * if 函数控制流程 `select last_name, commission_pct, if(commission_pct is null, '没奖金 呵呵', '有奖金') as 备注 from employees;`  
 * case 语句  
+
+        case 变量、表达式或字段 
+        when 常量1 then 值1 
+        when 常量2 then 值2  
+        when 常量3 then 值3  
+        else 默认值  
+        end
 
         select salary,  
         case
@@ -294,18 +301,18 @@ order by 关注的是从按到排序之间的内容
         end as 工资级别 
         from employees;  
 
-其他函数  
+##### 4.1.4 其他函数  
 `select version();`  
 `select database();`  
 `select user();`  
 
-#### 聚合函数
+#### 4.2 聚合函数
 
 sum 求和、avg  平均值、max 最大值、min 最小值、count 计算个数  
 
 `select sum(salary) as 和, round(avg(salary), 2) as 平均值, max(salary) as 最大值, min(salary) as 最小值, count(salary) as 个数 from employees;`  
 
-可以结合其他函数使用  
+都会忽略 null，可以结合其他函数使用  
 
 `select count(*) from employees;` 统计行数  
 
@@ -318,7 +325,7 @@ sum 求和、avg  平均值、max 最大值、min 最小值、count 计算个数
 
 ### 5、分组函数  
 
-    select 列, 分组函数(列) from 表名 where 筛选条件 group by 分组表达式 order by 排序列表 asc | desc  
+    select 列, 分组函数(列) from 表名 where 分组前的筛选条件 group by 分组表达式 having 分组后的筛选条件 order by 排序列表 asc | desc  
 
 group by 关注的是每个后面的内容  
 
@@ -363,17 +370,17 @@ group by 关注的是每个后面的内容
 
 ### 6、连接查询  
 
+#### 6.1 sql92 语法(默认用 sql99)  
+
 又称多表查询，当查询的字段来自多张表时，就要用到连接查询  
 
-笛卡尔乘积现象：表 1 有 m 行，表 2 有 n 行，结果为 m * n 行  
+笛卡尔乘积现象：表 1 有 m 行，表 2 有 n 行，结果为 m * n 行，因为没有有效的连接条件，导致多张表完全连接  
 
 解决办法：添加有效的连接条件，找两张表中意义相同的条件  
 
-* 内连接：等值连接、非等值连接、自连接  
-* 外连接：左外连接、右外连接、全外连接  
-* 交叉连接  
+##### 6.1.1 等值连接  
 
-#### 6.1 等值连接  
+    select 查询列表 from 表1 as 别名1, 表2 as 别名2 where 表1.key=表2.key and 筛选条件 group by 分组字段 having 分组后的筛选 order by 排序字段  
 
 使用表中交集部分作为连接条件，两张表都有的字段  
 
@@ -404,43 +411,139 @@ group by 关注的是每个后面的内容
 `select last_name, department_name, city from employees as e, departments as d, locations as l where e.department_id = d.department_id and d.location_id = l.location_id and city like 's%' order by department_name asc;`   
 
 
-#### 6.2 非等值连接  
+##### 6.1.2 非等值连接  
 
-1. 查询员工的工资和工资级别  
+    select 查询列表 from 表1 as 别名1, 表2 as 别名2 where 非等值连接条件 and 筛选条件 group by 分组字段 having 分组后的筛选 order by 排序字段  
+
 先创建工资等级表，复制执行下面代码  
 
-    CREATE TABLE job_grades 
-    (grade_level VARCHAR(3), 
-    lowest_sal INT, 
-    highest_sal INT); 
+        CREATE TABLE job_grades 
+        (grade_level VARCHAR(3), 
+        lowest_sal INT, 
+        highest_sal INT); 
 
-    INSERT INTO job_grades 
-    VALUES('A', 1000, 2999); 
+        INSERT INTO job_grades 
+        VALUES('A', 1000, 2999); 
 
-    INSERT INTO job_grades 
-    VALUES('B', 3000, 5999); 
+        INSERT INTO job_grades 
+        VALUES('B', 3000, 5999); 
 
-    INSERT INTO job_grades 
-    VALUES('C', 6000, 9999); 
+        INSERT INTO job_grades 
+        VALUES('C', 6000, 9999); 
 
-    INSERT INTO job_grades 
-    VALUES('D', 10000, 14999); 
+        INSERT INTO job_grades 
+        VALUES('D', 10000, 14999); 
 
-    INSERT INTO job_grades 
-    VALUES('E', 15000, 24999); 
+        INSERT INTO job_grades 
+        VALUES('E', 15000, 24999); 
 
-    INSERT INTO job_grades 
-    VALUES('F', 25000, 40000); 
+        INSERT INTO job_grades 
+        VALUES('F', 25000, 40000); 
 
+1. 查询员工的工资和工资级别  
 `select salary, grade_level from employees as e, job_grades as g where salary between g.lowest_sal and g.highest_sal;`  
 
 2. 查询员工的工资和工资级别，刷选出级别等于 A 的  
-`select salary, grade_level from employees as e, job_grades as g where salary between g.lowest_sal and g.highest_sal and AND g.`grade_level`='A';`  
+``select salary, grade_level from employees as e, job_grades as g where salary between g.lowest_sal and g.highest_sal and g.`grade_level`='A';``  
 
-    ```python
-    #!/usr/bin/env python3
-    print("Hello, World!");
-    ```
+##### 6.1.3 自连接  
+
+其实就是前面的等值连接，不过等值连接是多张不同的表，自连接是连接自己  
+
+1. 查询员工名和上级的名字  
+``select e.employee_id, e.last_name, m.employee_id, m.last_name from employees as e, employees as m where e.`manager_id`=m.`employee_id`;``  
+
+
+#### 6.2 sql99 语法  
+
+sql99 支持的语法更广，而且实现了连接条件和筛选条件的分离，可读性更高  
+
+    select 查询列表 from 表1 as 别名1 连接类型 join 表2 as 别名2 on 表1.key=表2.key where 筛选条件 group by 分组字段 having 分组后的筛选 order by 排序字段  
+    
+其中连接类型，内连接 inner inner 可以省略，因为用的非常多; 外连接 左外 left 右外 right; 交叉连接 cross  
+
+* 内连接：等值连接、非等值连接、自连接  
+* 外连接：左外连接、右外连接、全外连接  
+* 交叉连接  
+
+内连接是两张表的交集，左外连接是 A 全集，当然也包括 A B 的交集，右连接是 B 全集，当然也包括 A B 的交集；如果要实现 A 和 A B 交集的差集，就要加筛选条件，where B.key is null    
+
+##### 6.2.1 内连接  
+
+又分为等值连接、非等值连接和自连接  
+
+###### 6.2.1.1 等值连接  
+1. 查询员工名和对应的部门名  
+``select last_name, department_name from employees as e inner join departments as d on e.`department_id` = d.`department_id`;``
+
+添加筛选  
+2. 查询工种名和名字中包含 e 的员工名  
+``select job_title, last_name from employees as e inner join jobs as j on e.`job_id` = j.`job_id` where e.last_name like '%e%';``  
+
+添加筛选和分组  
+3. 查询部门个数 \>3 的城市名和部门个数  
+``select city, count(*) as 部门个数 from departments as d inner join locations as l on d.`location_id`=l.`location_id` group by city having count(*)>3;``  
+
+添加排序  
+4. 查询员工个数 >3 的部门名和对应的员工个数，并且按员工个数降序排列  
+``select count(*), department_name from employees as e inner join departments as d on e.`department_id` = d.`department_id` group by department_name having count(*)>3 order by count(*) desc;``  
+
+多表查询  
+5. 查询员工名、部门名和工种名，并且按部门名字母排序  
+``select last_name, department_name, job_title from employees as e inner join departments as d on e.`department_id` = d.`department_id` inner join jobs as j on e.`job_id` = j.`job_id` order by department_name asc;``  
+
+
+###### 6.2.1.2 非等值连接  
+
+1. 查询员工的工资级别  
+``select salary, grade_level from employees as e inner join job_grades as g on e.`salary` between g.`lowest_sal` and g.`highest_sal`;``  
+
+2. 查询员工的工资级别，并统计每个级别中员工个数，按个数降序排列    
+``select count(*), grade_level from employees as e inner join job_grades as g on e.`salary` between g.`lowest_sal` and g.`highest_sal` group by grade_level order by count(*) desc;``  
+
+3. 查询员工的工资级别，并统计每个级别中员工个数，显示个数 \>20 的级别，按个数降序排列    
+``select count(*), grade_level from employees as e inner join job_grades as g on e.`salary` between g.`lowest_sal` and g.`highest_sal` group by grade_level having count(*)>20 order by count(*) desc;``  
+
+###### 6.2.1.3 自连接  
+
+1. 查询员工名和上级的名字  
+``select e.last_name, m.last_name from employees as e inner join employees as m on e.`manager_id` = m.`employee_id`;``  
+
+2. 查询员工名和上级的名字，查询某一个上级管理的人员名单  
+``select e.last_name, m.last_name from employees as e inner join employees as m on e.`manager_id` = m.`employee_id` having m.last_name='K_ing';``  
+
+3. 查询员工名和上级的名字，并按领导管理人员个数降序排列  
+``select count(*), m.last_name from employees as e inner join employees as m on e.`manager_id` = m.`employee_id` group by m.last_name order by count(*) desc;``  
+
+##### 6.2.2 外连接  
+
+用于查询一个表中有，而另一个表中没有的记录  
+
+* 外连接的查询结果为主表中的所有记录，如果从表中有和主表匹配的，则显示匹配的值，如果从表中没有和它匹配的，则显示 null。外连接查询结果=内连接结果+主表中有而从表中没有的记录  
+* 左外连接，left join 左边的是主表，右外连接，right join 右边的是主表  
+* 
+
+想查询哪一张表中所有的信息，哪一张表就是主表  
+
+1. 查询男朋友不在 boys 表中的人的名字  
+``select b.name, bo.* from beauty as b left outer join boys as bo on b.`boyfriend_id` = bo.`id`;`` 先运行看结果  
+``select b.name, bo.* from beauty as b left outer join boys as bo on b.`boyfriend_id` = bo.`id` where bo.`id` is null;`` where 后面筛选用 id 是因为 id 是主键，主键唯一且非空    
+
+2. 查询哪个部门没有员工  
+``select d.*, e.employee_id from departments as d left outer join employees as e on d.`department_id` = e.`department_id`;`` 先运行看结果   
+``select d.*, e.employee_id from departments as d left outer join employees as e on d.`department_id` = e.`department_id` where e.`employee_id` is null;``     
+
+MySQL 不支持全外连接，全外连接=内连接结果+表1中有而表2中没有的+表2中有而表1中没有的    
+
+
+##### 6.2.3 交叉连接  
+
+交叉连接就是笛卡尔乘积  
+`select b.*, bo.* from beauty as b cross join boys as bo;`  
+
+
+### 7、子查询  
+
 
 
 
