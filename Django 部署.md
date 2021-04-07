@@ -32,7 +32,7 @@ pip install --upgrade pip
 创建虚拟环境  
 pip install virtualenv  
 
-virtualenv django_env(先 cd 到文件夹下面，比如 cd /home；这个命令会创建文件夹；可以指定 python 版本)  
+virtualenv django_env(先 cd 到文件夹下面，比如 cd /home；这个命令会创建文件夹)  
 source django_env/bin/activate  
 deactivate  
 
