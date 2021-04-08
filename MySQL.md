@@ -9,6 +9,7 @@ order by 关注的是从按到排序之间的内容，order by 一般放在最�
 
 ## MySQL 基础  
 
+
 MySQL 占比第一，学就对了  
 
 MySQL 学好学精了，就不愁找不到工作了  
@@ -543,6 +544,32 @@ MySQL 不支持全外连接，全外连接=内连接结果+表1中有而表2中�
 
 
 ### 7、子查询  
+
+出现在其他语句中的 select 语句，称为子查询或内查询，外部的查询语句称为主查询或外查询  
+
+* 按子查询出现的位置分类：select 之后，仅支持标量子查询; from 之后，支持表子查询; where 或 having 之后(重点内容)，标量子查询，列子查询，行子查询; exists 之后，表子查询
+* 按结果集的行列数不同分类：标量子查询(一行一列，就是一个数，也就是标量); 列子查询(一列多行); 行子查询(一行多列); 表子查询(多行多列)  
+
+
+#### 7.1 在 where 和 havin 之后   
+
+标量子查询，一般配合单行操作符使用 > < = <> >= <=  
+列子查询，一般配合多行操作符使用 in、any、some、all  
+
+##### 7.1.1 标量子查询
+
+1. 查询谁的工资比 Abel 高  
+先查询 Abel 的工资：`select salary from employees where last_name = 'Abel';` 结果是一行一列，所以是标量查询  
+查询工资大于 Abel 的员工的信息：`select * from employees where salary>(select salary from employees where last_name = 'Abel');`  
+
+2. 查询 job_id 与 141 号员工相同，salary 比 143 号员工多的员工姓名、job_id 和工资  
+查询 141 号员工的 job_id：`select job_id from employees where employee_id = 141;`  
+查询 143 号员工的 salary：`select salary from employees where employee_id = 143;`  
+查询满足要求的员工的姓名、job_id 和工资：`select last_name, job_id, salary from employees where job_id = (select job_id from employees where employee_id = 141) and salary > (select salary from employees where employee_id = 143);`  
+
+3. 查询工资最少的员工的 last_name, job_id 和 salary  
+查询最低工资：`select min(salary) from employees;`  
+查询满足条件的员工的 last_name, job_id 和 salary：`select last_name, job_id, salary from employees where salary=(select min(salary) from employees);`  
 
 
 
