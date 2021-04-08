@@ -2,10 +2,77 @@
 方法：视频看很多遍，代替读文档的文字，自己只敲代码，不再读文档  
 
 视频完成 2 遍  
-代码完成 1 遍  
+代码完成 2 遍  
 
 
 ## 文档  
+
+### Tutorial 1: Serialization  
+
+先创建模型，然后迁移到数据库，然后要使用 Web API 第一件要做的事就是 serializing 导入的 model 实例为 json 格式，在 app 目录下创建 serializer.py 文件，继承 serializers.Serializer，内容和 Django forms 差不多  
+
+第一节的这个 serializer 看似是最麻烦的，但是却是根基，可以看到内部是怎么实现的
+
+validate_data.get() 是要先验证数据的正确性，比如 python 第一个字母大写就通不过，这一步应该是从数据库取数据，浏览器展示数据之前的验证        
+
+后面的 shell 部分可以看到，serializer 是怎么把数据编程 json 格式的  
+
+`snippet = Snippet(code='foo = "bar"\n')` 就是实例化一个类，指定一个属性 code 的值  
+
+
+继承 serializers.ModelSerializer，指定 model 和 fields 就行了，而且自动包含了 create() 和 update() 方法  
+
+views 这里用的是函数  
+
+从 snippet_list 和 snippet_detail 两个函数的内部实现可以看出，serializer 可以接受前端页面传来的数据，就是 request，进行序列化，然后保存到数据库，也可以从数据库取数据  
+
+可以从实现中看到 GET 方法就是从数据库中取数据，POST 是存数据  
+
+
+### Tutorial 2: Requests and Responses  
+
+request.data 和 request.POST 意思差不多，但是功能更强大  
+
+views 使用 api_view 装饰器  
+
+urls.py 添加 suffixes  
+
+浏览器的显示内容的样式会发生改变  
+
+使用浏览器查看内容是一种极大的优势，自己可以很方便地查看和使用，也可以让别人更容易接触  
+
+
+### Tutorial 3: Class-based Views  
+
+views 使用的是 APIView  
+
+从 SnippetList 这个 class 的 get 方法中可以看到 get 是从数据库中取数据，展示到浏览器中，post 方法是将前面的 request 中包含的数据，save 到数据库中  
+
+
+可以使用 mixin   
+
+
+可以使用 generic class-based views，这个最简洁  
+
+
+### Tutorial 4: Authentication & Permissions  
+
+删除 db.sqlite 的时候，要先停止服务器  
+
+创建用户，关联用户  
+
+可以添加权限，没有登录的用户，没有权限添加数据  
+
+
+### Tutorial 5: Relationships & Hyperlinked APIs  
+
+这里的 serializer 用的是 HyperlinkedModelSerializer，自动添加超链接  
+
+
+### Tutorial 6: ViewSets & Routers  
+
+这一节用的 ViewSets 是最简单的  
+
 
 
 
@@ -34,7 +101,7 @@ exempt 免除，豁免
 
 继承 serializers.Serializer，要自己定义各个 field，和 model 的形式差不多  
 
-继承 serializers.ModelSerializer 就非常简洁，指定 model 指定 fields 就可以了  
+继承 serializers.ModelSerializer 就非常简洁，指定 model 和 fields 就可以了  
 
 继承 serializers.HyperlinkedModelSerializer 可以实现使用超链接点击跳转  
 
