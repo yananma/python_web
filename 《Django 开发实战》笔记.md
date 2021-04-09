@@ -1,6 +1,9 @@
 
 
 ## 指导思想：1、精通一个，不要摊大饼，杂而不精是一直以来的问题。聚焦一切力量，攻击一个‘城墙口’。；2、勤奋  
+
+Django 是立身之本，要非常精通，读源码是核心优势  
+
 原理：还是项目少，项目简单，工作还是很多的，如果能展示出自己有能力，那就是可以的；90 天 1500 个小时，可以做 12 个大项目了，肯定能找到工作  
 做法：多做项目，增加已有项目的功能；深化对 Django 的理解，《Django》开发实战，听 10 遍；  
 
@@ -9,7 +12,7 @@
 
 多查
 
-读目录 20 遍，熟悉了目录，看到这个知识点，才会想到来查：
+读目录 20 遍，熟悉了目录，看到这个知识点，才会想到来查：  
 2021.03.03：1 遍   
 2021.03.04：1 遍   
 
@@ -69,6 +72,51 @@ objects 是 Manager 类的实例，被称为查询管理器，是数据库查询
 
 
 
+### 第10章 Django 路由系统  
+
+
+
+#### 10.2 路由系统工作原理  
+
+##### 10.2.2 实现路由分发的 include 函数  
+
+网站中创建了一个 book 应用，include(book.urls)  
+
+    include 函数 Elapsed time: 00:00:00.402920
+    include 函数 Starting var:.. arg = 'book.urls'
+    include 函数 Starting var:.. namespace = None
+    include 函数 06:22:07.246083 call        14 def include(arg, namespace=None):
+    include 函数 06:22:07.270016 line        15     app_name = None
+    include 函数 New var:....... app_name = None
+    include 函数 06:22:07.274007 line        16     if isinstance(arg, tuple):
+    include 函数 06:22:07.285980 line        33         urlconf_module = arg
+    include 函数 New var:....... urlconf_module = 'book.urls'
+    include 函数 06:22:07.289964 line        35     if isinstance(urlconf_module, str):
+    include 函数 06:22:07.302929 line        36         urlconf_module = import_module(urlconf_module)
+    include 函数 Modified var:.. urlconf_module = <module 'book.urls' from 'C:\\Users\\MI\\Desktop\\04\\chapter02\\first_project\\book\\urls.py'>
+    include 函数 06:22:07.320881 line        37     patterns = getattr(urlconf_module, 'urlpatterns', urlconf_module)
+    include 函数 New var:....... patterns = [<URLPattern '' [name='index']>, <URLPattern 'book_list/' [name='book_list']>]
+    include 函数 06:22:07.323880 line        38     app_name = getattr(urlconf_module, 'app_name', app_name)
+    include 函数 06:22:07.336838 line        39     if namespace and not app_name:
+    include 函数 06:22:07.345814 line        46     namespace = namespace or app_name
+    include 函数 06:22:07.360775 line        49     if isinstance(patterns, (list, tuple)):
+    include 函数 06:22:07.375736 line        50         for url_pattern in patterns:
+    include 函数 New var:....... url_pattern = <URLPattern '' [name='index']>
+    include 函数 06:22:07.376731 line        51             pattern = getattr(url_pattern, 'pattern', None)
+    include 函数 New var:....... pattern = <django.urls.resolvers.RoutePattern object at 0x000001EE4C2588D0>
+    include 函数 06:22:07.390695 line        52             if isinstance(pattern, LocalePrefixPattern):
+    include 函数 06:22:07.405654 line        50         for url_pattern in patterns:
+    include 函数 Modified var:.. url_pattern = <URLPattern 'book_list/' [name='book_list']>
+    include 函数 06:22:07.408647 line        51             pattern = getattr(url_pattern, 'pattern', None)
+    include 函数 Modified var:.. pattern = <django.urls.resolvers.RoutePattern object at 0x000001EE4C258C50>
+    include 函数 06:22:07.423606 line        52             if isinstance(pattern, LocalePrefixPattern):
+    include 函数 06:22:07.438566 line        50         for url_pattern in patterns:
+    include 函数 06:22:07.439563 line        56     return (urlconf_module, app_name, namespace)
+    include 函数 06:22:07.449547 return      56     return (urlconf_module, app_name, namespace)
+    include 函数 Return value:.. (<module 'book.urls' from 'C:\\Users\\MI\\Desktop\\04\\chapter02\\first_project\\book\\urls.py'>, None, None)
+    include 函数 Elapsed time: 00:00:00.214428
+
+可以看到 include 函数，主要做的事情就是 import 应用的 urls.py，然后把列表拆分  
 
 
 
