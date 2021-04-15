@@ -1,6 +1,8 @@
 
+编程就是给你原材料(数据结构)、工具(if语句、for循环、函数、类)和说明书(算法)，自己生产自己想要的产品。想一想自己想去除 Chrome 的 doodle 费了多少周折还是做不成，想定制新建标签页面是何其艰难，这就可以看出编程是有多么广阔的自由度  
+
     a = [1, 2, 3]  
-    isinstance(a, list)
+    isinstance(a, list)    # True
 
 Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数   
 
