@@ -1,8 +1,10 @@
 
 编程就是给你原材料(数据结构)、工具(if语句、for循环、函数、类)和说明书(算法)，自己生产自己想要的产品。想一想自己想去除 Chrome 的 doodle 费了多少周折还是做不成，想定制新建标签页面是何其艰难，这就可以看出编程是有多么广阔的自由度  
 
-    a = [1, 2, 3]  
-    isinstance(a, list)    # True
+```python
+a = [1, 2, 3]  
+isinstance(a, list)    # True
+```
 
 Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数   
 
@@ -74,6 +76,14 @@ lambda 是 key 的 lambda，这个是按数字排序
 `print(sorted(l, key=lambda x:x[1]))`  
 这个是按字母排序  
 
+append() 函数就是在栈顶添加元素  
+
+```python
+a = [1, 2, 3]  
+a.append(4)  # 结果 a = [1, 2, 3, 4]
+```
+
+
 #### 字符串
 
 r 就是 raw，按照原始的字符串输出，读路径的时候常用  
@@ -128,10 +138,11 @@ if 语句就是在分叉路口做判断，根据判断结果选择走哪一条�
 #### 函数
 
 关键字参数说的是调用的时候指定，可以不用管定义的时候的顺序。比如 
+```python
+def about(name, course, site): 
+    print(name, course, site)  
+```
 
-    def about(name, course, site): 
-        print(name, course, site)  
-    
 调用的时候可以指定，`about(site='网址', name='名字', course='课程')` 可以打乱顺序  
 
 site 就是形参，'网址'就是实参  
@@ -139,14 +150,14 @@ site 就是形参，'网址'就是实参
 默认参数是说定义的时候指定的  
 
 不定长参数，就是加 *  
+```python
+def loop(*args):   
+    for x in args:  
+        print(x)  
 
-    def loop(*args):   
-        for x in args:  
-            print(x)  
-
-    loop(1, 2, 3)  
-    loop(1, 3, 5, 7, 9)  
-    
+loop(1, 2, 3)  
+loop(1, 3, 5, 7, 9)  
+```    
 
 #### 递归函数  
 
@@ -157,22 +168,24 @@ site 就是形参，'网址'就是实参
 #### 变量的作用域
 
 局部的和全局的  
-
-    def f(x):  
-        lacal_var = 200  
+```python
+def f(x):  
+    lacal_var = 200  
+```
 
 在外面 print(local_var) 就会报错，因为局部变量只能在函数内部使用  
 如果是在函数外面定义，就是全局变量，在哪里都可以调用  
 
 闭包就是，内部函数引用了外部函数的变量(不是全局变量)，那么内部函数就是闭包  
+```python
+def outer():  
+    num = 100  
+    def inner():  
+        print(num)  
+    inner()  
 
-    def outer():  
-        num = 100  
-        def inner():  
-            print(num)  
-        inner()  
-
-    outer()  
+outer()  
+```
 
 在这里 inner 可以调用 num 变量  
 查找顺序：局部 闭包 全局 内建  
@@ -199,29 +212,30 @@ nonlocal 就是闭包里修改外部函数的变量
 #### 文件  
 
 最重要的就是 open 函数，有了 open 函数就可以做其他的操作。open(filename, acess_mode='r', encoding='utf-8')  
+```python
+def open_file():  
+    f = open('test.txt', 'r', encoding='utf-8')  
+    print(f.read())  
 
-    def open_file():  
-        f = open('test.txt', 'r', encoding='utf-8')  
-        print(f.read())  
-
-    def write_file():  
-        f = open('test.txt', 'w', encoding='utf-8')  
-        f.write('mayanan')  覆盖写入  
-
+def write_file():  
+    f = open('test.txt', 'w', encoding='utf-8')  
+    f.write('mayanan')  覆盖写入  
+```
 
 最好是用 with，这样不用再 close  
 
-    def open_file():  
-        with open('test.txt','r',encoding='utf-8') as f:  
-            print(f.read())  
+```python
+def open_file():  
+    with open('test.txt','r',encoding='utf-8') as f:  
+        print(f.read())  
 
 
-    def write_file():
-        with open('test.py', 'w', encoding='utf-8') as f:
-            f.write('Hello World!')
+def write_file():
+    with open('test.py', 'w', encoding='utf-8') as f:
+        f.write('Hello World!')
 
-    write_file()
-
+write_file()
+```
 
 #### 异常和错误  
 
@@ -274,22 +288,24 @@ self 关键字，self 翻译过来就是我自己，指当前对象本身，谁�
 
 验证 self 就是实例本身代码  
 
-    class Person(object):  
-        def __init__(self):  
-            print(id(self))  
-    
-    # 方法里的 self 的 id 和实例也是相同的  
-        def say_hello(self, name):
-            print(id(self))
-            print('hello,', name)
+```python
+class Person(object):  
+    def __init__(self):  
+        print(id(self))  
+
+# 方法里的 self 的 id 和实例也是相同的  
+    def say_hello(self, name):
+        print(id(self))
+        print('hello,', name)
 
 
-    p = Person()  
-    print(id(p))  
+p = Person()  
+print(id(p))  
 
-    p = Person()  
-    print(id(p))  
-    p.say_hello('mayanan')  
+p = Person()  
+print(id(p))  
+p.say_hello('mayanan')  
+```
 
 id 相同，所以就验证了 self 就是这个实例本身  
 
@@ -331,21 +347,22 @@ id 相同，所以就验证了 self 就是这个实例本身
 
 非常清楚的一个例子  
 
-    class Bird(object):  
-        def fly(self):  
-            print('fly...')  
+```python
+class Bird(object):  
+    def fly(self):  
+        print('fly...')  
 
-    class Fish(object):  
-        def swim(self):  
-            print('swim...')  
+class Fish(object):  
+    def swim(self):  
+        print('swim...')  
 
-    class FlyFish(Bird, Fish):  
-        pass  
+class FlyFish(Bird, Fish):  
+    pass  
 
-    ff = FlyFish()  
-    ff.fly()  
-    ff.swim()  
-    
+ff = FlyFish()  
+ff.fly()  
+ff.swim()  
+```
 
 #### 方法覆盖  
 
@@ -353,48 +370,50 @@ id 相同，所以就验证了 self 就是这个实例本身
 
 既可以复用，又可以保证灵活性，可以根据实际情况修改定制  
 
-    class Animal(object):  
-        def run(self):  
-            print('Animal run...')  
-            
-        def sleep(self):  
-            print('Animal sleep...')  
+```python
+class Animal(object):  
+    def run(self):  
+        print('Animal run...')  
+
+    def sleep(self):  
+        print('Animal sleep...')  
 
 
-    class Dog(Animal):  
-        def run(self):  
-            print('dog run...')  
+class Dog(Animal):  
+    def run(self):  
+        print('dog run...')  
 
 
-    hua = Dog()  
+hua = Dog()  
 
-    hua.run()  
-    hua.sleep()  
-
+hua.run()  
+hua.sleep()  
+```
 
 #### super 关键字 
 
 调用父类的初始化方法 super().\_\_init__()  
 调用父类的其他属性和方法  
 
-    class Person(object):  
-        def __init__(self, name, age):  
-            self.name = name  
-            self.age = age  
-        
-        def display(self):  
-            print(self.name, self.age)  
+```python
+class Person(object):  
+    def __init__(self, name, age):  
+        self.name = name  
+        self.age = age  
 
-    class Manager(Person):  
-        def __init__(self):  
-            super().__init__('mayanan', 26)  
-    
-        def m_display(self):  
-            super().display()  
+    def display(self):  
+        print(self.name, self.age)  
 
-    m = Manager()  
-    m.m_display()  
+class Manager(Person):  
+    def __init__(self):  
+        super().__init__('mayanan', 26)  
 
+    def m_display(self):  
+        super().display()  
+
+m = Manager()  
+m.m_display()  
+```
 
 #### isinstance 
 
@@ -425,33 +444,33 @@ hasattr()、getattr()、setattr()、delattr()
 反序列化就是把对象从文件转化为对象，用 pickle.load()  
 
 因为一般情况下，结束以后内容就消失了，所以有了序列化    
+```python
+try:  
+    import cPickle as pickle  
+except ImportError:
+    import pickle  
 
-    try:  
-        import cPickle as pickle  
-    except ImportError:
-        import pickle  
 
+class Person(object):  
+    def __init__(self, name, age):   
+        self.name = name  
+        self.age = age  
 
-    class Person(object):  
-        def __init__(self, name, age):   
-            self.name = name  
-            self.age = age  
+p = Person('mayanan', 26)  
 
-    p = Person('mayanan', 26)  
+def write():  
+    with open('test.data', 'wb') as f:  
+        b = pickle.dumps(p)  
+        f.write(b)  
 
-    def write():  
-        with open('test.data', 'wb') as f:  
-            b = pickle.dumps(p)  
-            f.write(b)  
+def read():  
+    with open('test.data', 'rb') as f1:  
+        p = pickle.load(f1)  
+        print(p.name, p.age)  
 
-    def read():  
-        with open('test.data', 'rb') as f1:  
-            p = pickle.load(f1)  
-            print(p.name, p.age)  
-
-    # write()  
-    read()  
-    
+# write()  
+read()  
+```    
 
 #### 多线程  
 
