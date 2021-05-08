@@ -11,7 +11,8 @@
 
 一个非常直观的解决大数问题的方法就是把数字转换成字符串。另外，由于把数字 m 和 n 拼接起来得到 mn 和 nm，它们的位数肯定是相同的，因此比较它们的大小只需要按照字符串大小的比较规则就可以了。  
 
-```python 
+
+```python
 # -*- coding:utf-8 -*-
 class Solution:
     def PrintMinNumber(self, numbers):
