@@ -1,0 +1,32 @@
+
+题目描述  
+输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组 {3，32，321}，则打印出这三个数字能排成的最小数字为 321323。  
+
+解题思路  
+这道题其实是希望我们能找到一个排序规则，数组根据这个规则排序之后能排成一个最小的数字。要确定排序规则，就要比较两个数字，也就是给出两个数字 m 和 n，我们需要确定一个规则判断 m 和 n 哪个应该排在前面，而不是仅仅比较这两个数字的值哪个更大。  
+
+根据题目的要求，两个数字 m 和 n 能拼接成数字 mn 和 nm。如果 mn < nm，那么我们应该打印出 mn，也就是 m 应该排在 n 的前面，我们定义此时 m 小于 n；反之，如果 nm < mn，我们定义 n 小于 m。如果 mn=nm， m 等于 n。
+
+接下来考虑怎么去拼接数字，即给出数字 m 和 n，怎么得到数字 mn 和 nm 并比较它们的大小。  
+
+一个非常直观的解决大数问题的方法就是把数字转换成字符串。另外，由于把数字 m 和 n 拼接起来得到 mn 和 nm，它们的位数肯定是相同的，因此比较它们的大小只需要按照字符串大小的比较规则就可以了。  
+
+```python 
+# -*- coding:utf-8 -*-
+class Solution:
+    def PrintMinNumber(self, numbers):
+        if not numbers:
+            return '' 
+        result = sorted(numbers, cmp=self.num_compare) 
+        return int(''.join(str(x) for x in result))
+    
+    def num_compare(self, num1, num2):
+        num_12 = str(num1) + str(num2) 
+        num_21 = str(num2) + str(num1) 
+        if num_12 > num_21:
+            return 1 
+        elif num_12 < num_21:
+            return -1 
+        else:
+            return 0 
+```
