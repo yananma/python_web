@@ -1,4 +1,6 @@
 
+## 学不会不是不够聪明，不够勤奋，而是缺少好的工具。学算法程序最重要的工具：[pythontutor](http://www.pythontutor.com/visualize.html#mode=edit)、pysnooper、debug、print   
+
 把写完的程序弄明白，print 中间变量，多写几个 print  
 
 考察数据结构与算法是非常好的一种方法，以为这种方法考察的都是需要反复使用的能力和素质  
