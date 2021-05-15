@@ -1,4 +1,7 @@
 
+1. 检查输入类型和输入为空
+2. 实现算法程序  
+
 ## 学不会不是不够聪明，不够勤奋，而是缺少好的工具。学算法程序最重要的工具：[pythontutor](http://www.pythontutor.com/visualize.html#mode=edit)、pysnooper、debug、print   
 
 把写完的程序弄明白，print 中间变量，多写几个 print  
