@@ -6,6 +6,7 @@ a = [1, 2, 3]
 isinstance(a, list)    # True
 ```
 
+
 Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数   
 
 重载就是同名函数不同参数  
@@ -34,15 +35,22 @@ type() 看类型
 
 一个普通人加上记笔记的习惯就可以成为一个天才。  
 
+Python 中的 -> 就是函数标注，为函数添加元数据，本质上就是注释，方便阅读，通常用于类型提示：例如以下函数预期接受两个 int 参数并预期返回一个 int 值:  
+
+```python 
+def sum_two_numbers(a: int, b: int) -> int:
+    return a + b
+```
+
 
 #### 编程基础
 
 占位符，
-
+```python 
     name = 'mayanan' 
     age = 30  
     print('%s, %d' % (name, age))  
-
+```
 占位符的读法是，读到哪一个就把后面的名字提到前面来读  
 
 #### 数字  
