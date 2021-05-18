@@ -80,7 +80,7 @@ URL 路径说明了资源位于服务器的什么地方，本质上就是服务�
 
 Content-Type 说明了 body 是什么 MIME 格式，比如 text/html  
 
-Content-Length 说明了 body 的大小，单位是字节    
+Content-Length 说明了 body 的大小，单位是字节。一个字节是 8 位     
 
 请求报文起始行说明了要做什么，响应报文起始行说明发生了什么  
 
@@ -96,7 +96,7 @@ Content-Length 说明了 body 的大小，单位是字节
 
 * PUT 方法向服务器写入文档，比如 PUT /a.txt HTTP/1.1 会返回 201 created  
 
-* POST 起初是用来想服务器输入数据的(POST 用于向服务器发送数据，PUT 用于向服务器上的资源比如文件中存储数据)，现在通常用来支持 HTML 表单  
+* POST 起初是用来想服务器输入数据的(POST 用于向服务器发送数据，POST 用户名密码，PUT 用于向服务器上的资源比如文件中存储数据，PUT a.txt)，现在通常用来支持 HTML 表单  
 
 * TRACE 可以看中间经历过程，比如代理等  
 
