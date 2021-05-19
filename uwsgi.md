@@ -42,6 +42,7 @@ httpd.serve_forever()
 启动成功后，打开浏览器，输入http:\//localhost:8000/，就可以看到结果了  
 
 可以在 django/core/handlers/wsgi.py 文件中看到 environ 都包含哪些参数  
+在 LimitedStream 类中看到了 buffer size = 64 \* 1024 \* 1024 就是 64 个 G  
 
     C:\Users\MI\Desktop\10programs\21March\WSGI>python server.py
     serving port 8000...
