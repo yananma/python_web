@@ -30,7 +30,11 @@ type() 看类型
 单行注释井号，多行注释三引号  
 
 文档字符串，类或函数的第一句话，可以用自带的 \_\_doc__ 函数访问  
-
+```python
+from collections import OrderedDict  
+OrderedDict.\_\_doc__  
+'Dictionary that remembers insertion order'  
+```
 多写注释，不用就忘。  
 
 一个普通人加上记笔记的习惯就可以成为一个天才。  
@@ -47,9 +51,9 @@ def sum_two_numbers(a: int, b: int) -> int:
 
 占位符，
 ```python 
-    name = 'mayanan' 
-    age = 30  
-    print('%s, %d' % (name, age))  
+name = 'mayanan' 
+age = 30  
+print('%s, %d' % (name, age))  
 ```
 占位符的读法是，读到哪一个就把后面的名字提到前面来读  
 
@@ -109,6 +113,13 @@ r 就是 raw，按照原始的字符串输出，读路径的时候常用
 #### 字典
 
 键值对  
+
+####  OrderedDict  
+Dictionary that remembers insertion order  
+
+字典存储用的是 hash，是无序的，OrderedDict 可以按字典中元素的插入顺序来输出。  
+
+OrderedDict 是使用双向链表存储，插入的时候在链表表尾插入  
 
 #### range 函数
 
