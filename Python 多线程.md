@@ -16,13 +16,12 @@ GIL 和普通的锁 lock 本质上是一样的，只是作用的范围不一样
 
 ## [2小时玩转python多线程编程](https://www.bilibili.com/video/BV1fz4y1D7tU?from=search&seid=15504173216158754497)  
 
-多任务，比如百度网盘同时下载多部电影  
 好处：提高 CPU 资源利用率，降低时间  
 
 多任务是指在**同一时间**执行**多个任务**  
 
-* 并发：交替执行，比如一个 CPU 执行多个任务  
 * 并行：任务量小于或等于 CPU 核数  
+* 并发：交替执行，比如一个 CPU 执行多个任务  
 
 不使用多进程和多线程的时候，就是顺序执行，先执行完 sing 函数，再执行 dance 函数  
 
@@ -32,28 +31,29 @@ GIL 和普通的锁 lock 本质上是一样的，只是作用的范围不一样
 
 使用 pysnooper 可以看到这两个函数是同时执行的  
 
-    import time
-    import multiprocessing
+```python
+import time
+import multiprocessing
 
-    def sing(num):
-        for i in range(num):
-            print('唱歌......')
-            time.sleep(0.5)
+def sing(num):
+    for i in range(num):
+        print('唱歌......')
+        time.sleep(0.5)
 
-    def dance(num):
-        for i in range(num):
-            print('跳舞......')
-            time.sleep(0.5)
+def dance(num):
+    for i in range(num):
+        print('跳舞......')
+        time.sleep(0.5)
 
 
-    if __name__ == "__main__":
-        # 通过进程类，创建进程对象
-        sing_process = multiprocessing.Process(target=sing, args=(3, ))
-        dance_process = multiprocessing.Process(target=dance, kwargs={'num': 3})
+if __name__ == "__main__":
+    # 通过进程类，创建进程对象
+    sing_process = multiprocessing.Process(target=sing, args=(3, ))
+    dance_process = multiprocessing.Process(target=dance, kwargs={'num': 3})
 
-        sing_process.start()
-        dance_process.start()  
-        
+    sing_process.start()
+    dance_process.start()  
+```    
         
 主进程会等待子进程执行结束以后才结束，可以设置 daemon=True 守护主进程，使得主进程执行结束以后，子进程自动销毁，程序结束  
 
@@ -64,28 +64,30 @@ GIL 和普通的锁 lock 本质上是一样的，只是作用的范围不一样
 
 线程是程序执行的最小单位，实际上进程只负责分配资源，而利用这些资源执行程序的是线程。进程是线程的容器，一个进程中最少有一个线程来负责执行程序。同时线程自己不拥有系统资源，只需要一点必不可少的资源，它可以和同属一个进程的其他线程共享进程所拥有的全部资源。  
 
-    import time
-    import threading
+```python
+import time
+import threading
 
 
-    def sing(num):
-        for i in range(num):
-            print("唱歌......")
-            time.sleep(0.5)
+def sing(num):
+    for i in range(num):
+        print("唱歌......")
+        time.sleep(0.5)
 
 
-    def dance(num):
-        for i in range(num):
-            print("跳舞......")
-            time.sleep(0.5)
+def dance(num):
+    for i in range(num):
+        print("跳舞......")
+        time.sleep(0.5)
 
 
-    if __name__ == "__main__":
-        sing_thread = threading.Thread(target=sing, args=(3, ))
-        dance_thread = threading.Thread(target=dance, kwargs={'num': 3})
+if __name__ == "__main__":
+    sing_thread = threading.Thread(target=sing, args=(3, ))
+    dance_thread = threading.Thread(target=dance, kwargs={'num': 3})
 
-        sing_thread.start()
-        dance_thread.start()
+    sing_thread.start()
+    dance_thread.start()
+```
 
 线程之间的执行是无序的，是由 CPU 调度决定的  
 
@@ -94,17 +96,15 @@ GIL 和普通的锁 lock 本质上是一样的，只是作用的范围不一样
 
 ## [Python 并发编程实战，用多线程、多进程、多协程](https://www.bilibili.com/video/BV1bK411A7tV?p=13&spm_id_from=pageDriver)  
 
+多任务，比如百度网盘同时下载多部电影  
 比如爬虫，顺序执行可能要 1 个小时，并发只需要 10 分钟  
 比如请求网页，优化每次打开页面需要 3 秒，并发只需要 500 毫秒  
 
-提高执行速度  
-
 本质上是因为 IO 和 CPU 之间是可以并行执行的，IO 读取写入磁盘是不需要 CPU 的参与的  
 
-单线程、**多线程并发 threading**、**多 CPU 并行 multiprocessing**、多机器并行(handoop/spark/hive)  
+**多 CPU 并行 multiprocessing**、**多线程并发 threading**、多机器并行(handoop/spark/hive)  
 
 asyncio，异步 IO，在单线程中利用 CPU 和 IO 同时执行的原理，实现异步执行  
-
 
 CPU 密集型计算(CPU bound)，也叫计算密集型，就是 CPU 限制了整体，IO 耗时很短，CPU 需要大量的计算和处理，特点是 CPU 使用率很高；比如加密解密、比如压缩解压  
 
@@ -155,7 +155,7 @@ GIL 是设计之初是为了规避并发的数据同步问题而引入的，它�
 
 
 
-##
+## 
 
 单线程可以理解为只有一个箭头，从上到下顺序执行   
 
