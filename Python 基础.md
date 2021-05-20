@@ -32,7 +32,7 @@ type() 看类型
 文档字符串，类或函数的第一句话，可以用自带的 \_\_doc__ 函数访问  
 ```python
 from collections import OrderedDict  
-OrderedDict.\_\_doc__  
+OrderedDict.__doc__  
 'Dictionary that remembers insertion order'  
 ```
 多写注释，不用就忘。  
