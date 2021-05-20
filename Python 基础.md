@@ -335,15 +335,15 @@ id 相同，所以就验证了 self 就是这个实例本身
 实例方法必须实例化才能调用，就是最常用的那种方法  
 
 静态方法不需要实例化，通过名称就可以直接访问，静态方法不加 self，因为不用实例化，所以不加 self  
+```python
+class Site(object):  
+    @staticmethod  
+    def get_name():  
+        return 'mayanan'  
 
-    class Site(object):  
-        @staticmethod  
-        def get_name():  
-            return 'mayanan'  
-
-    name = Site.get_name()  
-    print(name)  
-
+name = Site.get_name()  
+print(name)  
+```
 
 类方法用的是 @classmethod，第一个参数必须是 cls 类本身  
 
@@ -353,11 +353,13 @@ id 相同，所以就验证了 self 就是这个实例本身
 实例属性就是实例变量，self.name = name，前面的 self.name 就是实例属性  
 
 下面这样的就是类属性，实例方法可以访问类属性  
-
-    class Site(object):  
-        name = 'mayanan'     
-        course = 'Python'  
-
+```python
+class Site(object):  
+    name = 'mayanan'     
+    course = 'Python'  
+    
+Site().course   # 类属性可以直接被类调用
+```
 
 #### 继承  
 
@@ -387,6 +389,8 @@ ff.swim()
 #### 方法覆盖  
 
 必须是继承关系；子类覆盖(重写)父类里面的同名方法  
+
+源码是使用了 update 方法，如果有同名方法，就 update，覆盖原来的方法    
 
 既可以复用，又可以保证灵活性，可以根据实际情况修改定制  
 
@@ -444,19 +448,19 @@ isinstance(obj, cls)
 #### 属性操作  
 
 hasattr()、getattr()、setattr()、delattr()  
+```python
+class Person(object):  
+    def __init__(self, name):  
+        self.name = name  
 
-    class Person(object):  
-        def __init__(self, name):  
-            self.name = name  
-
-    p = Person('mayanan')  
-    print(hasattr(p, 'name')) True  
-    print(getattr(p, 'name')) 就是 p.name  
-    setattr(p, 'name', 'mayanan')  
-    print(p.name)  
-    delattr(p, 'name')  
-    print(hasattr(p, 'name')) False   
-
+p = Person('mayanan')  
+print(hasattr(p, 'name')) True  
+print(getattr(p, 'name')) 就是 p.name  
+setattr(p, 'name', 'mayanan')  
+print(p.name)  
+delattr(p, 'name')  
+print(hasattr(p, 'name')) False   
+```
 
 #### 序列化和反序列化  
 
