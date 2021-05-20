@@ -333,6 +333,18 @@ id 相同，所以就验证了 self 就是这个实例本身
 #### 类方法静态方法和实例方法  
 
 实例方法必须实例化才能调用，就是最常用的那种方法  
+```python
+class Site(object):
+    def get_name(self):
+        return 'baidu'
+    def get_address(self):
+        return 'http://www.baidu.com'
+
+s = Site()
+name = s.get_name()
+address = s.get_address()
+print(name, address)
+```
 
 静态方法不需要实例化，通过名称就可以直接访问，静态方法不加 self，因为不用实例化，所以不加 self  
 ```python
@@ -346,7 +358,16 @@ print(name)
 ```
 
 类方法用的是 @classmethod，第一个参数必须是 cls 类本身  
+```python
+class Site(object):
+    name = 'mayanan'
+    @classmethod
+    def get_name(cls):
+        return cls.name
 
+name = Site.get_name()
+print(name)
+```
 
 #### 类属性和实例属性(属性就是变量)  
 
