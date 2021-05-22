@@ -7,6 +7,8 @@
 
 已完成：单下划线和双下划线、== 和 is、copy 和 deepcopy、  
 
+以这一篇为标准，[《流畅的python》阅读笔记](https://segmentfault.com/a/1190000011568813) [备份链接](https://zhuanlan.zhihu.com/p/30754843)，自己写的笔记就是一些补充    
+
 ### 第1章 Python数据模型  
 
 访问属性，调用方法的时候，就会调用 \_\_getitem__ ,   
@@ -161,5 +163,8 @@ python 自省就是运行时能够获得对象的类型。比如type()，dir()�
 d = {key: value for (key, value) in iterable}
 ```
 GIL 对于 IO 密集型，python 多线程会提高速度，但是对于 CPU 密集型，很可能会降低速度  
+
+
+
 
 
