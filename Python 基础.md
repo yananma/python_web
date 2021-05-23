@@ -18,7 +18,10 @@ Python 里 . 就是的，views.banner 就是 views 里面的 banner 函数
 
 type() 看类型   
 
+字面量先当做自变量，等理解了再改过来  
+
 #### 编码规范  
+编码规范是为了好读，不要吹毛求疵，因小失大。最重要的，最核心的还是编程思想，是程序实现的功能。  
 
 4 个空格缩进；顶级定义之间空两行，比如 class，类中的方法之间空一行；二元操作符前后空格，比如四则运算符号，用 = 指定参数默认值的时候，前后不要有空格。 
 
@@ -116,6 +119,12 @@ r 就是 raw，按照原始的字符串输出，读路径的时候常用
 #### 字典
 
 键值对  
+
+JSON(JavaScript Object Notation) 是一种数据格式，是一种 Notation，和 CSV 一个级别。  
+
+字典是一种数据结构。  
+
+可以把 JSON 转化成字典  
 
 ####  OrderedDict  
 Dictionary that remembers insertion order  
