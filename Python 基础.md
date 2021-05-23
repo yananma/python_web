@@ -47,9 +47,8 @@ def sum_two_numbers(a: int, b: int) -> int:
 ```
 
 
-#### 编程基础
+#### 占位符
 
-占位符，
 ```python 
 name = 'mayanan' 
 age = 30  
@@ -58,6 +57,8 @@ print('%s, %d' % (name, age))
 占位符的读法是，读到哪一个就把后面的名字提到前面来读  
 
 前端 `{% extends 'base.html' %}` 也是这样，把 base.html 的内容替换到当前的 HTML 文件中，就很清楚了  
+
+`super().__init__(*args, **kwargs)` 也是这个意思，把父类中的 \_\_init__ 方法中的内容放到当前 \_\_init__ 中  
 
 #### 数字  
 
