@@ -197,11 +197,50 @@ loop(1, 3, 5, 7, 9)
 ```    
 
 #### \*args 和 \*\*kwargs  
+
 灵活的参数处理机制，是 Python 最好的特性之一  
 
-不定量，不定长的参数，这里的核心是 \* 和 \*\*，后面的名词可以随便取；     
+可变参数(Variable Argument)，就是不定量，不定长的参数，\*args 是可变的 positional arguments，kwargs 是可变的 keyword arguments  
+
+这里的核心是 \* 和 \*\*，后面的名词可以随便取，比如 \*var \*\*vars；     
 
 \* 和 \*\* 的作用是展开可迭代对象，映射到单个参数  
+
+这一个程序就能说明所有问题了  
+```python 
+def para_test(arg, *args, **kwargs):
+    print(arg, type(args), args, type(kwargs), kwargs)
+    
+para_test(1, 3, 4, 5, a=7, b=8, c=9)  
+1 <class 'tuple'> (3, 4, 5) <class 'dict'> {'a': 7, 'b': 8, 'c': 9}
+```
+
+再详细的写法  
+```python 
+def foo(*args, **kwargs):
+    print('args = ', args)
+    print('kwargs = ', kwargs)
+    print('---------------------------------------')
+
+foo(1,2,3,4)
+foo(a=1,b=2,c=3)
+foo(1,2,3,4, a=1,b=2,c=3)
+foo('a', 1, None, a=1, b='2', c=3)
+
+args =  (1, 2, 3, 4)
+kwargs =  {}
+---------------------------------------
+args =  ()
+kwargs =  {'a': 1, 'b': 2, 'c': 3}
+---------------------------------------
+args =  (1, 2, 3, 4)
+kwargs =  {'a': 1, 'b': 2, 'c': 3}
+---------------------------------------
+args =  ('a', 1, None)
+kwargs =  {'a': 1, 'b': '2', 'c': 3}
+---------------------------------------
+```
+
 
 《流畅的 Python》5.7 节，示例 5-11 敲一遍，就完全弄明白了  
 
@@ -323,14 +362,15 @@ write_file()
 处理异常 try except，原因就是一部分出错，不能影响另一部分工作。比如汽车雨刷坏了不能影响刹车  
 
 程序也是这样，不能因为一个小毛病就崩溃了  
+```python
+def loop(l):  
+    try:  
+        print(l[3])  
+    except Exception as e:  
+        print('error')  
 
-    def loop(l):  
-        try:  
-            print(l[3])  
-        except Exception as e:  
-            print('error')  
-
-    loop([1, 2])
+loop([1, 2])
+```
 
 try except 的时候一般会 print 错误信息，否则不知道错在什么地方  
 
