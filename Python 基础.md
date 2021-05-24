@@ -196,6 +196,34 @@ loop(1, 2, 3)
 loop(1, 3, 5, 7, 9)  
 ```    
 
+#### \*args 和 \*\*kwargs  
+灵活的参数处理机制，是 Python 最好的特性之一  
+
+不定量，不定长的参数，这里的核心是 \* 和 \*\*，后面的名词可以随便取；     
+
+\* 和 \*\* 的作用是展开可迭代对象，映射到单个参数  
+
+《流畅的 Python》5.7 节，示例 5-11 敲一遍，就完全弄明白了  
+
+```python
+@pysnooper.snoop()
+def tag(name, *content, cls=None, **attrs):
+    """生成一个或多个 HTML 标签"""
+    if cls is not None:
+        attrs['class'] = cls
+    if attrs:
+        attr_str = ''.join('%s="%s" '%(attr, value) for attr, value in sorted(attrs.items()))
+    else:
+        attr_str = ''
+    if content:
+        return '\n'.join('<%s %s>%s</%s>'%(name, attr_str, c, name) for c in content)
+    else:
+        return '<%s %s />'%(name, attr_str)
+```
+
+
+
+
 #### 递归函数  
 
 1、函数自己调用自己  
