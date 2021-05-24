@@ -1,4 +1,8 @@
 
+DRF 在 Django 的基础上，去掉了模板的部分，提供了一个 REST 接口  
+
+models -> serializers -> views -> urls 的模式去分析  
+
 方法：写项目，读源码
 
 ## 文档  
