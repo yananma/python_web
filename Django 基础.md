@@ -1,4 +1,7 @@
 
+激活环境：`activate django_rest`  
+退出环境：`deactivate`  
+查看已有环境 `conda env list`
 
     django-admin startproject mysite  
 
@@ -10,7 +13,6 @@
     django-admin startapp polls  
 
 
-xxkt settings.py 最下面   
 LANGUAGE_CODE = 'zh-hans';  
 TIME_ZONE = 'Asia/Shanghai'  
 
