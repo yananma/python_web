@@ -940,40 +940,55 @@ UDP 客户端
 
 #### url 访问  
 
-    import socket
+复制代码，用 ipython 运行  
+浏览器输入 `http://127.0.0.1:10001/index` 访问  
 
-    def index():
-        return b'index page!'
-        
-    urls = [
-        ('/index', index)
-    ]
-    
-    sock = socket.socket()
-    sock.bind(('127.0.0.1', 10001))
-    sock.listen(5)
-    
-    while True:
-        conn, addr = sock.accept()
-        data = conn.recv(8096).decode()
-        print(data)  # 浏览器就是客户端，可以清楚地看到，客户端发送了什么内容到服务器，彻底理解了客户端和服务器是怎么交互的；彻底理解了 cookie 和 session 是如何发挥作用的  
-        print(data[4:10])
-        url = data[4:10]
-        conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
-        
-        page_content = None
-        for u in urls:
-            print(u[0])
-            if u[0] == url:  # 可以清楚地看到，是 url 是怎么发挥作用的  
-                page_content = u[1]
-                break
-        
-        if page_content:
-            response = page_content()
-        else:
-            response = b'404 page not found!'
-      
-        conn.send(response)
-        conn.close()
+
+```python
+import socket
+
+def index():
+    # return b'index page!'
+    # return b'<html><h1>H1</h1></html>'
+    return b'<html><form action="" method="POST"><input type="text" class="form-control" name="telephone" placeholder="phone number"> <button type="submit" class="btn btn-primary btn-block btn-flat">login</button></form></html>'   # 最后在命令行中国看到了一个 telephone=18888888888，证明数据从浏览器传到了服务器 
+
+urls = [
+    ('/index', index)
+]
+
+sock = socket.socket()
+sock.bind(('127.0.0.1', 10001))
+sock.listen(5)
+
+while True:
+    conn, addr = sock.accept()
+    data = conn.recv(8096).decode()
+    print('这里是浏览器发送的所有的 data：\n', data)  # 浏览器就是客户端，可以清楚地看到，客户端发送了什么内容到服务器，彻底理解了客户端和服务器是怎么交互的；彻底理解了 cookie 和 session 是如何发挥作用的  
+    print('这里是 data[4:10]：', data[4:10])
+    url = data[4:10]
+    conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
+
+    page_content = None
+    for u in urls:
+        print('这里是 u[0]', u[0])
+        # print('这里是 u[1]', u[1])
+        if u[0] == url:  # 可以清楚地看到，是 url 是怎么发挥作用的，就是匹配  
+            page_content = u[1]
+            break
+
+    if page_content:
+        response = page_content()
+        print("这里是 response：\n", response)
+    else:
+        response = b'404 page not found!'
+
+    conn.send(response)
+    conn.close()
+```
 
 改变 index 返回的内容，比如改成 HTML 表单，就可以看到表单是如何提交数据的  
+
+退出的时候，先在命令行中 Ctrl + C，然后刷新浏览器，就可以退出  
+
+再次运行，可以换端口，比如 10002，或者等一会儿  
+
