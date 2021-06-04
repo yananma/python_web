@@ -102,6 +102,8 @@ Django 调用数据库，和自己用 Python 执行 MySQL 是一样的，都是�
 
 开一个文件夹，专门存放这种 pysnooper 打印的内容，重点难点集中攻克，忘了直接查，一次运行，永远使用  
 
+工作以后做，一点一点都弄明白  
+
 网站中创建了一个 book 应用，include(book.urls)  
 
     include 函数 Elapsed time: 00:00:00.402920
