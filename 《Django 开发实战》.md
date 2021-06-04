@@ -51,11 +51,15 @@ django-admin startproject my_bbs
 
 ### 第4章 Django ORM 应用与原理剖析  
 
+auto_now_add 创建时间  
+auto_now 修改时间  
+
 ForeignKey，多对一  
 
+```python
 class Comment:  
-&emsp; topic = models.ForeignKey(Topic, on_delete=True)  
-
+    topic = models.ForeignKey(Topic, on_delete=True)  
+```
 
 创建好 model 以后，要迁移到数据库中  
 
@@ -74,6 +78,17 @@ objects 是 Manager 类的实例，被称为查询管理器，是数据库查询
 4.2 有 Meta、Field、model、关系类型 参数的详细说明  
 
 多对多的时候，可以使用 sqlmigrate 查看中间表的创建过程  
+
+
+#### 4.3 Model 的查询操作 API
+这一节是全书的重点  
+
+all() 方法返回的就是 self.\_chain()，就是所有实例，后面的源码中经常看到 obj = self.\_chain()，也是所有实例的意思  
+
+
+Django 调用数据库，和自己用 Python 执行 MySQL 是一样的，都是调用的 connection.cursor()  
+
+
 
 
 
