@@ -83,6 +83,16 @@ objects 是 Manager 类的实例，被称为查询管理器，是数据库查询
 #### 4.3 Model 的查询操作 API
 这一节是全书的重点  
 
+```python
+增：save、create
+删：delete
+改：update
+查：单个 get、get_or_create、first、last、exist
+    多个 all、reverse、filter、exclude、链式查询、values、values_list、切片、关联关系查询、F、Q、聚合查询、分组查询
+排：order_by
+计：count
+```
+
 all() 方法返回的就是 self.\_chain()，就是所有实例，后面的源码中经常看到 obj = self.\_chain()，也是所有实例的意思  
 
 
