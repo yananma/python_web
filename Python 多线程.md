@@ -4,7 +4,7 @@ from time import time
 
 start = time()
 
-time() - start
+pritn(time()-start)
 ```
 
 IO 密集型，就是很多人在做打纸带的工作，计算不多，还挺空闲；CPU 密集型，就是里面很忙，都在排队等，就好比医生很忙，大家都在排队  
