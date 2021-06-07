@@ -620,187 +620,161 @@ read()
 如果没有多线程，就会顺序执行，不管第一个函数执行多长时间，后面的函数都会等待  
 
 不使用线程代码，就是先打印 5 个 i，i 打印完了以后再打印 j    
+```python
+from time import ctime, sleep  
 
-    from time import ctime, sleep  
+def func1():  
+    for i in range(5):  
+        print('i=', i)  
+        sleep(0.1)  
 
-    def func1():  
-        for i in range(5):  
-            print('i=', i)  
-            sleep(0.1)  
+def func2():  
+    for j in range(5):  
+        print('j=', j)  
+        sleep(0.1)  
 
-    def func2():  
-        for j in range(5):  
-            print('j=', j)  
-            sleep(0.1)  
+def main():  
+    print('start:', ctime)  
+    func1()  
+    func2()  
+    print('end:', ctime)  
 
-    def main():  
-        print('start:', ctime)  
-        func1()  
-        func2()  
-        print('end:', ctime)  
-
-    if __name__ == '__main__':  
-        main()  
+if __name__ == '__main__':  
+    main()  
+```
 
 使用线程交替执行，不是顺序执行的，而是并行执行的  
 
 相当于买票的时候，原来只有一个窗口，只能这一队人排完以后，才能开始另一队；多线程就是有多个窗口买票  
 
-使用线程代码，这个 thread 模块，只能在 python2 版本中才能运行，但是可以便于理解多线程  
-
-    import thread  
-    from time import ctime, sleep  
-
-    def func1():  
-        for i in range(5):  
-            print('i=:', i)  
-            sleep(1)  
-
-    def func2():  
-        for j in range(5):  
-            print('j=:', j)  
-            sleep(1)  
-
-    def main():  
-        print('start:', ctime())  
-        thread.start_new_thread(func1, ())  
-        thread.start_new_thread(func2, ())  
-        sleep(5)  
-        print('end:', ctime)  
-
-    if __name__ == '__main__':  
-        main()  
-
 现实中不使用 sleep 函数，因为不知道运行多长时间，现实中使用 lock  
 
 python3 中使用的是 threading 模块，有 3 种方法，第一种是创建 Thread 实例，为 target 函数传递一个参数；第二种是创建 Thread 实例，传递给一个可调用的类实例，需要复写 \_\_call__ 函数；第三种是继承 Thread，并创建子类的实例  
 
-    import threading
-    from time import ctime, sleep
+```python
+import threading
+from time import ctime, sleep
 
-    def func1():
-        for i in range(5):
-            print('i=%d \n' % i)
-            sleep(0.1)
+def func1():
+    for i in range(5):
+        print('i=%d \n' % i)
+        sleep(0.1)
 
-    def func2():
-        for j in range(5):
-            print('j=%d \n' % j)
-            sleep(0.1)
+def func2():
+    for j in range(5):
+        print('j=%d \n' % j)
+        sleep(0.1)
 
-    def main():
-        print('start:', ctime())
-        t1 = threading.Thread(target=func1)
-        t2 = threading.Thread(target=func2)
+def main():
+    print('start:', ctime())
+    t1 = threading.Thread(target=func1)
+    t2 = threading.Thread(target=func2)
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print('end:', ctime())
 
-        t1.start()
-        t2.start()
-
-        t1.join()
-        t2.join()
-
-        print('end:', ctime())
-
-    if __name__ == '__main__':
-        main()
-
+if __name__ == '__main__':
+    main()
+```
 
 #### 线程同步  
 
 多个用户同时操作一个共享资源，要对共享资源进行保护，方法就是使用 lock。  
 
 比如现实中火车站，4 个窗口卖 100 张票，就要用 lock 线程，否则会卖重复  
+```python
+class Window(threading.Thread):  
+    def __init__(self, n, lock):  
+        self.lock = lock  
+        threading.Thread.__init__(self, name=n)  
 
-    class Window(threading.Thread):  
-        def __init__(self, n, lock):  
-            self.lock = lock  
-            threading.Thread.__init__(self, name=n)  
+    def take(self):  
+        global tickets  
+        while tickets >= 1:  
+            self.lock.acquire()  
+            print('%s :%d' % (threading.currentThread().name, tickets))  
+            tickets -= 1  
+            self.lock.release()  
+            sleep(0.1)  
 
-        def take(self):  
-            global tickets  
-            while tickets >= 1:  
-                self.lock.acquire()  
-                print('%s :%d' % (threading.currentThread().name, tickets))  
-                tickets -= 1  
-                self.lock.release()  
-                sleep(0.1)  
+    def run(self):  
+        self.take()  
 
-        def run(self):  
-            self.take()  
+def main():  
+    lock = threading.Lock()  
+    for i in range(1, 5):  
+        name = '窗口' + str(i)  
+        w = Window(name, lock)  
+        w.start()  
 
-    def main():  
-        lock = threading.Lock()  
-        for i in range(1, 5):  
-            name = '窗口' + str(i)  
-            w = Window(name, lock)  
-            w.start()  
-
-    if __name__ == '__main__':  
-        main()  
-        
+if __name__ == '__main__':  
+    main()  
+```        
 
 如果把程序中的 lock 去掉，就会有卖重复的现象  
 
 queue 模块使得共享数据更加方便，不用再用 lock，不用再自己控制，queue 自己内部就实现了这些功能  
-
-    from queue import Queue
-    from time import sleep
-    from random import randint
-    from threading import Thread
-
-
-    class Producer(object):
-        def __init__(self, q):
-            self.q = q
-
-        def put(self):
-            print('为 Q 添加对象...')
-            self.q.put('xxx', 1)
-            print('当前 Q 大小：%d' % self.q.qsize())
-
-        def produce(self):
-            for i in range(5):
-                self.put()
-                sleep(randint(1, 2))
-
-        def __call__(self):
-            self.produce()
-
-    class Consumer(object):
-        def __init__(self, q):
-            self.q = q
-
-        def get(self):
-            val = self.q.get(1)
-            print('从 Q 取对象...')
-            print('当前 Q 大小：%d' % self.q.qsize())
-
-        def consume(self):
-            for i in range(5):
-                self.get()
-                sleep(randint(2, 5))
-
-        def __call__(self):
-                self.consume()
+```python
+from queue import Queue
+from time import sleep
+from random import randint
+from threading import Thread
 
 
-    def main():
-        q = Queue(32)
-        p = Producer(q)
-        c = Consumer(q)
+class Producer(object):
+    def __init__(self, q):
+        self.q = q
 
-        t1 = Thread(target=p)
-        t1.start()
+    def put(self):
+        print('为 Q 添加对象...')
+        self.q.put('xxx', 1)
+        print('当前 Q 大小：%d' % self.q.qsize())
 
-        t2 = Thread(target=c)
-        t2.start()
+    def produce(self):
+        for i in range(5):
+            self.put()
+            sleep(randint(1, 2))
 
-        t1.join()
-        t2.join()
+    def __call__(self):
+        self.produce()
 
-    if __name__ == '__main__':
-        main()
+class Consumer(object):
+    def __init__(self, q):
+        self.q = q
 
+    def get(self):
+        val = self.q.get(1)
+        print('从 Q 取对象...')
+        print('当前 Q 大小：%d' % self.q.qsize())
+
+    def consume(self):
+        for i in range(5):
+            self.get()
+            sleep(randint(2, 5))
+
+    def __call__(self):
+            self.consume()
+
+
+def main():
+    q = Queue(32)
+    p = Producer(q)
+    c = Consumer(q)
+
+    t1 = Thread(target=p)
+    t1.start()
+
+    t2 = Thread(target=c)
+    t2.start()
+
+    t1.join()
+    t2.join()
+
+if __name__ == '__main__':
+    main()
+```
 
 #### 网络编程  
 
