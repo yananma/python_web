@@ -1,4 +1,12 @@
 
+```python
+from time import time 
+
+start = time()
+
+time() - start
+```
+
 IO 密集型，就是很多人在做打纸带的工作，计算不多，还挺空闲；CPU 密集型，就是里面很忙，都在排队等，就好比医生很忙，大家都在排队  
 
 join() 方法就是，让主线程等待子线程执行结束以后再执行  
