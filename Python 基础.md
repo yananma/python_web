@@ -323,18 +323,7 @@ nonlocal 就是闭包里修改外部函数的变量
 
 #### 文件  
 
-最重要的就是 open 函数，有了 open 函数就可以做其他的操作。open(filename, acess_mode='r', encoding='utf-8')  
-```python
-def open_file():  
-    f = open('test.txt', 'r', encoding='utf-8')  
-    print(f.read())  
-
-def write_file():  
-    f = open('test.txt', 'w', encoding='utf-8')  
-    f.write('mayanan')  覆盖写入  
-```
-
-最好是用 with，这样不用再 close  
+f 就是 file  
 
 ```python
 def open_file():  
