@@ -1,8 +1,6 @@
 
 学会爬虫，互联网就是你的资料库  
 
+豆瓣、猫眼、知乎、淘宝、招聘网站、携程、  
 
-
-
-
-读目录查用法：[Requests: 让 HTTP 服务人类 — Requests 2.18.1 文档](https://docs.python-requests.org/zh_CN/latest/)  
+文章、音乐、视频、飞机票、天气、公众号、朋友圈      
