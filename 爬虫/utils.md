@@ -22,3 +22,15 @@ def multi_tread():
     for thread in threads:
         thread.join()
 ```
+
+下载  
+
+```python
+def download(url, name):
+    global count
+    count = count + 1
+    r = requests.get(url, timeout=100)
+    with open("F:/crawling/" + str(count) + '.' + str(name) + '.jpg', 'wb') as f:
+        f.write(r.content)
+    print('已打印第{}张图片'.format(count))
+```
