@@ -1,10 +1,19 @@
 
+Shift + F10 运行  
+
+Shift + ESC 隐藏命令结果行  
+
+Ctrl + Shift + F10 运行当前页面(右上角选择的不是当前页面的时候)  
+
+Alt + 1 显示隐藏当前目录  
+
+Alt + 7 查看方法列表  
 
 格式化代码样式  Ctrl + Alt + l  
 
 切换 Alt + 方向键  
 
-
+*** 
 
 可以 debug，选择 dj 项目，有些是要在网页发送请求的时候才会触发  
 
@@ -24,20 +33,10 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 查找 Edit -> Find；用 Vim 的搜索功能    
 
 
-#### 基本概念
-
 项目是 pycharm 的最大的管理单元  
 
 项目下面有包，包里面有各种模块  
 
-
-#### 创建打开 checkout 项目
-
-创建就是 create，打开就是 open，checkout 可以从 GitHub 上直接 clone 下来  
-
-可以配置 interpreter，就是不同版本的 python  
-
-搜 pycharm interpreter，弄明白  
 
 #### 其他设置
 
