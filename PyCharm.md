@@ -1,5 +1,11 @@
 
 
+格式化代码样式  Ctrl + Alt + l  
+
+切换 Alt + 方向键  
+
+
+
 可以 debug，选择 dj 项目，有些是要在网页发送请求的时候才会触发  
 
 可以在源码中打断点，可以结合源码书共同学习  
@@ -15,7 +21,7 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 可以使用 PyCharm 连接 MySQL  
 
-查找 Edit -> Find  
+查找 Edit -> Find；用 Vim 的搜索功能    
 
 
 #### 基本概念
@@ -37,13 +43,9 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 pycharm 非常强大，可以创建 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
 
-代开 settings，可以使用快捷键 Ctrl + Alt + s，可以配置  
+打开 settings，可以使用快捷键 Ctrl + Alt + s，可以配置  
 
 Alt + Enter 快速修复错误  
-
-格式化代码样式  Ctrl + Alt + l  
-
-
 
 进入全屏：View -> Appearance -> Enter Full Screen    
 
