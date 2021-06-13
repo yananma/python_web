@@ -1,7 +1,10 @@
 
 激活环境：`activate django_rest`  
 退出环境：`deactivate`  
-查看已有环境 `conda env list`
+查看已有环境 `conda env list`  
+
+创建完应用添加到 installed_apps 中，写完视图函数添加 url，  
+
 #### 1、创建项目 创建应用  
 `cd desktop`  
 `mkdir elearning`  
