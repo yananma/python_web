@@ -8,13 +8,13 @@ Web 浏览器、服务器和相关的 Web 应用程序都是通过 HTTP 相互�
 
 HTTP 使用的是可靠的数据传输协议  
 
-Web 内容都是存储在 Web 服务器上的，Web 服务器是 Web 资源的宿主  
+Web 内容都是存储在 Web 服务器上的，Web 服务器是 Web 资源的宿主(电脑和文件)  
 
 媒体类型 MIME Multipurpose Internet Mail Extension 多用途因特网邮件拓展  
 
-Web 服务器会为所有 HTTP 对象数据附加一个 MIME 类型  
+Web 服务器会为所有 HTTP 对象数据附加一个 MIME 类型（文件格式）  
 
-每个 Web 服务器资源都有一个名字，这样客户端就能找到特定的资源了。服务器资源名称被称为统一资源标识符(Uniform Resource Identifier URI)。(urls.py 和 views.py 就是为资源指定地址)  
+每个 Web 服务器资源都有一个名字，这样客户端就能找到特定的资源了。服务器资源名称被称为统一资源标识符(Uniform Resource Identifier URI)  
 
 给定了 URI，HTTP 就可以解析出对象  
 
@@ -248,9 +248,6 @@ Web 隧道，可以通过 HTTP 应用程序访问非 HTTP 协议的应用程序�
 robots.txt 说明了可以访问哪些部分，是一种简单的自愿约束技术  
 
 
-### 第 10 章 HTTP-NG  
-
-
 ### 第 11 章 客户端识别和 cookie 机制  
 
 个性化接触，需要知道客户端的信息。  
@@ -402,7 +399,7 @@ PCA 就是以自动配置方式动态地配置浏览器，使其连接到正确�
 
 ### 附录  
 
-附录有状态码和各种首部的详细介绍，遇到问题可以来查  
+附录有状态码和各种首部的详细介绍  
 
 
 
