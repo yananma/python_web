@@ -99,12 +99,6 @@ lambda 是 key 的 lambda，这个是按数字排序
 `print(sorted(l, key=lambda x:x[1]))`  
 这个是按字母排序  
 
-append() 函数就是在栈顶添加元素  
-
-```python
-a = [1, 2, 3]  
-a.append(4)  # 结果 a = [1, 2, 3, 4]
-```
 
 
 #### 字符串
@@ -116,6 +110,19 @@ r 就是 raw，按照原始的字符串输出，读路径的时候常用
 #### 列表  
 
 列表方法：append、insert、remove、pop、clear、count、sort、reverse、  
+
+append() 函数就是在栈顶添加元素  
+```python
+a = [1, 2, 3]  
+a.append(4)  # 结果 a = [1, 2, 3, 4]
+```
+
+pop() 函数就是在栈顶弹出元素  
+```python
+a = [1, 2, 3]  
+a.pop()    # 弹出 3  
+a.pop(0)   # 弹出 1  
+```
 
 列表推导式：`[x**2 for x in range(5)]`  
 
