@@ -1,4 +1,6 @@
 
+Ctrl + Shift + r 重新连接  
+
 Xftp 连接的时候选 sftp，端口号也是 22  
 
 第一次连接报错：Ubuntu20.04 用Xshell通过SSH连接报错“服务器发送了一个意外的数据包  
