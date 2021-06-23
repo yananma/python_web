@@ -310,28 +310,7 @@ def outer():
 
 outer()  
 ```
-
-```
-outer 函数Source path:... <ipython-input-21-5430cd708e15>
-outer 函数21:27:03.916396 call         2 def outer():
-outer 函数21:27:03.918390 line         3     num = 100
-outer 函数New var:....... num = 100
-outer 函数21:27:03.920386 line         4     @pysnooper.snoop(prefix='inner 函数')
-outer 函数New var:....... inner = <function outer.<locals>.inner at 0x0000019887634C80>
-outer 函数21:27:03.921382 line         7     inner()
-inner 函数    Source path:... <ipython-input-21-5430cd708e15>
-inner 函数    Starting var:.. num = 100
-inner 函数    21:27:03.924377 call         5     def inner():
-inner 函数    21:27:03.943326 line         6         print(num)
-100    # 打印结果在这里  
-inner 函数    21:27:03.978248 return       6         print(num)
-inner 函数    Return value:.. None
-inner 函数    Elapsed time: 00:00:00.054851
-outer 函数21:27:03.982223 return       7     inner()
-outer 函数Return value:.. None
-outer 函数Elapsed time: 00:00:00.069817
-```
-
+[pysnooper 文件：闭包](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/pysnooper%20%E6%96%87%E4%BB%B6/%E9%97%AD%E5%8C%85.md)
 
 闭包的特殊之处在于在这里 inner 可以调用 num 变量，一般是不可以的  
 查找顺序：局部 闭包 全局 内建  
