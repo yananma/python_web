@@ -5,10 +5,11 @@
 
 script 里面的内容就是 js 代码，style 里面就是 css    
 
+```javascript
 function f1(){
-&rmsp; alert('hello world!')  
+    alert('hello world!')  
 }  
-
+```
 
 #### 基本语法
 统一编码，Unicode  
@@ -58,11 +59,61 @@ str.length 就是 len()
 
 
 #### jQuery 简介  
+jQuery 是 JavaScript 的一个类库，非常强大，write less，do more.  
 
+可以通过选择器实现快速查询定位，而且非常简洁  
 
+访问和操作数据元素  
+修改页面样式  
+事件处理  
+实现动画和特效  
+提供大量插件  
+与 ajax 结合的很好  
 
+官网：https://jquery.com/  
+
+#### 下载使用 jQuery  
+官网下载  
+不用安装，直接放到文件中就行，script 标签 src 导入，和 Python 的 import 一模一样  
+
+#### jQuery 的语法风格  
+用的最多的就是 `$` 符号，这个符号就是 jQuery 的缩写  
+通用模板就是 `$(selector).action(function)`  
+
+比如 HTML 页面的一个 p 标签，可以在 <script> 标签中写函数    
+```javascript  
+$(function () {
+    $("p").html("hello world");
+    $("p").css("color", "red");
+}) 
+```
+  
+#### jQuery 的基本应用  
+简单演示用法  
+
+可以通过 id、class 和标签访问
+```javascript  
+$(function() {
+    $("#title").css("color","red");
+    $(".myCls").css("list-style","none");
+    $("button").click(function() {
+        alert("Hello jQuery");
+    })
+})
+```
 
 #### jQuery 选择器  
+快速定位某个或某些元素  
+
+基本选择器：id、class、标签  
+层次关系选择器：空格、大于号、加号、siblings  
+简单过滤选择器：:first :last :not :even :odd 等等 
+内容过滤选择器：:contains(text) :empty :has(selector) :parent  
+可见性过滤选择器：:hidden :visible  
+属性过滤选择器：[attribute] [attribute=value] [attribute!=value] 等等  
+子元素过滤选择器：:nth-child(eq|even|odd|index) :first-child :last-child :only-child  
+表单选择器：:enabled :disabled :checked :select 还有 type 类型 :input :text :password :image :button 等等  
+
 
 
 #### 操作 DOM 文档  
