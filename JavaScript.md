@@ -115,8 +115,32 @@ $(function() {
 表单选择器：:enabled :disabled :checked :select 还有 type 类型 :input :text :password :image :button 等等  
 
 
-
 #### 操作 DOM 文档  
+
+1. 属性操作：获取属性值 attr(name)，设置属性值 attr(key, val) 删除属性值 removeAttr(name)  
+比如 `var title = $("a").attr("title")` `$("a").attr("title", "标题")` 等价于 `$("a").attr({"title":"标题"})` `$("a").removeAttr("title")`  
+2. 元素内容操作：html() text()  
+3. 元素样式操作：css() addClass() toggleClass() removeClass()  
+4. 元素创建：$("")  
+```javascript 
+<script type="text/javascript">
+    $(function() {
+      $("button").click(function() {
+        var h1 = $("<h1>网站标题</h>");
+        var a1 = $("<a href='http://www.baidu.com'>百度</a>");
+        $("body").append(h1);
+        $("body").append(a1);
+      })
+    })
+  </script>
+</head>
+<body>
+
+  <button type="button" name="button">创建元素</button>
+
+</body>
+```
+
 
 
 #### jQuery 事件处理  
