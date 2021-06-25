@@ -1,5 +1,6 @@
 
-Python 可以在 PyCharm 中看源码，虽然没有代码，但是有 doc，doc 里面有例子，是最权威的解释；  
+Python 可以在 PyCharm 中看源码，虽然没有代码，但是有 doc，doc 里面有例子，是最权威的解释，是最好的参考；  
+或者使用 help，效果是一样的。比如 help(getattr)  
 
 比如 setattr  
 ```python 
