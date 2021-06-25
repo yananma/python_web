@@ -1,13 +1,14 @@
 
 #### CSS 基础  
+CSS Cascading Style Sheets 层叠样式表  
 
-CSS 定义了如何显示 HTML 的内容，做到了样式和内容的分离  
+HTML 是内容，CSS 是如何展示内容，CSS 做到了样式和内容的分离  
 
 CSS 主要由两个部分构成：选择器，以及一条或多条声明，每条属性由一个属性和一个值构成  
 
-h1(选择器){color:red(正两个是一条声明，color 是属性，red 是值);font-size:14px;}  
+h1(选择器){color:red(这两个是一条声明，color 是属性，red 是值);font-size:14px;}  
 
-在 HTML 中使用 CSS 有 3 种方式，一种是内联样式，就是写到标签里，style=''，第二种是内部样式，写到 HTML 文件中，还有外部样式，在 HTML 中添加 link，其中 rel='stylesheet', href='style.css'  
+在 HTML 中使用 CSS 有 3 种方式，一种是内联样式，就是写到标签里，style=''，第二种是内部样式，写到 HTML 文件中 <style>，还有外部样式，在 HTML 中添加 link，其中 rel='stylesheet', rel 就是 relation 关系的意思，href='style.css'  
 
 #### CSS 选择器
 
