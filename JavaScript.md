@@ -1,4 +1,6 @@
 
+# 所有的前端技术，都通过看视频学
+
 #### 简介
 
 实现动态效果  
@@ -59,6 +61,9 @@ str.length 就是 len()
 
 
 #### jQuery 简介  
+
+读项目里的 jQuery 代码，找一些好的，作为补充例子  
+
 jQuery 是 JavaScript 的一个类库，非常强大，write less，do more.  
 
 可以通过选择器实现快速查询定位，而且非常简洁  
@@ -128,7 +133,7 @@ $(function() {
       $("button").click(function() {
         var h1 = $("<h1>网站标题</h>");
         var a1 = $("<a href='http://www.baidu.com'>百度</a>");
-        $("body").append(h1);
+        $("body").prepend(h1);
         $("body").append(a1);
       })
     })
@@ -140,11 +145,41 @@ $(function() {
 
 </body>
 ```
-
+5. 内部插入：append() prepend()  
+6. 外部插入：after() before() 
+7. 复制元素：clone()  
+8. 替换元素：replaceWith(content) replaceAll(selector)  
+9. 包装元素：wrap(html) wrap(element) wrap(function)  
+10. 元素的遍历：each(callback) 
+11. 删除元素：remove([expr]) empty()   
 
 
 #### jQuery 事件处理  
 
-
+1. ready() 事件：是最常用的事件，一般都省略不写  
+```javascript
+$(function () {
+    alert('Hello Welcome');
+})
+```
+2. 绑定事件：bind(type, [data], fn)
+3. 切换事件：hover() toggle()  
+4. 解除事件：unbind()  
+5. 触发事件：one() trigger()  
+6. 浏览器事件：ready() resize() scroll()  
+7. 鼠标事件：click() dbclick() hover() mousedown() 等等  
+```javascript
+$(function() {
+    $("button").bind(
+        {
+            click:function() {console.log('click');},
+            focus:function() {console.log('focus');},
+            mousedown:function() {console.log('mousedown');},
+            mouseup:function() {console.log('mouseup');}
+        }
+    )
+})
+```
+8. 键盘事件：keydown() keypress() keyup() 
 
 
