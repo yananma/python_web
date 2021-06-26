@@ -1,4 +1,13 @@
 
+Guido van Rossum: what programming language mean to the people who use them，如果你让一个程序员向不懂程序的人解释，typically 他们会说：“oh，programming language is just how you tell the computer what to do.” 然后可能会举一些具体的例子，But if that is all，if it is just a way to tell a computer what to do，why would programmers so passionate about programming language when you hear they are talking amongst themselves？So in reality，programming languages are much more than just how you tell a computer what to do，**Programming languages are how programmers express themselves and communicate ideas**。是给人看的，而不是给电脑看的。  
+
+What is the idea of Python？Why it is so successful？How does Python distinguish itself from other programming languages？  
+因为 Python is develop on the Internet，entirely in the open，by a community of volunteers who feel passion and ownership.  
+
+I am happiest when I feel that I'm part of such a community. I'm lucky that I can feel it in my day job too。if I can't feel it，I don't feel alive。  
+
+编程就是给你原材料(数据结构)、工具(if语句、for循环、函数、类)和说明书(算法)，自己生产自己想要的产品。想一想自己想去除 Chrome 的 doodle 费了多少周折还是做不成，想定制新建标签页面是何其艰难，这就可以看出编程是有多么广阔的自由度   
+
 Python 可以在 PyCharm 中看源码，虽然没有代码，但是有 doc，doc 里面有例子，是最权威的解释，是最好的参考；  
 比如 setattr  
 ```python 
@@ -12,8 +21,6 @@ def setattr(x, y, v):
 ```
 
 或者使用 help，效果是一样的。比如 help(setattr)  
-
-编程就是给你原材料(数据结构)、工具(if语句、for循环、函数、类)和说明书(算法)，自己生产自己想要的产品。想一想自己想去除 Chrome 的 doodle 费了多少周折还是做不成，想定制新建标签页面是何其艰难，这就可以看出编程是有多么广阔的自由度  
 
 ```python
 a = [1, 2, 3]  
