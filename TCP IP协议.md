@@ -1,6 +1,7 @@
 
-记笔记原则是，一般而言每章记不超过 5 个知识点，多了就没有意义了  
+## 学习方法：3 倍速听，或读三级标题读划线部分  
 
+记笔记原则是，一般而言每章记不超过 5 个知识点，多了就没有意义了  
 
 # TCP/IP 协议  
 
@@ -12,6 +13,11 @@ TCP（Transmission Control Protocol 传输控制协议）是一种面向连接�
 
 TCP 是一个工作在传输层的可靠数据传输的服务，它能确保接收端接收的网络包是无损坏、无间隔、非冗余和按序的。  
 
+ISN 初始序列号，可能是 initial sequence number  
+
+MSL Maximum Segment Lifetime 最长生存时间  
+
+DoS Denial of Service 拒绝服务型攻击  
 
 ### 三次握手四次挥手 
 最重要的是脑子里要有一张图  
@@ -57,6 +63,8 @@ TCP/IP 协议是目前最完整的、被普遍接受的通信协议标准，无�
 
 RFC Request For Comment，是关于 Internet 的一系列注解和文件，是学习和掌握 Internet 知识的最重要的资料。  
 
+![OSI](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/OSI%E6%A8%A1%E5%9E%8B.jpg)
+
 看似是对等层交流，本质上还是通过物理通信的  
 
 ARP Adress Resolution Protocol 用于根据 IP 地址获取物理地址  
@@ -79,7 +87,7 @@ MAC Media Access Control 介质访问控制
 MTU Maximum Transmit Unit 最大传输单元  
 
 
-### 第 3 章 IP 寻址和地址解析(再听一遍，只听这一章)  
+### 第 3 章 IP 寻址和地址解析
 
 IP 地址在网络层实现了底层网络地址的统一，使 TCP/IP 网络层地址具有全局唯一性和一致性  
 
