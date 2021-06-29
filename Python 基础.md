@@ -258,52 +258,7 @@ para_test(1, 3, 4, 5, a=7, b=8, c=9)
 1 <class 'tuple'> (3, 4, 5) <class 'dict'> {'a': 7, 'b': 8, 'c': 9}
 ```
 
-再详细的写法  
-```python 
-def foo(*args, **kwargs):
-    print('args = ', args)
-    print('kwargs = ', kwargs)
-    print('---------------------------------------')
-
-foo(1,2,3,4)
-foo(a=1,b=2,c=3)
-foo(1,2,3,4, a=1,b=2,c=3)
-foo('a', 1, None, a=1, b='2', c=3)
-
-args =  (1, 2, 3, 4)
-kwargs =  {}
----------------------------------------
-args =  ()
-kwargs =  {'a': 1, 'b': 2, 'c': 3}
----------------------------------------
-args =  (1, 2, 3, 4)
-kwargs =  {'a': 1, 'b': 2, 'c': 3}
----------------------------------------
-args =  ('a', 1, None)
-kwargs =  {'a': 1, 'b': '2', 'c': 3}
----------------------------------------
-```
-
-
-《流畅的 Python》5.7 节，示例 5-11 敲一遍，就完全弄明白了  
-
-```python
-@pysnooper.snoop()
-def tag(name, *content, cls=None, **attrs):
-    """生成一个或多个 HTML 标签"""
-    if cls is not None:
-        attrs['class'] = cls
-    if attrs:
-        attr_str = ''.join('%s="%s" '%(attr, value) for attr, value in sorted(attrs.items()))
-    else:
-        attr_str = ''
-    if content:
-        return '\n'.join('<%s %s>%s</%s>'%(name, attr_str, c, name) for c in content)
-    else:
-        return '<%s %s />'%(name, attr_str)
-```
-
-
+[详细例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/args%20%E5%92%8C%20kwargs%20%E8%AF%A6%E7%BB%86.md) 
 
 
 #### 递归函数  
@@ -339,13 +294,16 @@ def outer():
 
 outer()  
 ```
+这个例子中，num 可以读，但是不能改，比如 num = num + 1 就报错  
+
 [pysnooper 文件：闭包](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/pysnooper%20%E6%96%87%E4%BB%B6/%E9%97%AD%E5%8C%85.md)
 
 闭包的特殊之处在于在这里 inner 可以调用 num 变量，一般是不可以的  
 查找顺序：局部 闭包 全局 内建  
 
-局部不能修改全局变量，如果要修改，就要加上 global 关键字  
-nonlocal 就是闭包里修改外部函数的变量  
+局部不能修改全局变量，如果要修改，就要加上 global 关键字 [global 例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/pysnooper%20%E6%96%87%E4%BB%B6/%E9%97%AD%E5%8C%85.md#global)  
+nonlocal 就是闭包里修改外部函数的变量 [nonlocal 例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/pysnooper%20%E6%96%87%E4%BB%B6/%E9%97%AD%E5%8C%85.md#nonlocal)  
+
 
 函数的参数就是局部变量  
 
@@ -428,6 +386,8 @@ raise 是主动抛出异常，assert 是断言，满足条件才往下执行
 
 构造方法就是 \_\_init__，作用就是初始化实例变量，当实例化对象时，一定会调用构造方法  
 
+方法重载，方法名称相同，参数的个数或类型不同  
+
 self 关键字，self 翻译过来就是我自己，指当前对象本身，谁调用该方法，当前对象就是谁；在类里面的方法的第一个关键字必须是 self；self 就是 this，翻译成这个实例的  
 
 验证 self 就是实例本身代码  
@@ -481,6 +441,7 @@ class Site(object):
 name = Site.get_name()  
 print(name)  
 ```
+静态方法不能访问实例变量（因为没有实例化），也不能访问类变量。（静态方法用的不多）  
 
 类方法用的是 @classmethod，第一个参数必须是 cls 类本身  
 ```python
@@ -541,6 +502,8 @@ ff.swim()
 
 必须是继承关系；子类覆盖(重写)父类里面的同名方法  
 
+如果子类重新实现了父类中的同名方法，调用的时候，会使用子类的方法，也就是子类的优先级更高  
+
 源码是使用了 update 方法，如果有同名方法，就 update，覆盖原来的方法    
 
 既可以复用，又可以保证灵活性，可以根据实际情况修改定制  
@@ -555,17 +518,20 @@ class Animal(object):
 
 
 class Dog(Animal):  
+    # 这个例子很好地展示了方法覆盖的含义  
     def run(self):  
+        super.run()   # 这里调用的就是父类的 run 方法，覆盖，但是用的时候还可以用，这就是 super 的作用  
         print('dog run...')  
 
 
 hua = Dog()  
-
 hua.run()  
 hua.sleep()  
 ```
 
 #### super 关键字 
+
+上面的例子更好，说明了 super 的作用就是调用父类的方法  
 
 调用父类的初始化方法 super().\_\_init__()  
 调用父类的其他属性和方法  
@@ -581,7 +547,7 @@ class Person(object):
 
 class Manager(Person):  
     def __init__(self):  
-        super().__init__('mayanan', 26)  
+        super().__init__('mayanan', 26)   # 理解 super().__init__() 的很好的例子
 
     def m_display(self):  
         super().display()  
@@ -590,11 +556,33 @@ m = Manager()
 m.m_display()  
 ```
 
+
+#### issubclass  
+
+判断前面一个类是不是后面类的子类  
+
+```python 
+class Animal(object):
+    pass 
+    
+class Dog(Animal):
+    pass  
+    
+print(issubclass(Dog, Animal))    # True   
+
+```
+
 #### isinstance 
 
 isinstance(obj, cls)  
 
-判断一个实例是不是一个类的实例  
+判断一个实例是不是后面这个类的实例  
+
+```python
+a = [1, 2, 3]  
+isinstance(a, list)    # True
+```
+
 
 #### 属性操作  
 
@@ -606,17 +594,76 @@ class Person(object):
 
 p = Person('mayanan')  
 print(hasattr(p, 'name')) True  
-print(getattr(p, 'name')) 就是 p.name  
-setattr(p, 'name', 'mayanan')  
+print(getattr(p, 'name'))   # 就是 p.name  
+setattr(p, 'name', 'mayanan')    # 等价于 p.name = 'mayanan'，想一想是非常合理的，因为要 set  
 print(p.name)  
 delattr(p, 'name')  
 print(hasattr(p, 'name')) False   
 ```
 
+#### Python 组合关系  
+
+Python 类之间有继承关系，也有组合关系，组合有一对一，一对多，多对一，多对多  
+
+人骑车  
+``python 
+class Person(object):
+    def ride(self, b):
+        b.run()
+
+
+class Bicycle(object):
+    def run(self):
+        print('run...')
+
+
+b = Bicycle()
+p = Person()
+p.ride(a, b)
+```
+
+
+最好的一个例子  
+```python
+class Author(object):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+class Course(object):
+    def __init__(self, name, runtime, author):
+        self.name = name
+        self.runtime = runtime
+        self.author = author
+
+class Site(object):
+    def __init__(self, name, address, courses):
+        self.name = name
+        self.address = address
+        self.courses = courses
+
+a = Author('马亚南', 26)
+py = Course('Python 基础', 100, a)
+dj = Course('Django 项目', 120, a)
+
+xxkt = Site('享学课堂', '2xkt.com', [py, dj])
+
+print(xxkt.name)
+print(xxkt.address)
+courses = xxkt.courses
+
+for c in courses:
+    print(c.name, c.runtime, c.author.name)
+# print(xxkt.courses)
+```
+
+
 #### 序列化和反序列化  
 
-对象序列化就是把对象保存成文件格式，用 pickle.dumps()  
-反序列化就是把对象从文件转化为对象，用 pickle.load()  
+作用就是持久保存  
+
+对象序列化就是把对象保存成文件格式，从 Python 转成 Windows，用 pickle.dumps()  
+反序列化就是把对象从文件转化为对象，从 Windows 转成 Python，用 pickle.load()  
 
 因为一般情况下，结束以后内容就消失了，所以有了序列化    
 ```python
@@ -646,6 +693,13 @@ def read():
 # write()  
 read()  
 ```    
+
+#### Python 访问控制  
+
+主要就控制是变量和方法的调用  
+
+一个下划线，意思是受保护的，但只是一种口头约定，用的时候和一般的完全一样，丝毫不会影响。  
+前面两个下划线，意思是私有的，调用的时候会报错，说没有这个变量或方法  
 
 #### 多线程  
 
