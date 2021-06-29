@@ -602,7 +602,7 @@ print(hasattr(p, 'name')) False
 Python 类之间有继承关系，也有组合关系，组合有一对一，一对多，多对一，多对多  
 
 人骑车  
-``python 
+```python 
 class Person(object):
     def ride(self, b):
         b.run()
