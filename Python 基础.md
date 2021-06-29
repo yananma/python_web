@@ -1,10 +1,6 @@
 
-Guido van Rossum: What programming language mean to the people who use them，如果你让一个程序员向不懂程序的人解释，typically they will say：“oh，programming language is just how you tell the computer what to do.” 然后可能会举一些具体的例子，But if that is all，if it is just a way to tell a computer what to do，why would programmers so passionate about programming language when you hear they are talking amongst themselves？So in reality，programming languages are much more than just how you tell a computer what to do，**Programming languages are how programmers express themselves and communicate ideas**。是给人看的，而不是给电脑看的。  
+Guido van Rossum: **Programming languages are how programmers express themselves and communicate ideas**。  
 
-What is the idea of Python？Why it is so successful？How does Python distinguish itself from other programming languages？  
-因为 Python is develop on the Internet，entirely in the open，by a community of volunteers who feel passion and ownership.  
-
-I am happiest when I feel that I'm part of such a community. I'm lucky that I can feel it in my day job too。if I can't feel it，I don't feel alive。  
 
 编程就是给你原材料(数据结构)、工具(if语句、for循环、函数、类)和说明书(算法)，自己生产自己想要的产品。想一想自己想去除 Chrome 的 doodle 费了多少周折还是做不成，想定制新建标签页面是何其艰难，这就可以看出编程是有多么广阔的自由度   
 
@@ -154,7 +150,7 @@ a.pop(0)   # 弹出 1
 列表是用来保存多个相互独立对象的数据集合  
 元组设计的初衷就是为了描述一个不会改变的事物的多个属性  
 
-[列表存储空间分配](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB.md)
+[列表存储空间分配](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Python%20%E5%9F%BA%E7%A1%80/%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB.md)
 
 #### 集合
  {} 或 set()，去重  
@@ -258,7 +254,7 @@ para_test(1, 3, 4, 5, a=7, b=8, c=9)
 1 <class 'tuple'> (3, 4, 5) <class 'dict'> {'a': 7, 'b': 8, 'c': 9}
 ```
 
-[详细例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/args%20%E5%92%8C%20kwargs%20%E8%AF%A6%E7%BB%86.md) 
+[详细例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Python%20%E5%9F%BA%E7%A1%80/args%20%E5%92%8C%20kwargs%20%E8%AF%A6%E7%BB%86.md) 
 
 
 #### 递归函数  
