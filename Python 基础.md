@@ -1,5 +1,5 @@
 
-Guido van Rossum: what programming language mean to the people who use them，如果你让一个程序员向不懂程序的人解释，typically 他们会说：“oh，programming language is just how you tell the computer what to do.” 然后可能会举一些具体的例子，But if that is all，if it is just a way to tell a computer what to do，why would programmers so passionate about programming language when you hear they are talking amongst themselves？So in reality，programming languages are much more than just how you tell a computer what to do，**Programming languages are how programmers express themselves and communicate ideas**。是给人看的，而不是给电脑看的。  
+Guido van Rossum: What programming language mean to the people who use them，如果你让一个程序员向不懂程序的人解释，typically they will say：“oh，programming language is just how you tell the computer what to do.” 然后可能会举一些具体的例子，But if that is all，if it is just a way to tell a computer what to do，why would programmers so passionate about programming language when you hear they are talking amongst themselves？So in reality，programming languages are much more than just how you tell a computer what to do，**Programming languages are how programmers express themselves and communicate ideas**。是给人看的，而不是给电脑看的。  
 
 What is the idea of Python？Why it is so successful？How does Python distinguish itself from other programming languages？  
 因为 Python is develop on the Internet，entirely in the open，by a community of volunteers who feel passion and ownership.  
@@ -147,6 +147,14 @@ a.pop(0)   # 弹出 1
 
 列表推导式：`[x**2 for x in range(5)]`  
 
+#### 列表和元组的区别  
+
+最核心的一点就是，列表是动态数组，列表是可变的;元组是静态数组，不可变，且其内部数据一旦创建便无法改变。我们可以修改列表的值，但是不修改元组的值。    
+
+列表是用来保存多个相互独立对象的数据集合  
+元组设计的初衷就是为了描述一个不会改变的事物的多个属性  
+
+[列表存储空间分配](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB.md)
 
 #### 集合
  {} 或 set()，去重  
