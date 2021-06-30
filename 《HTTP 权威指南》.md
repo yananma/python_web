@@ -335,6 +335,8 @@ Transfer-Encoding：chunked 分块
 
 ETag 文档每个实例的唯一标识符，由服务器在响应中发送，客户端在后继请求的 If-Match 和 If-None-Match 首部中使用它  
 
+[编码：ASCII、Unicode、UTF-8、GBK 的区别](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037080&idx=3&sn=fa5c1437db40ae0fad57a4ec31f97524&chksm=872bb7e1b05c3ef71984b33f38635f5cb4592187a11ffbfacc044b5fb4ca8a1f64938ddfbed6&scene=21#wechat_redirect)  
+
 
 ### 第 16 章 国际化  
 
