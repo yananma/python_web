@@ -5,9 +5,9 @@
 
 方法是先读源码，遇到不会的读一章，分而治之，各个击破  
 
-元类(metaclass)、静态方法和类方法、字典推导式、迭代器和生成器、装饰器、\_\_new__ 和 \_\_init__、作用域、闭包、垃圾回收机制、
+元类(metaclass)、静态方法和类方法、字典推导式、装饰器、作用域、闭包、
 
-已完成：单下划线和双下划线、== 和 is、copy 和 deepcopy、  
+已完成：单下划线和双下划线、[== 和 is](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454038245&idx=4&sn=6c4f80bee2292ad74ec8466428bf4bdc&chksm=872bb35cb05c3a4a57955cd41f949c3608d5742b05298507004da975a3174b2b7425fbbbd6ec&scene=21#wechat_redirect)、[copy 和 deepcopy](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037267&idx=4&sn=6c41c5e950dc057a0713cf7e683d3403&chksm=872bb6aab05c3fbc7874054dbab0df0771a6666e2d1799d7f04276a0cc4b998141fef4c60c44&scene=21#wechat_redirect)、[迭代器和生成器](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037337&idx=5&sn=3c84b314c82f72abf2213b1982b70311&chksm=872bb6e0b05c3ff6c284aba96b1203c1335f1f256c2a7ad9513cecd835c5ee89c40789a09fc6&scene=21#wechat_redirect)、[垃圾回收机制](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037551&idx=5&sn=63f15731506f43c134320f594ba1d2fb&chksm=872bb196b05c3880378e6bee135e9f03d3e72f08606f55790a69f7e92961c74c0ef6c37fc3a6&scene=21#wechat_redirect)、[\_\_new__ 和 \_\_init__](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037869&idx=5&sn=1b101279e96bd18cdb2e88d135703f94&chksm=872bb0d4b05c39c2786ed93d90f1ef07bca0d624bc07d893c59b094aafbe98eaea1fdbdeaffa&scene=21#wechat_redirect)    
 
 以这一篇为标准，[《流畅的python》阅读笔记](https://segmentfault.com/a/1190000011568813) [备份链接](https://zhuanlan.zhihu.com/p/30754843)，自己写的笔记就是一些补充    
 
@@ -54,14 +54,13 @@ print(my_dog)
 
 
 
-
 ### 第8章 对象引用、可变性和垃圾回收  
 
 为了理解 Python 中的赋值语句，应该始终先读右边。对象在右边创建或获取，然后为对象贴贴纸  
 
 对象一旦建立，标识就不会再变，就是 id，就是内存地址，就是身份证  
 
-is 比较的是地址；== 比较的是存储的内容  
+is 比较的是id；== 比较的是 value    
 
 元组如果有可变的元素，那么元组元素是可变的，元组不可变说的是元组的标识不会变  
 
@@ -161,6 +160,11 @@ Python 不像 Java 那样使用 private 来创建私有属性，但是 Python �
 ## 其他  
 
 python 自省就是运行时能够获得对象的类型。比如type()，dir()，getattr()，hasattr()，isinstance()  
+
+[Python 自省方法](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454038123&idx=4&sn=e4f654549eca6d51344873c6f85568cb&chksm=872bb3d2b05c3ac4b0cffac332d71256a3e19813e0187ef77076e32f78423d37c9e71111e07a&scene=21#wechat_redirect)  
+自省是一种自我检查行为。在计算机编程中，自省是指这种能力：检查某些事物以确定它是什么、它知道什么以及它能做什么。自省向程序员提供了极大的灵活性和控制力。  
+
+说的更简单直白一点：自省就是面向对象的语言所写的程序在运行时，能够知道对象的类型。一句可以概况为：运行时能够获知对象的类型。  
 
 字典推导式 
 ```python
