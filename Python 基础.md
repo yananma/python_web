@@ -904,122 +904,129 @@ socket 就是插座，5 个部分连接上以后才是一个 socket，协议 ip 
 要打开端口  
 
 TCP 服务器  
+```python
+from socket import *  
+from time import ctime  
 
-    from socket import *  
-    from time import ctime  
+HOST = 'localhost'  
+PORT = 10001  
+BUFFER = 1024  
+ADDRESS = (HOST, PORT)  
 
-    HOST = 'localhost'  
-    PORT = 10001  
-    BUFFER = 1024  
-    ADDRESS = (HOST, PORT)  
+serverSocket = socket(AF_INET, SOCK_STREAM)  
+serverSocket.bind(ADDRESS)  
 
-    serverSocket = socket(AF_INET, SOCK_STREAM)  
-    serverSocket.bind(ADDRESS)  
+serverSocket.listen(5)  
 
-    serverSocket.listen(5)  
-
+while True:  
+    print('等待连接...')  
+    clientSocket, add = serverSocket.accept()  
+    print('连接来自：', add)  
     while True:  
-        print('等待连接...')  
-        clientSocket, add = serverSocket.accept()  
-        print('连接来自：', add)  
-        while True:  
-            data = clientSocket.recv(BUFFER).decode()  
-            print('来自客户端的信息：', data)  
-            if not data:  
-                break  
-            clientSocket.send(('[%s] %s' %(ctime(), data)).encode())  
-        clientSocket.close()  
+        data = clientSocket.recv(BUFFER).decode()  
+        print('来自客户端的信息：', data)  
+        if not data:  
+            break  
+        clientSocket.send(('[%s] %s' %(ctime(), data)).encode())  
+    clientSocket.close()  
 
-    serverSocket.close()  
+serverSocket.close()  
+```
 
 TCP 客户端  
 
-    from socket import *  
+```python
+from socket import *  
 
-    HOST = 'localhost'  
-    PORT = 10001  
-    BUFFER = 1024  
-    ADDRESS = (HOST, PORT)  
+HOST = 'localhost'  
+PORT = 10001  
+BUFFER = 1024  
+ADDRESS = (HOST, PORT)  
 
-    clientSocket = socket(AF_INET, SOCK_STREAM)  
-    clientSocket.connect(ADDRESS)  
-    while True:  
-        data = input('>')  
-        if not data:  
-            break  
-        clientSocket.send(data.encode())  
-        data = clientSocket.recv(BUFFER).decode()  
-        if not data:  
-            break  
-        print(data)  
+clientSocket = socket(AF_INET, SOCK_STREAM)  
+clientSocket.connect(ADDRESS)  
+while True:  
+    data = input('>')  
+    if not data:  
+        break  
+    clientSocket.send(data.encode())  
+    data = clientSocket.recv(BUFFER).decode()  
+    if not data:  
+        break  
+    print(data)  
 
-    clientSocket.close()  
-
+clientSocket.close()  
+```
 
 UDP 服务器 
 
-    from socket import *
-    from time import ctime
+```python
+from socket import *
+from time import ctime
 
-    HOST = 'localhost'
-    PORT = 10001
-    BUFFER = 1024
-    ADDRESS = (HOST, PORT)
+HOST = 'localhost'
+PORT = 10001
+BUFFER = 1024
+ADDRESS = (HOST, PORT)
 
-    udpSocket = socket(AF_INET, SOCK_DGRAM)
-    udpSocket.bind(ADDRESS)
+udpSocket = socket(AF_INET, SOCK_DGRAM)
+udpSocket.bind(ADDRESS)
 
-    while True:
-        print('等待信息...')
-        data, addr = udpSocket.recvfrom(BUFFER)
-        if not data:
-            break
-        print(data.decode())
-        udpSocket.sendto(('[%s] %s' %(ctime(), data.decode())).encode(), addr)
-        print('返回给：', addr)
+while True:
+    print('等待信息...')
+    data, addr = udpSocket.recvfrom(BUFFER)
+    if not data:
+        break
+    print(data.decode())
+    udpSocket.sendto(('[%s] %s' %(ctime(), data.decode())).encode(), addr)
+    print('返回给：', addr)
 
-    udpSocket.close()
-
+udpSocket.close()
+```
 
 
 UDP 客户端  
 
-    from socket import *
+```python
+from socket import *
 
-    HOST = 'localhost'
-    PORT = 10001
-    BUFFER = 1024
-    ADDRESS = (HOST, PORT)
+HOST = 'localhost'
+PORT = 10001
+BUFFER = 1024
+ADDRESS = (HOST, PORT)
 
-    udpClient = socket(AF_INET, SOCK_DGRAM)
+udpClient = socket(AF_INET, SOCK_DGRAM)
 
-    while True:
-        data = input('>')
-        if not data:
-            break
-        udpClient.sendto(data.encode(), ADDRESS)
-        data, ADDRESS = udpClient.recvfrom(BUFFER)
-        if not data:
-            break
-        print(data.decode())
-        print(ADDRESS)
+while True:
+    data = input('>')
+    if not data:
+        break
+    udpClient.sendto(data.encode(), ADDRESS)
+    data, ADDRESS = udpClient.recvfrom(BUFFER)
+    if not data:
+        break
+    print(data.decode())
+    print(ADDRESS)
 
-    udpClient.close()
+udpClient.close()
+```
 
 #### 服务器  
 
-    import socket
+```python
+import socket
 
-    sock = socket.socket()
-    sock.bind(('127.0.0.1', 80))
-    sock.listen(5)
+sock = socket.socket()
+sock.bind(('127.0.0.1', 80))
+sock.listen(5)
 
-    while True:
-      conn, addr = sock.accept()
-      data = conn.recv(8096)
-      conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
-      conn.send(b'123')
-      conn.close()
+while True:
+  conn, addr = sock.accept()
+  data = conn.recv(8096)
+  conn.send(b'HTTP/1.1 200 OK\r\n\r\n')
+  conn.send(b'123')
+  conn.close()
+```
 
 可以在阿里云服务器上跑，把 IP 改成 0.0.0.0，端口自己指定，阿里云打开安全组端口  
 
