@@ -71,6 +71,7 @@ def sum_two_numbers(a: int, b: int) -> int:
     return a + b
 ```
 
+PEP 是 Python Enhancement Proposal 的缩写，通常翻译为“Python增强提案”。每个 PEP 都是一份为 Python 社区提供的指导 Python 往更好的方向发展的技术文档，其中的第 8 号增强提案（PEP 8）是针对 Python 语言编订的代码风格指南。  
 
 #### 占位符
 
@@ -79,11 +80,24 @@ name = 'mayanan'
 age = 30  
 print('%s, %d' % (name, age))  
 ```
+
+[% 和 format](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037457&idx=4&sn=232076a78028e1cf7b3496ead5ab465e&chksm=872bb668b05c3f7e958f5e9bb8306e2bf743472adbe9d42a5f8db5b3be8077e02a8af104f6da&scene=21#wechat_redirect)  
+
 占位符的读法是，读到哪一个就把后面的名字提到前面来读  
 
 前端 `{% extends 'base.html' %}` 也是这样，把 base.html 的内容替换到当前的 HTML 文件中，就很清楚了  
 
 `super().__init__(*args, **kwargs)` 也是这个意思，把父类中的 \_\_init__ 方法中的内容放到当前 \_\_init__ 中  
+
+#### Python 数据类型  
+
+Python 的六种标准数据类型：数字、字符串、列表、元组、字典、集合。  
+
+不可变数据（3个）：Number（数字）、String（字符串）、Tuple（元组）。
+可变数据（3个）：List（列表）、Dictionary（字典）、Set（集合）。  
+
+[可变数据类型和不可变数据类型，这一篇说的最清楚](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037174&idx=3&sn=e44a0b1fcf6e374119c5a970f38cba87&chksm=872bb70fb05c3e194d3daaffc7033bab02fab9ae88908ff488638dd7c8d3fa8c9eb0d315e437&scene=21#wechat_redirect)  
+
 
 #### 数字  
 
@@ -116,8 +130,6 @@ lambda 是 key 的 lambda，这个是按数字排序
 `print(sorted(l, key=lambda x:x[1]))`  
 这个是按字母排序  
 
-
-
 #### 字符串
 
 字符串统一使用单引号    
@@ -127,6 +139,7 @@ r 就是 raw，按照原始的字符串输出，读路径的时候常用
 #### 列表  
 
 列表方法：append、insert、remove、pop、clear、count、sort、reverse、  
+列表方法可以在 PyCharm 中看，`a = list()` 看 list  
 
 append() 函数就是在栈顶添加元素  
 ```python
@@ -157,7 +170,11 @@ a.pop(0)   # 弹出 1
 
 #### 字典
 
-键值对  
+字典其实就是字典，键是目录的一条，值是具体的详细内容。特点就是关联关系和哈希存储  
+
+字典是 Python 提供的一种常用的数据结构，主要用于存放具有映射关系的数据 。比如保存某班同学的成绩单数据，张三：95分，李四：70分，王五：100分 ... ，因为姓名和成绩是有关联的，所以不能单独用两个列表来分别保存，这时候用字典来存储，再合适不过了。  
+
+字典是一种可变的容器模型，它是通过一组键（key）值（value）对组成，这种结构类型通常也被称为映射，或者叫关联数组，也有叫哈希表的。每个key-value之间用“:”隔开，每组用“,”分割，整个字典用“{}”括起来。  
 
 JSON(JavaScript Object Notation) 是一种数据格式，是一种 Notation，和 CSV 一个级别。  
 
@@ -174,7 +191,7 @@ OrderedDict 是使用双向链表存储，插入的时候在链表表尾插入
 
 #### range 函数
 
-range(start, stop, step)  
+range(start, stop, step)    # 是非常合理的，step 可有可无，放到最后面，start 开头，stop 结尾  
 
 #### break 和 continue  
 
@@ -363,6 +380,8 @@ try except 的时候一般会 print 错误信息，否则不知道错在什么�
 
 finally 不管有没有异常都会执行，比如 close 文件，关闭数据库等等  
 
+[异常](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454038018&idx=4&sn=cacc75f7858e5b66949a5e85f54e36ac&chksm=872bb3bbb05c3aad0d07d352f0b8ae10ce6351490f19b44b232999fc0560d85f8843d7d22d6c&scene=21#wechat_redirect)
+
 #### raise 和 assert  
 
 raise 是主动抛出异常，assert 是断言，满足条件才往下执行  
@@ -373,8 +392,15 @@ raise 是主动抛出异常，assert 是断言，满足条件才往下执行
 
 #### 面向对象  
 
-抽象、封装、继承、多态  
+[封装、继承、多态](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037085&idx=2&sn=6f898ae80004ed081648b761f271c63a&chksm=872bb7e4b05c3ef25f205f55fdf50189e66b03b48dcac5f6b2089a7dab4ef94d164ba567d337&scene=21#wechat_redirect)    
 封装，比如汽车，最后留给我们的只有几个方向盘，刹车等几个接口，发动机、变速箱等都封装了起来  
+
+隐藏对象的属性和实现细节，仅对外提供公共访问方式。  
+好处：1. 将变化隔离；2. 便于使用；3. 提高复用性；4. 提高安全性。  
+在python中用双下划线开头的方式将属性设置成私有的。  
+
+多态是一种事物的多种体现形式，函数的重写其实就是多态的一种体现。  
+多态的好处：（1）增加了程序的灵活性；（2）增加了程序可扩展性  
 
 类是抽象的，是一个模板；对象是具体的，是类的一个实例  
 
