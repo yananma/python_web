@@ -1,3 +1,5 @@
+
+```python
 from django import forms
 
 class ContactForm(forms.Form):
@@ -11,3 +13,4 @@ class ContactForm(forms.Form):
         ('VERYGOOD', '好评'),
     )
     category = forms.ChoiceField(choices=CATEGORY_ITEM)
+```
