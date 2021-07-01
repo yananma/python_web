@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  你确定要删除吗？
+  <form class="" action="{% url 'del' object.id %}" method="post">
+
+    <input type="submit" name="" value="删除">
+
+    {% csrf_token %}
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+  <title>留言板</title>
+</head>
+<body>
+
+<h1 class='page-header'>留言板</h1>
+
+<form action="{% url 'update' object.id %}" method="post" class="smart-green">
+<h1>留言板
+<span>请添加您的留言信息.</span>
+</h1>
+
+<label>
+<span>姓名 :</span>
+{{form.name}}
+</label>
+
+<label>
+<span>邮箱 :</span>
+{{form.email}}
+</label>
+
+<label>
+<span>留言 :</span>
+{{form.content}}
+</label>
+
+<label>
+<span>分类 :</span>
+{{form.category}}
+</label>
+
+<label>
+<span>&nbsp;</span>
+<input type="submit" class="button" value="提交" />
+</label>
+
+{%csrf_token%}
+
+</form>
+
+</body>
+</html>

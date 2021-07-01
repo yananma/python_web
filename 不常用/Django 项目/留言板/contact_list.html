@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+  <title>留言列表</title>
+</head>
+<body>
+
+  <div class="container">
+    <h3 class="page-header">留言列表</h3>
+    <table class="table table-bordered">
+      <tr>
+        <th>#</th><th>姓名</th><th>邮箱</th><th>内容</th><th>修改</th><th>删除</th>
+      </tr>
+      {% for obj in object_list %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{obj.name}}</td>
+        <td>{{obj.email}}</td>
+        <td>{{obj.content}}</td>
+        <td><a href="/myapp/update/{{obj.id}}">修改</a></td>
+        <td><a href="/myapp/del/{{obj.id}}">删除</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <a href="/myapp/create">添加</a>
+  </div>
+  {% csrf_token %}
+
+
+</body>
+</html>
