@@ -1,5 +1,13 @@
 
-一节课一行笔记  
+一节课一行笔记，写实现某项功能的关键  
+
+### 排错清单  
+单词写错了  
+缺括号  
+创建应用以后，没在 INSTALLED_APPS 中添加  
+Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
+类中的方法没写 self  
+
 
 ## Django 入门  
 
@@ -94,7 +102,7 @@ class PersonDetailView(DetailView):
 
 标签  
 {% if 或 for %}  
-{% url 'detail' %}
+{% url 'detail' %}  
 {% block title，extends 'base.html'，include %}  
 
 过滤器  
@@ -108,13 +116,347 @@ class PersonDetailView(DetailView):
 [models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/models.py)  
 [forms.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/forms.md)  
 [views.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/views.py)  
+视图函数全部都是使用 View 创建  
 
 ## 博客项目  
+
+#### 前期准备  
+项目演示  
+下载安装  
+创建项目，创建应用  
+
+[models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E5%8D%9A%E5%AE%A2/models.py)  
+```python
+STATIC_URL = '/static/'    # 这个是 url 用的
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')    # 这个是目录  
+]
+```
+
+配置视图和 url  
+后台注册  
+
+### 首页  
+
+#### 轮播图替换  
+is_active 发挥作用  
+```python
+{% for banner in banner_list %}
+{% if banner.is_active %}
+<li data-target="#focusslide" data-slide-to="{{banner.idx}}" class="active"></li>
+{% else %}
+<li data-target="#focusslide" data-slide-to="{{banner.idx}}"></li>
+{% endif %}
+{% endfor %}
+```
+
+#### 推荐博客  
+models.py 中的 blog 模型有一个 recommend 字段：` recommend = models.BooleanField('推荐博客', default=False)`  
+views.py `recommend_list = Post.objects.filter(recommend=1)`  
+前端页面  
+```python 
+{% for post in recommend_list %}
+<article class="excerpt-minic excerpt-minic-index">
+    <h2><span class="red">【推荐】</span><a target="_blank" href="/blog/{{post.id}}" title="{{post.title}}" >{{post.title}}</a>
+    </h2>
+    <p class="note">{{post.content}}</p>
+</article>
+{% endfor %}
+```
+
+#### 最新博客列表   
+`post_list = Post.objects.order_by('pub_date').all()[:3]`
+
+主外键关联关系，category 是 post 的 ForeignKey  
+`<a class="cat" href="/category/{{post.category.id}}" title="{{post.category.name}}" >{{post.category.name}}<i></i></a>`  
+
+评论数  
+`{{post.views}}`  
+
+浏览数  
+`{{post.comment_set.count}}`  
+
+#### 博客分类  
+先创建 BlogCategory 类：  
+```python 
+class BlogCategory(models.Model):
+    name = models.CharField('分类名称', max_length=20, default='')
+```
+在 Post 类中外键关联  
+`category = models.ForeignKey(BlogCategory, verbose_name='博客分类', default=None, on_delete=True)`  
+在 views.py 的 index 函数中取值  
+`blogcategory_list = BlogCategory.objects.all()`  
+在前端页面显示  
+```python
+{% for c in blogcategory_list %}
+    <a href="/category/{{c.id}}" title="{{c.name}}" >{{c.name}}</a>
+{% endfor %}
+```      
+
+#### 右侧最新评论文章  
+一篇文章 20 个评论都是最新的，但是不能把这篇文章显示 20 次，所以要去重  
+views.py   
+```python
+comment_list = Comment.objects.order_by('pub_date').all()[:10]    # 取出最新的评论  
+comment_list1 = []
+post_list1 = []
+for c in comment_list:
+    if c.post.id not in post_list1:
+        comment_list1.append(c)
+        post_list1.append(c.post.id)
+ctx = {
+    'comment_list':comment_list1,
+}
+```
+前端展示，关联关系，comment 类中有 post 字段：`post = models.ForeignKey(Post, verbose_name='博客', on_delete=True)`    
+```python
+{% for c in comment_list %}
+<li>
+  <a title="{{c.post.title}}" href="#" >
+    <span class="thumbnail">
+            <img class="thumb" data-original="/{{c.post.cover}}" src="/{{c.post.cover}}" alt="{{c.post.cover}}"  style="display: block;">
+        </span>
+    <span class="muted"><i class="glyphicon glyphicon-time"></i>
+            {{c.post.pub_date|date:'Y-m-d'}}
+        </span>
+  </a>
+</li>
+{% endfor %}
+```
+
+#### 搜索功能
+要创建一个视图函数，用的是 list 列表页模板  
+前端 index.html 是一个 form 表单    	
+```python
+<form class="navbar-form" action="/search" method="post">
+  <div class="input-group">
+        <input type="text" name="keyword" (views 函数中是用这里的 name 取的输入的值) class="form-control" size="35" placeholder="请输入关键字" maxlength="15">
+        <span class="input-group-btn">
+        <button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+        </span>
+  </div>
+</form>
+```
+```python 
+class SearchView(View):
+    def get(self, request):
+        pass
+    def post(self, request):
+        kw = request.POST.get('keyword')
+        post_list = Post.objects.filter(Q(title__icontains=kw)|Q(content__icontains=kw))
+        ctx = {
+            'post_list':post_list,
+        }
+        return render(request, 'list.html', ctx)
+```
+前端 list.html 展示文章    
+```python
+{% for post in post_list.object_list %}
+  <article class="excerpt excerpt-1"><a class="focus" href="/blog/{{post.id}}" title="{{post.title}}" target="_blank" >
+	<header><a class="cat" href="#" title="{{post.category.name}}" >{{post.category.name}}<i></i></a>
+	  <h2><a href="/blog/{{post.id}}" title="{{post.title}}" target="_blank" >{{post.title}}</a></h2>
+	</header>
+  </article>
+{% endfor %}
+```
+
+#### 友情链接  
+需要在 models.py 写一个类  
+```python 
+class FriendlyLink(models.Model):
+    title = models.CharField('标题', max_length=50)
+    link = models.URLField('链接', max_length=50, default='')
+```    
+在 admin.py 中注册  
+`admin.site.register(FriendlyLink)`  
+在 views.py 的 index 视图函数中取值  
+`links = FriendlyLink.objects.all()`  
+前端替换  
+```python 
+{% for link in links %}
+    <a href="{{link.link}}" title="{{link.title}}" target="_blank">{{link.title}}</a>&nbsp;&nbsp;&nbsp;
+{% endfor %}
+```
+
+#### 列表页  
+就是写一个视图函数，去除所有的值  
+
+#### 分页功能  
+安装 django-pure-pagination  
+照着 github 官方文档一步一步写就行了。  
+
+#### 标签云功能  
+views.py 中创建一个类  
+```python 
+class TagMessage(object):
+    def __init__(self, tid, title, count):
+        self.tid = tid
+        self.title = title
+        self.count = count
+```
+在 views.py 的 blog_list 视图函数中添加  
+```python 
+tags = Tags.objects.all()
+tag_message_list = []
+for t in tags:
+    count = len(t.post_set.all())
+    tm = TagMessage(t.id, t.title, count)
+    tag_message_list.append(tm)
+
+ctx = {
+    'tags':tag_message_list,
+}
+```
+前端 index.html 中  
+```python
+{% for t in tags %}
+    <li><a href="/tags/{{t.tid}}" title="{{t.title}}">{{t.title}} <span class="badge">{{t.count}}</span></a></li>
+{% endfor %}
+```
+
+#### 分类查询功能  
+在视图中获取数据  
+```python
+def blog_list(request, cid=-1):
+    post_list = None
+    if cid != -1:    # 分类查询  
+        category = BlogCategory.objects.get(id=cid)
+        post_list = category.post_set.all()    # 多对多  
+    else:    # 默认查询所有  
+        post_list = Post.objects.all()
+```
+配置 url  
+`path('category/<int:cid>', views.blog_list, name='category')`  
+在前端页面显示  
+```python
+{% for c in blogcategory_list %}
+    <a href="/category/{{c.id}}" title="{{c.name}}" >{{c.name}}</a>
+{% endfor %}
+```
+
+#### 标签查询功能  
+和上面的过程一样  
+添加一个 tid  
+```python 
+def blog_list(request, tid=-1):
+    post_list = None
+    if tid!=-1:
+        tag = Tags.objects.get(id=tid)
+        post_list = tag.post_set.all()
+    else:
+        post_list = Post.objects.all()
+```
+
+### 详细页  
+先创建 Comment 模型  
+```python
+class Comment(models.Model):
+    post = models.ForeignKey(Post, verbose_name='博客', on_delete=True)    # 有两个外键  
+    user = models.ForeignKey(BlogUser, verbose_name='作者', on_delete=True)
+    pub_date = models.DateTimeField('发布时间')
+    content = models.TextField('内容')
+```
+
+views.py  
+```python
+def blog_detail(request, bid):
+    post = Post.objects.get(id=bid)
+    post.views = post.views + 1    # 访问一次，浏览数加 1 
+    post.save()
+    new_comment_list = Comment.objects.order_by('-pub_date').all()[:10]    # 右侧最新博客  
+    # 去重
+    new_comment_list1 = []
+    post_list1 = []
+    for c in new_comment_list:
+        if c.post.id not in post_list1:
+            new_comment_list1.append(c)
+            post_list1.append(c.post.id)
+    comment_list = post.comment_set.all()
+    tag_list = post.tags.all()
+    post_recommend_list =set(Post.objects.filter(tags__in=tag_list)[:6])    # 推荐文章，选择是标签相同的 post；set 去重，是因为可能包含多个标签，就会显示多次
+```
+post 和 tags 是多对多关系，在详细页面取博客所有标签的时候，用的是 `{{post.tags.all}}`
+
+评论功能  
+前端 detail.html 页面  
+```python 
+<form id="comment-form" name="comment-form" action="/comment/{{post.id}}/" method="POST">
+			<div class="comment">
+				<input name="username" id="" value="{{user.username}}" class="form-control" size="22" placeholder="您的昵称（必填）" maxlength="15" autocomplete="off" tabindex="1" type="text">
+				<div class="comment-box">
+					<textarea placeholder="您的评论或留言（必填）" name="content" id="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+					<div class="comment-ctrl">
+						<button type="submit" name="comment-submit" id="comment-submit" tabindex="4">评论</button>
+					</div>
+				</div>
+			</div>
+      {% csrf_token %}
+		</form>
+```
+views.py 写 comment 视图  
+```python 
+class CommentView(View):
+    def get(self, request):
+        pass
+    def post(self, request, bid):
+        comment = Comment()
+        comment.user = request.user
+        comment.post = Post.objects.get(id=bid)
+        comment.content = request.POST.get('content')
+        comment.pub_date = datetime.now()
+        comment.save()
+        return HttpResponseRedirect(reverse("blog_detail", kwargs={"bid":bid}))    # comment 有视图，没有自己 HTML，因为评论是 detail 页面的一部分，所以要跳转到 detail  
+```
+配置 url：`path('comment/<int:bid>', views.CommentView.as_view(), name='comment')`  
+显示评论列表  
+```python
+ {% for comment in comment_list %}
+    	<li class="comment-content"><span class="comment-f">#{{forloop.counter}}</span><div class="comment-main"><p><a class="address" href="#" rel="nofollow" target="_blank">{{comment.user.username}}</a><span class="time">({{comment.pub_date|date:'Y-m-d'}})</span><br>{{comment.content}}</p></div></li>
+{% endfor %}
+```
+所以流程就是，先在 form 表单中写评论，写完提交跳转到 action 指定的 url，通过 url 找到 CommentView 视图类，通过 save() 保存到数据库，然后 redirect 到 blog_detail() 函数，从数据库中取 comment，然后 render 到前端页面  
+
+#### 登录功能  
+配置 url  
+`path('login', views.LoginView.as_view(), name='login')`  
+写视图函数  
+```python 
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse("index"))
+            else:
+                return render(request, 'login.html', {'error_msg':'用户未激活'})
+        else:
+            return render(request, 'login.html', {'error_msg':'用户名或密码错误！'})
+```
+最开始走的是 get 方法，展示页面以后，填写提交，走的是 post 方法  
+登录成功以后，前端右上角显示用户名  
+```python 
+<ul class="nav navbar-nav navbar-right">
+  {% if user.is_authenticated %}
+  <li><a data-cont="用户" title="用户" href="#">欢迎，{{user.username}}</a></li>
+  <li><a data-cont="注册" title="注册" href="/user/logout">注销</a></li>
+  {% else %}
+  <li><a data-cont="登录" title="登录" href="/user/login">登录</a></li>
+  <li><a data-cont="注册" title="注册" href="/user/register">注册</a></li>
+  {% endif %}
+</ul>
+```
+#### 注册功能  
+
 
 
 
 
 创建项目 File -> New Project -> Django -> 填写 Location -> 选择 Existing interpreter -> 选择解释器(好像有些问题，选择已有环境以后还会显示安装 django，不知道为什么)  
 
-Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
 
