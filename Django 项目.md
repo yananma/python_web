@@ -374,7 +374,8 @@ def blog_detail(request, bid):
             post_list1.append(c.post.id)
     comment_list = post.comment_set.all()
     tag_list = post.tags.all()
-    post_recommend_list =set(Post.objects.filter(tags__in=tag_list)[:6])    # 推荐文章，选择是标签相同的 post；set 去重，是因为可能包含多个标签，就会显示多次
+    post_recommend_list =set(Post.objects.filter(tags__in=tag_list)[:6])    # 推荐文章，选择是标签相同的 post；
+                                                                            # set 去重，是因为可能包含多个标签，就会显示多次
 ```
 post 和 tags 是多对多关系，在详细页面取博客所有标签的时候，用的是 `{{post.tags.all}}`
 
@@ -382,17 +383,17 @@ post 和 tags 是多对多关系，在详细页面取博客所有标签的时候
 前端 detail.html 页面  
 ```python 
 <form id="comment-form" name="comment-form" action="/comment/{{post.id}}/" method="POST">
-			<div class="comment">
-				<input name="username" id="" value="{{user.username}}" class="form-control" size="22" placeholder="您的昵称（必填）" maxlength="15" autocomplete="off" tabindex="1" type="text">
-				<div class="comment-box">
-					<textarea placeholder="您的评论或留言（必填）" name="content" id="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
-					<div class="comment-ctrl">
-						<button type="submit" name="comment-submit" id="comment-submit" tabindex="4">评论</button>
-					</div>
-				</div>
-			</div>
-      {% csrf_token %}
-		</form>
+    <div class="comment">
+        <input name="username" id="" value="{{user.username}}" size="22" placeholder="您的昵称（必填）" maxlength="15" tabindex="1" type="text">
+	<div class="comment-box">
+		<textarea placeholder="您的评论或留言（必填）" name="content" id="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
+		<div class="comment-ctrl">
+			<button type="submit" name="comment-submit" id="comment-submit" tabindex="4">评论</button>
+		</div>
+	</div>
+    </div>
+    {% csrf_token %}
+</form>
 ```
 views.py 写 comment 视图  
 ```python 
@@ -410,9 +411,17 @@ class CommentView(View):
 ```
 配置 url：`path('comment/<int:bid>', views.CommentView.as_view(), name='comment')`  
 显示评论列表  
-```python
+```html
  {% for comment in comment_list %}
-    	<li class="comment-content"><span class="comment-f">#{{forloop.counter}}</span><div class="comment-main"><p><a class="address" href="#" rel="nofollow" target="_blank">{{comment.user.username}}</a><span class="time">({{comment.pub_date|date:'Y-m-d'}})</span><br>{{comment.content}}</p></div></li>
+    <li class="comment-content">
+    <span class="comment-f">#{{forloop.counter}}</span>
+    <div class="comment-main">
+        <p>
+        <a class="address" href="#" rel="nofollow" target="_blank">{{comment.user.username}}</a>
+	<span class="time">({{comment.pub_date|date:'Y-m-d'}})</span><br>{{comment.content}}
+	</p>
+    </div>
+    </li>
 {% endfor %}
 ```
 所以流程就是，先在 form 表单中写评论，写完提交跳转到 action 指定的 url，通过 url 找到 CommentView 视图类，通过 save() 保存到数据库，然后 redirect 到 blog_detail() 函数，从数据库中取 comment，然后 render 到前端页面  
@@ -452,7 +461,139 @@ class LoginView(View):
 </ul>
 ```
 #### 注册功能  
+配置 url  
+`path('register', views.RegisterView.as_view(), name='register')`  
+写视图函数  
+```python 
+class RegisterView(View):
+    def get(self, request):
+        return render(request, 'register.html')
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        my_send_email(email)    
+        user = BlogUser()
+        user.username = username
+        user.password = make_password(password)
+        user.email = email
+        user.is_active = False
+        user.save()    # 这里会保存一个没有激活的用户，激活以后再 update  
+        return render(request, 'login.html', {})
+```
+最开始走的是 get 方法，展示页面以后，填写提交，走的是 post 方法  
 
+#### 激活用户  
+要先在 settings 里面配置  
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'mayananlzjt@163.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_FROM = '描述的几个字<mayananlzjt@163.com>'
+```
+创建 email 的 model  
+```python 
+class EmailVerifyRecord(models.Model):
+    code = models.CharField(verbose_name='验证码', max_length=50, default='')
+    email = models.EmailField('邮箱', max_length=50)
+    send_type = models.CharField('验证码模型', choices=(("register", "注册"), ('forget', '找回密码'), ("update_email", '修改邮箱')), max_length=30)
+    send_time = models.DateTimeField('发送时间', default=datetime.now)
+```
+views.py 中写几个函数  
+```python 
+# 生成随机字符串
+def make_random_str(randomlength=8):
+    str = ''
+    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+    length = len(chars) - 1
+    random = Random()
+    for i in range(randomlength):
+        str+=chars[random.randint(0, length)]
+    return str
+
+# 发送邮件
+def my_send_email(email, send_type="register"):
+    email_record = EmailVerifyRecord()
+    if send_type == "update_email":
+        code = make_random_str(4)
+    else:
+        code = make_random_str(16)
+    email_record.code = code
+    email_record.email = email
+    email_record.send_type = send_type
+    email_record.save()
+    email_title = ""
+    email_body = ""
+    if send_type == "register":
+        email_title = "享学博客-注册激活链接"
+        email_body = "请点击下面的链接激活你的账号: http://127.0.0.1:8000/active/{0}".format(code)    # 可以点击这个链接，就说明邮箱是对的，就可以激活
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+        if send_status:
+            pass
+    elif send_type == "forget":
+        email_title = "享学博客-网注册密码重置链接"
+        email_body = "请点击下面的链接重置密码: http://127.0.0.1:8000/reset/{0}".format(code)
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+        if send_status:
+            pass
+    elif send_type == "update_email":
+        email_title = "享学博客-邮箱修改验证码"
+        email_body = "你的邮箱验证码为: {0}".format(code)
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+        if send_status:
+            pass
+```
+url 是 `path('active', ActiveView.as_view(), name='active')`  
+```python 
+class ActiveView(View):
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecords.objects.filter(code=active_code) 
+        if all_records:
+            for record in all_records:
+                email = record.email 
+                user = BlogUser.objects.get(email=email) 
+                user.is_active = True     # 核心是这一句  
+                user.save()    # 这个 save 其实就是 update  
+        else:
+            return render(request, "active_fail.html") 
+        return render(request, "login.html")
+```
+
+#### 注销功能
+```python
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))
+```
+配置 url `path('logout', LogoutView.as_view(), name='logout')`
+
+#### 富文本编辑器  
+GitHub 搜 kindeditor  
+下载 zh-CN zip 包，解压  
+在 static/js 下创建一个 editor 文件夹，复制包里面的 lang、plugins、themes、kindeditor-all.js  
+在 editor 文件夹下创建一个 config.js，添加代码    
+```js 
+KindEditor.ready(function(K) {
+    window.editor = K.create('#id_content',{
+        // 指定大小
+        width:'800px',
+        height:'200px',
+    });
+});
+```
+然后要在 admin.py 中注册  
+```python
+class PostAdmin(admin.ModelAdmin):
+    class Media:
+        js = (
+            'js/editor/kindeditor-all.js',
+            'js/editor/config.js',
+        )
+admin.site.register(Post, PostAdmin)
+```
 
 
 
