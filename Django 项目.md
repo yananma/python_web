@@ -4,10 +4,55 @@
 ### 排错清单  
 单词写错了  
 缺括号  
-创建应用以后，没在 INSTALLED_APPS 中添加  
 Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
 类中的方法没写 self  
 
+
+#### 固定步骤  
+创建模型，添加到 admin，后台添加数据，在视图函数中，从数据库取值，共享到前端，前端替换     
+写完视图函数添加 url  
+创建应用以后，在 INSTALLED_APPS 中添加  
+
+
+#### 想法  
+是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例   
+
+#### 用法  
+
+模型  
+在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
+def \_\_str__(self)，是点进去以后实例显示的内容  
+字段的 verbos_name 是再点进去编辑的时候，左侧显示的名字  
+DateField 日期  
+DateTimeField 时间  
+auto_now_add 创建时间  
+auto_now 修改时间   
+
+后台  
+admin.site.site_header = '在线教育平台后台管理系统'  
+C:\ProgramData\Miniconda3\envs\django\Lib\site-packages\django\contrib\admin\templates\admin\base_site.html  
+在文件夹下面有很多 HTML 页面  
+
+
+模板  
+要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
+
+
+
+用户  
+user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和它的父类 AbstractBaseUser 中，比如 username、is_active，比如 is_authenticated  
+
+
+
+#### 配置  
+
+激活环境：`activate django_rest`  
+退出环境：`deactivate`  
+查看已有环境 `conda env list`  
+
+LANGUAGE_CODE = 'zh-hans';  
+TIME_ZONE = 'Asia/Shanghai'  
+admin.site.site_header = '在线教育平台后台管理系统'  
 
 ## Django 入门  
 
@@ -177,7 +222,7 @@ views.py `recommend_list = Post.objects.filter(recommend=1)`
 浏览数  
 `{{post.comment_set.count}}`  
 
-#### 博客分类  
+#### 博客分类的显示  
 先创建 BlogCategory 类：  
 ```python 
 class BlogCategory(models.Model):
@@ -284,9 +329,19 @@ class FriendlyLink(models.Model):
 
 #### 分页功能  
 安装 django-pure-pagination  
-照着 github 官方文档一步一步写就行了。  
+照着 github 官方文档一步一步写就能运行成功。  
+前端在 \_pagination.html 中 `<li><a href="?{{ page.querystring }}" class="pagination__page btn-squae">{{ page }}</a></li>`
+```python 
+try:
+    page = request.GET.get('page', 1)
+except PageNotAnInteger:
+    page = 1
+p = Paginator(course_list, per_page=1, request=request)
+course_list = p.page(page)   # 最重要的就是 Paginator 的 page 方法，核心就是对列表切片 self.object_list[bottom:top]
+```
 
-#### 标签云功能  
+
+#### 标签云展示  
 views.py 中创建一个类  
 ```python 
 class TagMessage(object):
@@ -440,7 +495,7 @@ class LoginView(View):
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
-                login(request, user)
+                login(request, user)    # 读源码，login 是先 user = request.user，添加 session，然后 request.user = user  
                 return HttpResponseRedirect(reverse("index"))
             else:
                 return render(request, 'login.html', {'error_msg':'用户未激活'})
@@ -450,15 +505,18 @@ class LoginView(View):
 最开始走的是 get 方法，展示页面以后，填写提交，走的是 post 方法  
 登录成功以后，前端右上角显示用户名  
 ```python 
-<ul class="nav navbar-nav navbar-right">
-  {% if user.is_authenticated %}
-  <li><a data-cont="用户" title="用户" href="#">欢迎，{{user.username}}</a></li>
-  <li><a data-cont="注册" title="注册" href="/user/logout">注销</a></li>
-  {% else %}
-  <li><a data-cont="登录" title="登录" href="/user/login">登录</a></li>
-  <li><a data-cont="注册" title="注册" href="/user/register">注册</a></li>
-  {% endif %}
-</ul>
+{% if user.is_authenticated %}
+<div class="group-sign-in">
+  <a href="#" class="login">欢迎，{{user.username}}</a>
+  <a href="{% url 'logout' %}" class="logout">注销</a>
+</div>
+
+{% else %}
+<div class="group-sign-in">
+  <a href="{% url 'login' %}" class="login">登录</a>
+  <a href="{% url 'register' %}" class="register">注册</a>
+</div>
+{% endif %}
 ```
 #### 注册功能  
 配置 url  
@@ -568,7 +626,9 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect(reverse("index"))
 ```
-配置 url `path('logout', LogoutView.as_view(), name='logout')`
+配置 url `path('logout', LogoutView.as_view(), name='logout')`  
+读源码，设置了 `user = None`  
+
 
 #### 富文本编辑器  
 GitHub 搜 kindeditor  
@@ -595,9 +655,177 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 ```
 
+## 在线教育平台  
+
+#### 创建项目 创建应用  
+`cd desktop`  
+`mkdir elearning`  
+`cd elearning`  
+`conda env list`  
+`activate django`  
+`django-admin startproject xxkt`  
+`python manage.py startapp myapp`  
+在 INSTALLED_APPS 列表中添加 myapp   
+
+配置数据库  
+在 settings.py 里有数据库配置的文档  
+删除数据库：`drop database xxkt_db;`  
+创建数据库：`create database xxkt_db;`  
+`python manage.py makemigrations`  
+`python manage.py migrate`  
+`USE xxkt_db;`  
+`SHOW tables;`  
+
+创建超级用户  
+`python manage.py createsuperuser`  
+admin  
+admin@qq.com  
+password1234  
+password1234  
+
+`python manage.py runserver`  
 
 
+#### 创建课程相关模型  
+myapp 的 models.py 添加 Banner 类  
+python manage.py makemigrations myapp 生成 banner 中间表  
+然后执行 python manage.py migrate 根据中间表生成数据库中的一张 table  
 
-创建项目 File -> New Project -> Django -> 填写 Location -> 选择 Existing interpreter -> 选择解释器(好像有些问题，选择已有环境以后还会显示安装 django，不知道为什么)  
+[models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E5%B9%B3%E5%8F%B0/models.py)  
+
+是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例  
+
+#### 重写用户模型  
+settings.py 中，添加 AUTH_USER_MODEL = 'myapp.XXUser'  
+models.py   
+```python 
+class XXUser(AbstractUser):
+    nikename = models.CharField('昵称', max_length=20)
+```
+看 AbstractUser，这个类就在原来的基础上多了一个 nikename 字段  
+
+#### 模板  
+配置模板，创建 templates 文件夹，os.path.join(BASE_DIR, 'templates')、创建视图函数，配置应用 url，include 到项目 url  
+模板继承  
+
+#### 轮播图  
+创建模型，添加到 admin，后台添加数据，在 index 视图函数中，从数据库取值，共享到前端，前端替换   
+
+#### 课程分类  
+这个是展示，不是查询，展示就是从数据库取值  
+`category_list = Category.objects.all()[:6]`  
+
+#### 数据统计  
+```python
+teacher_count = Teacher.objects.count()
+course_count = Course.objects.count()
+user_count = XXUser.objects.count()
+category_count = Category.objects.count()
+```
+
+#### 最新课程  
+```python 
+class CourseAdmin(admin.ModelAdmin):
+    fields = ['category', 'level', 'title', 'body', 'cover', 'attachment',
+            'is_free', 'teacher', 'star', 'price', 'recommend', 'published']
+
+admin.site.register(Course, CourseAdmin)
+```
+
+`course_list = Course.objects.order_by('-pub_date').all()`  
+
+#### 明星学员  
+在前端有一个判断，active 的展示出来，如果都是 active，就是像一个栈一样，都显示出来了  
+```html
+{%for stu in  starstudent_list %}
+{% if forloop.counter == 1 %}
+<div class="peopel-item item active"><p class="peopel-comment">{{stu.comment}}</p>
+	<div class="peopel-name">{{stu.name}}</div>
+</div>
+{%else %}
+<div class="peopel-item item"><p class="peopel-comment">{{stu.comment}}</p>
+	<div class="peopel-name">{{stu.name}}</div>
+</div>
+{%endif%}
+{%endfor%}
+```
+
+#### 课程分类查询  
+views.py 的 course  
+```python 
+category_list = Category.objects.all()
+course_count = Course.objects.count()
+category_id = request.GET.get('category_id')    # 这个 category_id 是从 href 的查询字符串中得到的  
+if category_id:
+    course_list = course_list.filter(category_id=category_id)    # 实现查询的核心就是这一行，根据前面传进来的 id 去数据库中查    
+    category_id = int(category_id)
+```
+```html
+{%for category in category_list %}
+{%if category_id == category.id %}    # category.id 是从数据库中取到的  
+  <li role="presentation" class="active"><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
+{%else%}
+  <li role="presentation"><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
+{%endif%}
+{% endfor %}
+ ```
+```html
+<li {% if request.path == '/' %} class="active" {%endif%}><a href="/" class="main-menu">享学首页</a></li>
+<li {% if request.path == '/course' or request.path == '/course-detail/1' %} class="active" {%endif%}><a href="/course" class="main-menu">享学课程</a></li>
+```
+
+#### 课程详细页面  
+不使用 DetailView，而是写函数  
+```python 
+def course_detail(request, cid):
+    course = Course.objects.get(pk=cid)    # 这里不是 course_list，因为只有一篇文章；前端取值直接取就可以了比如星级 {{course.level}}    
+    ctx = {
+        'course':course,
+    }
+    return render(request, 'courses-detail.html', ctx)
+```
+配置 url `path('course-detail/<int:cid>', views.course_detail, name='course-detail')`  
+这个 id 是从前面的 HTML 里来的；`<div class="edugate-content"><a href="course-detail/{{course.id}}" class="title">{{course.title}}</a>`  
+根据 course.id 进入 course_detail 视图函数，然后从数据库中根据特定 id 取到这一篇 course  
+
+取出课程所有的章节 `{% for section in course.section_set.all %}`  
+
+#### 推荐课程  
+课程详细页面右侧的推荐课程，不是最新课程  
+在 course_detail 视图函数中取值就可以了  
+`course_list = Course.objects.filter(recommend=True)[:3]`  
+
+课程详细页面右侧的分类，也可以做查询，前端的路由的写法`<a href="{% url 'course' %}?category_id={{category.id}}">`  
+
+#### 视频播放  
+GitHub 搜 videojs  
+使用 cdn  
+```python
+{%block custom_css%}
+<link href="http://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
+{%endblock%}
+
+{%block custom_js%}
+<script src="http://vjs.zencdn.net/5.19/video.js"></script>
+{%endblock%}
+```
+```html
+<div class="course-video">
+    <video id="preview-player" class="video-js vjs-default-skin" width="847px" height="400px" controls preload="auto" >
+
+    </video>
+
+    <script type="text/javascript">
+	var player = videojs(document.querySelector('video'));
+	function play_video(url){
+	  player.src(url);
+	  player.play()
+	}
+    </script>
+</div>
+
+<td class="left col-1"><a href="javascript:play_video('http://localhost:8000/{{video.video}}')">{{video.title}}</a></td>
+```
 
 
+ 
