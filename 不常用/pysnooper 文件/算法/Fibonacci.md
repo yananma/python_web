@@ -1,4 +1,7 @@
 
+先算加号左边的，一路到底  
+画成二叉树，就是先左子树一路走到头，再往上走  
+
 ```python 
 Starting var:.. n = 4
 06:56:38.167264 call         4 def Fibonacci(n):
