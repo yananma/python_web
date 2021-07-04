@@ -1,7 +1,7 @@
 
 最重要的原因就是读文档记不住，读源码一次就记住了  
 
-### 读源码就不用读各种书了，不用再纠结于哪本书好了，源码是根基，源码就是最好的书。书读多了，越读越乱  
+### 读源码就不用读各种书了看各种视频了，不用再纠结于哪本书好哪个视频好了，源码是根基，源码就是最好的书，最好的课。书读多了，视频看多了，越来越乱  
 
 # 源码面前，了无秘密。  
 
@@ -49,6 +49,18 @@ Ctrl 跳转
 
 
 ### 具体源码内容
+Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
+源码在 django/core/management/commands/runserver.py 中  
+在 django/core/servers/basehttp.py 最后的 run 方法中实现了 httpd.serve_forever()  
+本质上是 TCP，源码在 django/Lib/socketserver.py 中  
+`python manage.py runserver` 可以自动刷新，不需要重启服务器，是通过线程实现的，源码在 django/utils/autoreload.py 中  
+一直刷新的 log 日志信息的实现在 django/core/servers/basehttp.py 的 WSGIRequestHandler 的 log_message() 方法中   
+HTTP 请求和响应报文，都是在 django/Lib/http/server.py 中实现的  
+
+django 最开始的欢迎页面在 django/views/templates/default_urlconf.html  
+
+makemigrations 命令，源码会通过 os.mkdir() 创建 migrations 文件夹，生成 \_\_init__.py 文件，写文件。写详细文件在 django/db/migrations/writers.py 中  
+
 
 Mixin 是组件的意思  
 
