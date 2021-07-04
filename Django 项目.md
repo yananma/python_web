@@ -10,58 +10,38 @@ Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存
 
 #### 固定步骤  
 创建模型，添加到 admin，后台添加数据，在视图函数中，从数据库取值，共享到前端，前端替换     
-写完视图函数添加 url  
+写完视图函数添加 url   
+修改 models.py 以后，要 makemigrations、migrate  
 创建应用以后，在 INSTALLED_APPS 中添加  
 
 
 #### 想法  
 是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例   
-
-#### 用法  
-
-模型  
-在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
-def \_\_str__(self)，是点进去以后实例显示的内容  
-字段的 verbos_name 是再点进去编辑的时候，左侧显示的名字  
-DateField 日期  
-DateTimeField 时间  
-auto_now_add 创建时间  
-auto_now 修改时间   
-
-后台  
-admin.site.site_header = '在线教育平台后台管理系统'  
-C:\ProgramData\Miniconda3\envs\django\Lib\site-packages\django\contrib\admin\templates\admin\base_site.html  
-在文件夹下面有很多 HTML 页面  
+添加数据的本质就是创建一个类的实例  
 
 
-模板  
-要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
+## Django 基础知识  
+框架的作用：  
+封装：大量功能的封装  
+简化：复杂功能封装以后做到了简化  
+优化：框架做了大量的优化  
+安全：框架有完善的安全机制  
+管理：模块化，层次划分清晰，易于管理维护  
 
+Django 是一个重度框架，大而全，适合大型团队管理。学习成本高一些。  
+Django 可以做网站开发、微信公众号、小程序后端开发等，只要是有 HTTP 的地方，都可以用 Django  
+人工智能平台融合，前面是打车微信小程序，中间是 Django，后面是人工智能系统。  
 
+MTV 核心思想就是解耦，便于开发维护，增加模块的可重用性。  
 
-用户  
-user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和它的父类 AbstractBaseUser 中，比如 username、is_active，比如 is_authenticated  
-
-
-
-#### 配置  
-
-激活环境：`activate django_rest`  
-退出环境：`deactivate`  
-查看已有环境 `conda env list`  
-
-LANGUAGE_CODE = 'zh-hans';  
-TIME_ZONE = 'Asia/Shanghai'  
-admin.site.site_header = '在线教育平台后台管理系统'  
-
-## Django 入门  
 
 #### 前期配置  
+python manage.py 的所有可用命令都在 django/core/management/commands 文件夹下面  
+
 创建项目：`django-admin startproject mysite`  
-Django 项目生成的各个文件介绍  
 配置 MySQL，不用记，代码 settings 里面有网址，复制就行  
 创建应用：`django-admin startapp polls`  
-添加到 INSTALLED_APPS 中  
+添加到 INSTALLED_APPS 中，就是源码中的 app_label    
 项目是应用的容器  
 BASE_DIR 就是项目文件夹  
 
@@ -72,8 +52,17 @@ BASE_DIR 就是项目文件夹
 
 
 #### 模型操作  
-模型是你的数据的唯一的，权威的信息源，包含所存储的必要字段，通常一个模型对应数据库中的一张表，一个字段对应于数据库表中的一列  
-每个字段都是 Field 子类的实例  
+模型是你的数据的唯一的，权威的信息源，包含所存储的必要字段，一个模型对应数据库中的一张表，一个字段对应于数据表中的一列  
+Django ORM 可以用相同的接口操作不同的数据库，做了底层封装；更加安全；易读性更高；不用因为修改数据库而修改代码  
+每个字段都是 Field 子类的实例；每个字段都是模型的类属性    
+在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
+def \_\_str__(self)，是点进去以后实例显示的内容  
+字段的 verbos_name 是再点进去编辑的时候，左侧显示的名字  
+DateField 日期  
+DateTimeField 时间  
+auto_now_add 创建时间  
+auto_now 修改时间   
+修改属性：模型对象.属性 = 新值，然后 save()  
 除了关联关系之外，一般第一个属性都是字段的自述名，就是 verbose_name  
 blank 是用于前端表单的，默认是不可以输入空值的，设置了以后可以不填  
 unique 唯一性约束，比如邮箱、手机号、身份证号码  
@@ -81,10 +70,12 @@ null，如果设置了 null=True，在数据库中会把空值设置为 NULL，C
 choices 就是一个下拉列表  
 max_length 是 CharField 的必填字段，在 \_\_init__方法中有一个 MaxLengthValidator 验证    
 
-关联关系，多对一、一对一、多对多  
+关联关系：多对一、一对一、多对多  
+ForeignKey，Comment 中的 ForeignKey 是 Blog，所以 Comment 直接就有 Blog 字段，所以取值的时候直接取，comment.blog.title  
+Blog 中没有 Comment 字段，所以取的时候是反向查询，blog = Blog.objects.get(id=1)，blog.comment_set.all()，其中 comment_set 是自动添加的查询管理器  
 
 进入 shell 环境：`python manage.py shell`  
-后面就是 model 操作 API，创建一个实例，save()、filter()、get()、delete()、update()、  
+model 操作 API，创建一个实例，save()、filter()、get()、delete()、update()、  
 
 
 #### 后台管理  
@@ -100,36 +91,33 @@ password1234
 `admin.site.register(Question)`  
 
 可以自己设置后台显示样式  
+admin.site.site_header = '在线教育平台后台管理系统'  
+django/contrib/admin/templates/admin/base_site.html  
+在文件夹下面有很多 HTML 页面  
+
 
 #### 视图  
-在 views.py 中创建视图函数  
-配置 url  
+在 views.py 中创建视图函数，写完视图函数配置 url  
 浏览器找的时候是通过 url 找到 urls.py，从 urls.py 的配置中找到 views 函数，通过 views 函数返回响应  
+路由列表必须叫 urlpatterns，因为源码里是 `getattr(urlconf_module, 'urlpatterns')`  
+views 后面接函数名，不加括号是函数，加括号是函数的返回值；  
+继承 View 类的时候，as_view() 加括号，加括号源码最后返回的是 as_view 内部定义的 view 函数，所以还是函数  
 跳转到详细页面，移除硬编码，可以使用 `{% url 'detail' question.id %}`，这里单引号里的 detail 是 path 里面的 name  
-在 Vote 函数中第一句做一个验证，`question = get_object_or_404(Question, pk=question_id)`  
-
-`selected_choice = question.choice_set.get(pk=request.POST['choice'])` POST 后面的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
-这种方式 request.POST，就是一个 MultiValueDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容   
+在 View 函数中第一句做一个验证，`question = get_object_or_404(Question, pk=question_id)`  
+`selected_choice = question.choice_set.get(pk=request.POST['choice'])` ['choice'] 中的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
+request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容   
 
 最后返回，`HttpResponseRedirect(reverse('result'))` 这里 result 也是 path 里面的 name，会根据 url 配置找到 result 视图函数  
 
-generic 通用视图  
 
-FILE 上传文件用  
+#### 模板  
+要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
 
-Django 内建视图类：TemplateView 最简单，直接显示页面，传一个 html 就可以了；
-```python
-class AboutView(TemplateView):
-    template_name = 'myapp/about.html'
+变量：{{ }}  
+标签：{% if 或 for、url、block、extends、include %}  
+过滤器：读源码最容易  
 
-class PersonList(ListView):
-    model = Person
-    template_name = 'myapp/personlist.html'
-
-class PersonDetailView(DetailView):
-    model = Person
-    template_name = "myapp/detail.html"
-```
+`choice{{ forloop.counter }}` 拿到 choice1，choice2，choice3  
 
 
 #### 表单  
@@ -140,28 +128,19 @@ class PersonDetailView(DetailView):
 映射到模板中，{{ form }}  
 
 
-#### 模板  
+#### 用户  
+user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和它的父类 AbstractBaseUser 中，比如 username、is_active，比如 is_authenticated  
 
-变量  
-{{}}  
 
-标签  
-{% if 或 for %}  
-{% url 'detail' %}  
-{% block title，extends 'base.html'，include %}  
+#### 路由  
+路由就是给谁  
 
-过滤器  
-读源码最容易  
-
-`choice{{ forloop.counter }}` 拿到 choice1，choice2，choice3  
 
 
 ## 留言板项目  
 
-[models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/models.py)  
-[forms.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/forms.md)  
-[views.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/views.py)  
-视图函数全部都是使用 View 创建  
+[models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/models.py)、[forms.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/forms.md)、[views.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E7%95%99%E8%A8%80%E6%9D%BF/views.py)  
+视图函数全部都是使用 View 创建的，读完就学会 View 类写视图了  
 
 ## 博客项目  
 
@@ -186,7 +165,7 @@ STATICFILES_DIRS = [
 
 #### 轮播图替换  
 is_active 发挥作用  
-```python
+```html
 {% for banner in banner_list %}
 {% if banner.is_active %}
 <li data-target="#focusslide" data-slide-to="{{banner.idx}}" class="active"></li>
@@ -203,8 +182,7 @@ views.py `recommend_list = Post.objects.filter(recommend=1)`
 ```python 
 {% for post in recommend_list %}
 <article class="excerpt-minic excerpt-minic-index">
-    <h2><span class="red">【推荐】</span><a target="_blank" href="/blog/{{post.id}}" title="{{post.title}}" >{{post.title}}</a>
-    </h2>
+    <h2>【推荐】<a href="/blog/{{post.id}}" title="{{post.title}}">{{post.title}}</a></h2>
     <p class="note">{{post.content}}</p>
 </article>
 {% endfor %}
@@ -213,7 +191,7 @@ views.py `recommend_list = Post.objects.filter(recommend=1)`
 #### 最新博客列表   
 `post_list = Post.objects.order_by('pub_date').all()[:3]`
 
-主外键关联关系，category 是 post 的 ForeignKey  
+主外键关联关系，category 是 post 的 ForeignKey，在 post 模型中 `category = models.ForeignKey(Category, on_delete=True)`  
 `<a class="cat" href="/category/{{post.category.id}}" title="{{post.category.name}}" >{{post.category.name}}<i></i></a>`  
 
 评论数  
@@ -223,18 +201,18 @@ views.py `recommend_list = Post.objects.filter(recommend=1)`
 `{{post.comment_set.count}}`  
 
 #### 博客分类的显示  
-先创建 BlogCategory 类：  
+先创建 Category 类：  
 ```python 
-class BlogCategory(models.Model):
+class Category(models.Model):
     name = models.CharField('分类名称', max_length=20, default='')
 ```
 在 Post 类中外键关联  
-`category = models.ForeignKey(BlogCategory, verbose_name='博客分类', default=None, on_delete=True)`  
+`category = models.ForeignKey(Category, on_delete=True)`  
 在 views.py 的 index 函数中取值  
-`blogcategory_list = BlogCategory.objects.all()`  
+`category_list = Category.objects.all()`  
 在前端页面显示  
 ```python
-{% for c in blogcategory_list %}
+{% for c in category_list %}
     <a href="/category/{{c.id}}" title="{{c.name}}" >{{c.name}}</a>
 {% endfor %}
 ```      
@@ -254,17 +232,15 @@ ctx = {
     'comment_list':comment_list1,
 }
 ```
-前端展示，关联关系，comment 类中有 post 字段：`post = models.ForeignKey(Post, verbose_name='博客', on_delete=True)`    
+前端展示，关联关系，Comment 类中有 post 字段：`post = models.ForeignKey(Post, verbose_name='博客', on_delete=True)`    
 ```python
 {% for c in comment_list %}
 <li>
   <a title="{{c.post.title}}" href="#" >
-    <span class="thumbnail">
-            <img class="thumb" data-original="/{{c.post.cover}}" src="/{{c.post.cover}}" alt="{{c.post.cover}}"  style="display: block;">
-        </span>
+            <img class="thumb" data-original="/{{c.post.cover}}" src="/{{c.post.cover}}" alt="{{c.post.cover}}">
     <span class="muted"><i class="glyphicon glyphicon-time"></i>
             {{c.post.pub_date|date:'Y-m-d'}}
-        </span>
+    </span>
   </a>
 </li>
 {% endfor %}
@@ -276,10 +252,8 @@ ctx = {
 ```python
 <form class="navbar-form" action="/search" method="post">
   <div class="input-group">
-        <input type="text" name="keyword" (views 函数中是用这里的 name 取的输入的值) class="form-control" size="35" placeholder="请输入关键字" maxlength="15">
-        <span class="input-group-btn">
+        <input type="text" name="keyword" (views 函数中是用这里的 name 取的输入的值) placeholder="请输入关键字" maxlength="15">
         <button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
-        </span>
   </div>
 </form>
 ```
@@ -298,7 +272,7 @@ class SearchView(View):
 前端 list.html 展示文章    
 ```python
 {% for post in post_list.object_list %}
-  <article class="excerpt excerpt-1"><a class="focus" href="/blog/{{post.id}}" title="{{post.title}}" target="_blank" >
+  <article><a class="focus" href="/blog/{{post.id}}" title="{{post.title}}" target="_blank" >
 	<header><a class="cat" href="#" title="{{post.category.name}}" >{{post.category.name}}<i></i></a>
 	  <h2><a href="/blog/{{post.id}}" title="{{post.title}}" target="_blank" >{{post.title}}</a></h2>
 	</header>
@@ -320,24 +294,25 @@ class FriendlyLink(models.Model):
 前端替换  
 ```python 
 {% for link in links %}
-    <a href="{{link.link}}" title="{{link.title}}" target="_blank">{{link.title}}</a>&nbsp;&nbsp;&nbsp;
+    <a href="{{link.link}}" title="{{link.title}}" target="_blank">{{link.title}}</a>
 {% endfor %}
 ```
 
 #### 列表页  
-就是写一个视图函数，去除所有的值  
+就是写一个视图函数，取出所有的值  
 
 #### 分页功能  
 安装 django-pure-pagination  
 照着 github 官方文档一步一步写就能运行成功。  
-前端在 \_pagination.html 中 `<li><a href="?{{ page.querystring }}" class="pagination__page btn-squae">{{ page }}</a></li>`
+前端在 \_pagination.html 中 `<li><a href="?{{ page.querystring }}" class="btn-squae">{{ page }}</a></li>`
 ```python 
 try:
     page = request.GET.get('page', 1)
 except PageNotAnInteger:
     page = 1
 p = Paginator(course_list, per_page=1, request=request)
-course_list = p.page(page)   # 最重要的就是 Paginator 的 page 方法，核心就是对列表切片 self.object_list[bottom:top]
+course_list = p.page(page)   # 最重要的就是 Paginator 的 page 方法，
+                             # page 方法的核心就是对列表切片 self.object_list[bottom:top]  
 ```
 
 
@@ -366,7 +341,7 @@ ctx = {
 前端 index.html 中  
 ```python
 {% for t in tags %}
-    <li><a href="/tags/{{t.tid}}" title="{{t.title}}">{{t.title}} <span class="badge">{{t.count}}</span></a></li>
+    <li><a href="/tags/{{t.tid}}" title="{{t.title}}">{{t.title}}{{t.count}}</a></li>
 {% endfor %}
 ```
 
@@ -375,9 +350,9 @@ ctx = {
 ```python
 def blog_list(request, cid=-1):
     post_list = None
-    if cid != -1:    # 分类查询  
+    if cid != -1:    # 分类查询，核心就是下面这两句    
         category = BlogCategory.objects.get(id=cid)
-        post_list = category.post_set.all()    # 多对多  
+        post_list = category.post_set.all()    
     else:    # 默认查询所有  
         post_list = Post.objects.all()
 ```
@@ -396,7 +371,7 @@ def blog_list(request, cid=-1):
 ```python 
 def blog_list(request, tid=-1):
     post_list = None
-    if tid!=-1:
+    if tid!=-1:    # 拿到这个 tag，找到这个 tag 的所有文章
         tag = Tags.objects.get(id=tid)
         post_list = tag.post_set.all()
     else:
@@ -417,7 +392,7 @@ views.py
 ```python
 def blog_detail(request, bid):
     post = Post.objects.get(id=bid)
-    post.views = post.views + 1    # 访问一次，浏览数加 1 
+    post.views = post.views + 1    # 访问一次 url 即 blog_detail 函数，浏览数就加 1 
     post.save()
     new_comment_list = Comment.objects.order_by('-pub_date').all()[:10]    # 右侧最新博客  
     # 去重
@@ -432,19 +407,16 @@ def blog_detail(request, bid):
     post_recommend_list =set(Post.objects.filter(tags__in=tag_list)[:6])    # 推荐文章，选择是标签相同的 post；
                                                                             # set 去重，是因为可能包含多个标签，就会显示多次
 ```
-post 和 tags 是多对多关系，在详细页面取博客所有标签的时候，用的是 `{{post.tags.all}}`
 
 评论功能  
 前端 detail.html 页面  
 ```python 
-<form id="comment-form" name="comment-form" action="/comment/{{post.id}}/" method="POST">
+<form name="comment-form" action="/comment/{{post.id}}/" method="POST">
     <div class="comment">
-        <input name="username" id="" value="{{user.username}}" size="22" placeholder="您的昵称（必填）" maxlength="15" tabindex="1" type="text">
+        <input name="username" value="{{user.username}}" placeholder="您的昵称（必填）" type="text">
 	<div class="comment-box">
-		<textarea placeholder="您的评论或留言（必填）" name="content" id="comment-textarea" cols="100%" rows="3" tabindex="3"></textarea>
-		<div class="comment-ctrl">
-			<button type="submit" name="comment-submit" id="comment-submit" tabindex="4">评论</button>
-		</div>
+		<textarea placeholder="您的评论（必填）" name="content"></textarea>
+		<button type="submit" name="comment-submit">评论</button>
 	</div>
     </div>
     {% csrf_token %}
@@ -462,9 +434,11 @@ class CommentView(View):
         comment.content = request.POST.get('content')
         comment.pub_date = datetime.now()
         comment.save()
-        return HttpResponseRedirect(reverse("blog_detail", kwargs={"bid":bid}))    # comment 有视图，没有自己 HTML，因为评论是 detail 页面的一部分，所以要跳转到 detail  
+        return HttpResponseRedirect(reverse("blog_detail", kwargs={"bid":bid}))    
+	# comment 有视图，没有自己 HTML  
 ```
 配置 url：`path('comment/<int:bid>', views.CommentView.as_view(), name='comment')`  
+在 blog_detail 视图函数中取值，`comment_list = post.comment_set.all()`
 显示评论列表  
 ```html
  {% for comment in comment_list %}
@@ -493,9 +467,9 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                login(request, user)    # 读源码，login 是先 user = request.user，添加 session，然后 request.user = user  
+        if user:    # 如果通过，就是说已经匹配成功了
+            if user.is_active:    # 这里的 login 就是前端显示用的，并没有验证功能
+                login(request, user)    # 读源码，是先 user = request.user，添加 session，然后 request.user = user  
                 return HttpResponseRedirect(reverse("index"))
             else:
                 return render(request, 'login.html', {'error_msg':'用户未激活'})
@@ -510,7 +484,6 @@ class LoginView(View):
   <a href="#" class="login">欢迎，{{user.username}}</a>
   <a href="{% url 'logout' %}" class="logout">注销</a>
 </div>
-
 {% else %}
 <div class="group-sign-in">
   <a href="{% url 'login' %}" class="login">登录</a>
@@ -533,7 +506,7 @@ class RegisterView(View):
         my_send_email(email)    
         user = BlogUser()
         user.username = username
-        user.password = make_password(password)
+        user.password = make_password(password)    # 加密
         user.email = email
         user.is_active = False
         user.save()    # 这里会保存一个没有激活的用户，激活以后再 update  
@@ -547,16 +520,17 @@ class RegisterView(View):
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'mayananlzjt@163.com'
+EMAIL_HOST_USER = 'mayanan@163.com'
 EMAIL_HOST_PASSWORD = ''
-EMAIL_FROM = '描述的几个字<mayananlzjt@163.com>'
+EMAIL_FROM = '描述的几个字<mayanan@163.com>'
 ```
 创建 email 的 model  
 ```python 
 class EmailVerifyRecord(models.Model):
     code = models.CharField(verbose_name='验证码', max_length=50, default='')
     email = models.EmailField('邮箱', max_length=50)
-    send_type = models.CharField('验证码模型', choices=(("register", "注册"), ('forget', '找回密码'), ("update_email", '修改邮箱')), max_length=30)
+    choices = (("register", "注册"), ('forget', '找回密码'), ("update_email", '修改邮箱'))
+    send_type = models.CharField('验证码模型', choices=choices, max_length=30)
     send_time = models.DateTimeField('发送时间', default=datetime.now)
 ```
 views.py 中写几个函数  
@@ -585,25 +559,26 @@ def my_send_email(email, send_type="register"):
     email_title = ""
     email_body = ""
     if send_type == "register":
-        email_title = "享学博客-注册激活链接"
-        email_body = "请点击下面的链接激活你的账号: http://127.0.0.1:8000/active/{0}".format(code)    # 可以点击这个链接，就说明邮箱是对的，就可以激活
+        email_title = "博客-注册激活链接"  # 可以点击下面这个链接，说明收到邮件了，说明邮箱是对的，就可以激活
+        email_body = "请点击下面的链接激活你的账号: http://127.0.0.1:8000/active/{0}".format(code)    
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
         if send_status:
             pass
     elif send_type == "forget":
-        email_title = "享学博客-网注册密码重置链接"
+        email_title = "博客-注册密码重置链接"
         email_body = "请点击下面的链接重置密码: http://127.0.0.1:8000/reset/{0}".format(code)
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
         if send_status:
             pass
     elif send_type == "update_email":
-        email_title = "享学博客-邮箱修改验证码"
+        email_title = "博客-邮箱修改验证码"
         email_body = "你的邮箱验证码为: {0}".format(code)
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
         if send_status:
             pass
 ```
 url 是 `path('active', ActiveView.as_view(), name='active')`  
+视图函数，点击链接就访问了 ActiveView，就把 user.is_active 设置为 True  
 ```python 
 class ActiveView(View):
     def get(self, request, active_code):
@@ -627,8 +602,7 @@ class LogoutView(View):
         return HttpResponseRedirect(reverse("index"))
 ```
 配置 url `path('logout', LogoutView.as_view(), name='logout')`  
-读源码，设置了 `user = None`  
-
+读 logout 源码，设置了 `user = None`  
 
 #### 富文本编辑器  
 GitHub 搜 kindeditor  
@@ -682,18 +656,16 @@ admin
 admin@qq.com  
 password1234  
 password1234  
-
 `python manage.py runserver`  
 
 
 #### 创建课程相关模型  
 myapp 的 models.py 添加 Banner 类  
-python manage.py makemigrations myapp 生成 banner 中间表  
+python manage.py makemigrations myapp 生成中间表  
 然后执行 python manage.py migrate 根据中间表生成数据库中的一张 table  
 
 [models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E5%B9%B3%E5%8F%B0/models.py)  
 
-是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例  
 
 #### 重写用户模型  
 settings.py 中，添加 AUTH_USER_MODEL = 'myapp.XXUser'  
@@ -711,7 +683,7 @@ class XXUser(AbstractUser):
 #### 轮播图  
 创建模型，添加到 admin，后台添加数据，在 index 视图函数中，从数据库取值，共享到前端，前端替换   
 
-#### 课程分类  
+#### 课程分类展示  
 这个是展示，不是查询，展示就是从数据库取值  
 `category_list = Category.objects.all()[:6]`  
 
@@ -724,6 +696,7 @@ category_count = Category.objects.count()
 ```
 
 #### 最新课程  
+后台设置  
 ```python 
 class CourseAdmin(admin.ModelAdmin):
     fields = ['category', 'level', 'title', 'body', 'cover', 'attachment',
@@ -731,11 +704,10 @@ class CourseAdmin(admin.ModelAdmin):
 
 admin.site.register(Course, CourseAdmin)
 ```
-
 `course_list = Course.objects.order_by('-pub_date').all()`  
 
 #### 明星学员  
-在前端有一个判断，active 的展示出来，如果都是 active，就是像一个栈一样，都显示出来了  
+在前端有一个判断，active 的展示出来，如果不设置，最后就会像一个栈一样，都显示出来了  
 ```html
 {%for stu in  starstudent_list %}
 {% if forloop.counter == 1 %}
@@ -754,7 +726,6 @@ admin.site.register(Course, CourseAdmin)
 views.py 的 course  
 ```python 
 category_list = Category.objects.all()
-course_count = Course.objects.count()
 category_id = request.GET.get('category_id')    # 这个 category_id 是从 href 的查询字符串中得到的  
 if category_id:
     course_list = course_list.filter(category_id=category_id)    # 实现查询的核心就是这一行，根据前面传进来的 id 去数据库中查    
@@ -763,29 +734,31 @@ if category_id:
 ```html
 {%for category in category_list %}
 {%if category_id == category.id %}    # category.id 是从数据库中取到的  
-  <li role="presentation" class="active"><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
+  <li class="active"><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
 {%else%}
-  <li role="presentation"><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
+  <li><a href="?category_id={{category.id}}" class="text">{{category.title}}</a></li>
 {%endif%}
 {% endfor %}
  ```
 ```html
-<li {% if request.path == '/' %} class="active" {%endif%}><a href="/" class="main-menu">享学首页</a></li>
-<li {% if request.path == '/course' or request.path == '/course-detail/1' %} class="active" {%endif%}><a href="/course" class="main-menu">享学课程</a></li>
+<li {% if request.path == '/' %} class="active" {%endif%}><a href="/" class="main-menu">首页</a></li>
+<li {% if request.path == '/course' or request.path == '/course-detail/1' %} class="active" {%endif%}>
+	<a href="/course" class="main-menu">课程</a></li>
 ```
 
 #### 课程详细页面  
 不使用 DetailView，而是写函数  
 ```python 
 def course_detail(request, cid):
-    course = Course.objects.get(pk=cid)    # 这里不是 course_list，因为只有一篇文章；前端取值直接取就可以了比如星级 {{course.level}}    
+    course = Course.objects.get(pk=cid)    # 这里不是 course_list，因为只有一篇文章；
+                                           # 前端取值直接取就可以了比如星级 {{course.level}}    
     ctx = {
         'course':course,
     }
     return render(request, 'courses-detail.html', ctx)
 ```
 配置 url `path('course-detail/<int:cid>', views.course_detail, name='course-detail')`  
-这个 id 是从前面的 HTML 里来的；`<div class="edugate-content"><a href="course-detail/{{course.id}}" class="title">{{course.title}}</a>`  
+这个 id 是从前面的 HTML 里来的；`<a href="course-detail/{{course.id}}" class="title">{{course.title}}</a>`  
 根据 course.id 进入 course_detail 视图函数，然后从数据库中根据特定 id 取到这一篇 course  
 
 取出课程所有的章节 `{% for section in course.section_set.all %}`  
@@ -811,8 +784,7 @@ GitHub 搜 videojs
 ```
 ```html
 <div class="course-video">
-    <video id="preview-player" class="video-js vjs-default-skin" width="847px" height="400px" controls preload="auto" >
-
+    <video id="preview-player" class="video-js" width="847px" height="400px" controls preload="auto" >
     </video>
 
     <script type="text/javascript">
@@ -824,7 +796,7 @@ GitHub 搜 videojs
     </script>
 </div>
 
-<td class="left col-1"><a href="javascript:play_video('http://localhost:8000/{{video.video}}')">{{video.title}}</a></td>
+<a href="javascript:play_video('http://localhost:8000/{{video.video}}')">{{video.title}}</a>
 ```
 
 
