@@ -49,6 +49,7 @@ PyCharm 快捷键 Ctrl + Alt + l
 
 类名称首字母大写，其他除全局变量外都是小写加下划线  
 
+[编码规范](https://github.com/zh-google-styleguide/zh-google-styleguide/blob/master/google-python-styleguide/python_style_rules.rst)  
 
 #### 注释  
 
