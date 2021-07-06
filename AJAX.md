@@ -1,5 +1,6 @@
 
 引入 jQuery  
+```js
 $.ajax({
     url: '要提交的地址', 
     type: 'POST',  // GET 或 POST
@@ -11,7 +12,7 @@ $.ajax({
         // 处理失败执行的代码  
     }
 })
-
+```
 js 重定向：`location.href = '要跳转的地址'`  
 
 #### AJAX 简介  
