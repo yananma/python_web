@@ -15,7 +15,7 @@ Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存
 创建应用以后，在 INSTALLED_APPS 中添加  
 
 
-#### 想法  
+想法  
 是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例   
 添加数据的本质就是创建一个类的实例  
 
@@ -31,6 +31,140 @@ Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存
 Django 是一个重度框架，大而全，适合大型团队管理。学习成本高一些。  
 Django 可以做网站开发、微信公众号、小程序后端开发等，只要是有 HTTP 的地方，都可以用 Django  
 人工智能平台融合，前面是打车微信小程序，中间是 Django，后面是人工智能系统。  
+
+浏览器本质上就是一个 socket 客户端，就是 TCP，不断开就一直连接。HTTP 建立在 TCP 之上，其实就是 TCP  
+HTTP 无状态，短连接。HTTP 是无状态的，本质上就是因为 TCP 连接断开以后，再次连接不知道对方原来是否连接过，所以就有了 cookie 和 session 来解决这个问题  
+浏览器（socket 客户端），GitHub 网站（也就是 web 应用程序）（socket 服务器），服务器先运行起来，会一直监听 IP 和 80，客户端连接以后，客户端发数据，服务器返回响应  
+服务器，my_server.py，所有的框架，所有的网站，本质上就是这几行代码    
+```python 
+import socket
+
+socket = socket.socket()    # 可以读源码  
+socket.bind(('127.0.0.1', 8000))
+socket.listen(5)
+
+while True:
+    conn, addr = socket.accept()  # 阻塞，等待连接
+    data = conn.recv(8096)
+    print(data)   # 可以看到 HTTP 报文  
+    conn.send(b'HTTP/1.1 200 ok\r\n\r\n')   # Chrome 浏览器要加 start line，否则没有办法访问  
+    conn.send(b'connect server successfully')
+    conn.close()
+```
+HTTP 协议规定了请求和响应的格式  
+
+网络框架的核心代码  
+```python 
+import socket
+import pymysql
+
+socket = socket.socket()
+socket.bind(('127.0.0.1', 8000))
+socket.listen(5)
+
+
+def f1(request):
+    '''
+    处理用户的请求，返回响应
+    :param request: 用户请求的所有信息
+    :return: 返回的内容，可以是数据库内容，可以是内存中的 html 文档
+    '''
+    f = open('index.html', 'rb')  # index.html 可以写登录表单，可以写 table 表格
+    data = f.read()  # 后缀名没有任何关系，写什么都可以，写 .myn 都可以
+    f.close()  # 静态网站是不变的，动态网站去数据库取值
+    return data  # 返回的是字符串，能看到效果，是因为浏览器做了解析
+
+
+def f2(request):
+    f = open('article.html', 'r', encoding='utf-8')
+    data = f.read()
+    f.close()
+    import time
+    ctime = time.time()  # 这是自己生成的动态数据，数据完全可以是从数据库取的数据
+    data.replace('@@myn@@', str(ctime))  # 就完成了动态替换，模板里放的是占位符，完成占位符替换
+    return bytes(data, encoding='utf-8')
+
+
+def f3(request):
+    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='123', db='user')
+    cursor = conn.cursor(cursor=pymysql.cursor.DictCursor)
+    cursor.excute("select id, name, password from userinfo")
+    user_list = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    print(user_list)
+    content_list = []
+    for user in user_list:
+        tp = '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (user['id'], user['name'], user['password'])
+        content_list.append(tp)
+    content = ''.join(content_list)
+
+    f = open('user_list.html', 'r', encoding='utf-8')
+    template = f.read()  # 前端写了一个 @@content@@
+    # 到这里就拿到了两个数据，数据库取的 user_list 和磁盘的 template
+    # 要做的把拼接的字符串，替换到前端
+    # 这里就是模板渲染，拿到模板和数据，把数据放到模板里
+    data = template.replace('@@content@@', content)
+    return bytes(data, encoding='utf-8')
+
+
+def f4(request):
+    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='123', db='user')
+    cursor = conn.cursor(cursor=pymysql.cursor.DictCursor)
+    cursor.excute("select id, name, password from userinfo")
+    user_list = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    f = open('user_list1.html', 'r', encoding='utf-8')
+    data = f.read()
+    f.close()
+
+    # 基于第三方工具实现的模板渲染
+    from jinja2 import Template
+    template = Template(data)
+    data = template.render(user_list=user_list)
+    return data.encode('utf-8')
+
+
+# 不配置 url，访问网址，不管后面输入什么，返回的都是同样的内容
+routers = [
+    ('/index/', f1),
+    ('/detail/', f2),
+    ('/sql/', f3),
+    ('/jinja2/', f4),
+]
+
+
+def run_server():
+    while True:
+        conn, addr = socket.accept()
+        data = conn.recv(8096)
+        data = str(data, encoding='utf-8')
+        header, body = data.split('\r\n\r\n')
+        start_line, header = header.split('\r\n')
+        method, url, schema = start_line.split(' ')
+        # header 按 ： split，可以取到请求头的信息
+        conn.send(b'HTTP/1.1 200 ok\r\n\r\n')
+        # 拿到 url，就可以做判断
+        func_name = None
+        for router in routers:
+            if router[0] == url:
+                func_name = router[1]  # 就是 path 函数的作用，通过 url 找到视图函数
+
+        if func_name:
+            response = func_name(data)  # 这里传了 request
+        else:
+            response = b'404 not found'
+        conn.send(response)
+        conn.close()
+
+
+if __name__ == '__main__':
+    run_server()
+```
+
+nginx 就是 socket 服务端  
 
 MTV 核心思想就是解耦，便于开发维护，增加模块的可重用性。  
 
@@ -54,6 +188,7 @@ BASE_DIR 就是项目文件夹
 #### 模型操作  
 模型是你的数据的唯一的，权威的信息源，包含所存储的必要字段，一个模型对应数据库中的一张表，一个字段对应于数据表中的一列  
 Django ORM 可以用相同的接口操作不同的数据库，做了底层封装；更加安全；易读性更高；不用因为修改数据库而修改代码  
+ORM 做的事情就是把 Python 类，拼接成 SQL 语句  
 每个字段都是 Field 子类的实例；每个字段都是模型的类属性    
 在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
 def \_\_str__(self)，是点进去以后实例显示的内容  
@@ -70,15 +205,25 @@ null，如果设置了 null=True，在数据库中会把空值设置为 NULL，C
 choices 就是一个下拉列表  
 max_length 是 CharField 的必填字段，在 \_\_init__方法中有一个 MaxLengthValidator 验证    
 
+
+filter(类，子类), filter 内部是拼接 WHERE 语句，是与的关系  
+
 关联关系：多对一、一对一、多对多  
 ForeignKey，Comment 中的 ForeignKey 是 Blog，所以 Comment 直接就有 Blog 字段，所以取值的时候直接取，comment.blog.title  
 Blog 中没有 Comment 字段，所以取的时候是反向查询，blog = Blog.objects.get(id=1)，blog.comment_set.all()，其中 comment_set 是自动添加的查询管理器  
+
+大部分的展示信息，都是用的 `模型类.objects.all()`  
+关联信息会用到反向查询和关联关系查询，对于 ForeignKey，ForeignKey 写在一对多的那个多的类中，比如 Topic 和 Comment，写在 Comment 类里，因为添加 Comment 必须要有 Topic，但是添加 Top 不用写 Comment。查询的时候，Topic 中没有 Comment 字段，所以用的是反向查询，自动添加了 comment_set 查询管理器，Topic.comment_set.all()。Comment 中有 Topic 字段，查询的时候直接查就可以，在前端可以通过 comment.topic.name 取值。  
+比如通过标签查博客，先通过标签 id 取到特定标签，然后通过反向查询 Tags.blog_set.all() 取到所有有这个标签的 blog  
+
 
 进入 shell 环境：`python manage.py shell`  
 model 操作 API，创建一个实例，save()、filter()、get()、delete()、update()、  
 
 
 #### 后台管理  
+Django 相较于其他的框架的一个大的优势就是有一个功能完善的后台系统，不用从头搭建  
+
 创建账号：`python manage.py createsuperuser`  
 输入账号密码：  
 admim  
@@ -117,15 +262,17 @@ request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是�
 标签：{% if 或 for、url、block、extends、include %}  
 过滤器：读源码最容易  
 
+理解模板继承的时候，想象中应该是把 base.html 的内容拿到当前的模板文件中，然后结合 {% block %} 部分  
+
 `choice{{ forloop.counter }}` 拿到 choice1，choice2，choice3  
 
 
 #### 表单  
 浏览器提交内容就要用到表单  
 
-在 forms.py 中定义 form，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form  
-在 view 函数里面使用 form  
-映射到模板中，{{ form }}  
+有两种方式：  
+一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值  
+第二种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
 
 
 #### 用户  
@@ -379,7 +526,7 @@ def blog_list(request, tid=-1):
 ```
 
 ### 详细页  
-先创建 Comment 模型  
+先在 models.py 创建 Comment 模型  
 ```python
 class Comment(models.Model):
     post = models.ForeignKey(Post, verbose_name='博客', on_delete=True)    # 有两个外键  
@@ -387,7 +534,6 @@ class Comment(models.Model):
     pub_date = models.DateTimeField('发布时间')
     content = models.TextField('内容')
 ```
-
 views.py  
 ```python
 def blog_detail(request, bid):
@@ -411,7 +557,7 @@ def blog_detail(request, bid):
 评论功能  
 前端 detail.html 页面  
 ```python 
-<form name="comment-form" action="/comment/{{post.id}}/" method="POST">
+<form name="comment-form" action="/comment/{{post.id}}/" method="POST">  # 核心是这里的 action  
     <div class="comment">
         <input name="username" value="{{user.username}}" placeholder="您的昵称（必填）" type="text">
 	<div class="comment-box">
@@ -470,6 +616,8 @@ class LoginView(View):
         if user:    # 如果通过，就是说已经匹配成功了
             if user.is_active:    # 这里的 login 就是前端显示用的，并没有验证功能
                 login(request, user)    # 读源码，是先 user = request.user，添加 session，然后 request.user = user  
+		request.session['user_id'] = user.id
+		request.session['username'] = user.username		
                 return HttpResponseRedirect(reverse("index"))
             else:
                 return render(request, 'login.html', {'error_msg':'用户未激活'})
@@ -603,6 +751,13 @@ class LogoutView(View):
 ```
 配置 url `path('logout', LogoutView.as_view(), name='logout')`  
 读 logout 源码，设置了 `user = None`  
+
+使用函数实现  
+```python 
+def my_logout(request):
+    logout(request) 
+    return HttpResponseRedirect(reverse("index"))
+```
 
 #### 富文本编辑器  
 GitHub 搜 kindeditor  
@@ -770,6 +925,48 @@ def course_detail(request, cid):
 
 课程详细页面右侧的分类，也可以做查询，前端的路由的写法`<a href="{% url 'course' %}?category_id={{category.id}}">`  
 
+
+#### 修改评论  
+在 forms.py 中写验证表单  
+```python 
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'请输入评论',
+                                                                'id':'comment_text',
+								'class':'form-control form-input'}))
+```
+定义视图  
+在 blog_detail 视图函数中实例化 form，并且共享到前端页面 `form = CommentForm()`  
+前端没有实现 {{ form }}，还是用的 html 的表单，这种不用 Django 表单验证的方式不太好，不过这里主要是理解思路  
+```python 
+def comment_update(request, id, bid):
+    form = CommentForm()
+    comment = Comment.objects.get(id=id)
+    blog = Blog.objects.get(id=bid)
+    if request.method == 'GET':
+        ctx = {
+        'comment':comment,
+        'form':form,
+        'blog':blog,
+        }
+        return render(request, 'comment_update.html',ctx)
+
+    if request.method == 'POST':
+        comment.user = request.user
+        comment.blog = Blog.objects.get(id=bid)
+        comment.content = request.POST.get('comment_text')
+        comment.pub_date = datetime.now()
+        comment.save()
+        return HttpResponseRedirect(reverse("blog-detail",kwargs={'bid':bid}))
+```
+
+#### 删除评论  
+```python 
+def comment_del(request, id, bid):
+    comment = Comment.objects.get(id=id)
+    comment.delete()
+    return HttpResponseRedirect(reverse("blog-detail",kwargs={'bid':bid}))
+```
+
 #### 视频播放  
 GitHub 搜 videojs  
 使用 cdn  
@@ -797,7 +994,72 @@ GitHub 搜 videojs
 </div>
 
 <a href="javascript:play_video('http://localhost:8000/{{video.video}}')">{{video.title}}</a>
+部署的时候要改一下网址  
+<a href="javascript:play_video('http://mayanan.top/{{video.video}}')">{{video.title}}</a>
 ```
+
+
+## 爱鲜蜂项目  
+这个老师写的代码太乱，所以不记代码，只写思路  
+
+### celery   
+耗时操作  
+定时请求，比如证券行情，比如天气的温度  
+
+celery，1) 把耗时任务放到 celery 中执行；2) 定时请求  
+
+任务：就是一个 Python 函数  
+队列：要执行的任务  
+工人：执行任务  
+代理：代理负责调度，部署环境中，一般使用 Redis  
+
+### 首页
+配置路由和视图   
+移动端，最下面有 4 个选项，其实就是 4 个页面，配置 4 个路由，对应的视图函数，创建对应的模板和静态文件  
+移动端和网页端的最大的区别就是 CSS 中宽高大小的值  
+
+轮播图  
+轮播图是用容器装图片，然后写 js 代码，让容器移动实现的  
+
+页面布局  
+前端传的数据，85% 都是 json 格式  
+
+### 商品页面  
+先设计表结构，然后创建模型  
+
+分为类别和商品展示两大类  
+
+实现通过类别查询商品  
+先取商品类别，`category = Category.objects.get(pk=cid)`  
+然后根据类别取得这个类别所包含的商品：`product_list = category.product_set.all()`  
+
+子类查询，比如查询饮料分类中的汽水，用 filter(类，子类), filter 内部是拼接 WHERE 语句，是与的关系  
+
+商品排序  
+比如按照价格由高到低、由低到高、距离远近、评分高低等排序  
+在商品字段中有一个 sort_id 字段，在视图函数中写判断：  
+```python 
+if sort_id == '1':
+    product_list = Product.objects.order_by('price').all()  
+if sort_id == '2':
+    product_list = Product.objects.order_by('-price').all()  
+...
+```
+
+点击加号，往购物车添加商品的时候，本质上就是把当前商品的 id 发给服务器。  
+
+### 登录注册页面  
+主要是实现了登录注册功能  
+
+
+### 购物车页面  
+设计购物车表，用户 id、用户选择的商品 id、用户选择的商品数量、商品图片、商品全名、总价、删除商品  
+
+购物车买的时候要考虑库存  
+
+往购物车添加商品数量的时候，这一个商品的总价要变化，用 ajax 实现  
+
+
 
 
  
