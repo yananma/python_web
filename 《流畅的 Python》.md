@@ -1,15 +1,13 @@
 
-层次结构图片中，箭头是从子类指向父类   
-
 这本书是读懂源码的基础，是读懂源码的最强大的工具，源码是最好的技术文档技术书，可以读懂 Django、DjangoRESTFramework、Flask、Python 库、深度学习框架等  
 
 方法是先读源码，遇到不会的读一章，分而治之，各个击破  
 
-元类(metaclass)、静态方法和类方法、字典推导式、装饰器、作用域、闭包、
-
-已完成：单下划线和双下划线、[== 和 is](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454038245&idx=4&sn=6c4f80bee2292ad74ec8466428bf4bdc&chksm=872bb35cb05c3a4a57955cd41f949c3608d5742b05298507004da975a3174b2b7425fbbbd6ec&scene=21#wechat_redirect)、[copy 和 deepcopy](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037267&idx=4&sn=6c41c5e950dc057a0713cf7e683d3403&chksm=872bb6aab05c3fbc7874054dbab0df0771a6666e2d1799d7f04276a0cc4b998141fef4c60c44&scene=21#wechat_redirect)、[迭代器和生成器](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037337&idx=5&sn=3c84b314c82f72abf2213b1982b70311&chksm=872bb6e0b05c3ff6c284aba96b1203c1335f1f256c2a7ad9513cecd835c5ee89c40789a09fc6&scene=21#wechat_redirect)、[垃圾回收机制](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037551&idx=5&sn=63f15731506f43c134320f594ba1d2fb&chksm=872bb196b05c3880378e6bee135e9f03d3e72f08606f55790a69f7e92961c74c0ef6c37fc3a6&scene=21#wechat_redirect)、[\_\_new__ 和 \_\_init__](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037869&idx=5&sn=1b101279e96bd18cdb2e88d135703f94&chksm=872bb0d4b05c39c2786ed93d90f1ef07bca0d624bc07d893c59b094aafbe98eaea1fdbdeaffa&scene=21#wechat_redirect)    
+已完成：单下划线和双下划线、[== 和 is](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454038245&idx=4&sn=6c4f80bee2292ad74ec8466428bf4bdc&chksm=872bb35cb05c3a4a57955cd41f949c3608d5742b05298507004da975a3174b2b7425fbbbd6ec&scene=21#wechat_redirect)、[copy 和 deepcopy](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037267&idx=4&sn=6c41c5e950dc057a0713cf7e683d3403&chksm=872bb6aab05c3fbc7874054dbab0df0771a6666e2d1799d7f04276a0cc4b998141fef4c60c44&scene=21#wechat_redirect)、[迭代器和生成器](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037337&idx=5&sn=3c84b314c82f72abf2213b1982b70311&chksm=872bb6e0b05c3ff6c284aba96b1203c1335f1f256c2a7ad9513cecd835c5ee89c40789a09fc6&scene=21#wechat_redirect)、[垃圾回收机制](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037551&idx=5&sn=63f15731506f43c134320f594ba1d2fb&chksm=872bb196b05c3880378e6bee135e9f03d3e72f08606f55790a69f7e92961c74c0ef6c37fc3a6&scene=21#wechat_redirect)、[\_\_new__ 和 \_\_init__](https://mp.weixin.qq.com/s?__biz=MzA5NzgzODI5NA==&mid=2454037869&idx=5&sn=1b101279e96bd18cdb2e88d135703f94&chksm=872bb0d4b05c39c2786ed93d90f1ef07bca0d624bc07d893c59b094aafbe98eaea1fdbdeaffa&scene=21#wechat_redirect)、元类(metaclass)、静态方法和类方法、字典推导式、装饰器、作用域、闭包、    
 
 以这一篇为标准，[《流畅的python》阅读笔记](https://segmentfault.com/a/1190000011568813) [备份链接](https://zhuanlan.zhihu.com/p/30754843)，自己写的笔记就是一些补充    
+
+层次结构图片中，箭头是从子类指向父类   
 
 ### 第1章 Python数据模型  
 
