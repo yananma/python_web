@@ -184,4 +184,5 @@ $(function() {
 ```
 8. 键盘事件：keydown() keypress() keyup() 
 
+location.reload() 重新加载页面  
 
