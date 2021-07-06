@@ -5,11 +5,12 @@ $.ajax({
     url: '要提交的地址', 
     type: 'POST',  // GET 或 POST
     data: {'key1':value1, 'key2': value2}  // 要提交的数据  
-    success: function(data) {
+    success: function(result) {
         // 当服务器处理完毕后，自动执行的回调函数  
-	// data 是返回的数据  
-    }else{
-        // 处理失败执行的代码  
+	// result 是返回的数据  
+	if (成功) {
+	}else{
+	} 	
     }
 })
 ```
