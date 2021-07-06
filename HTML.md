@@ -11,11 +11,7 @@ base 是 base URL，有了这个以后后面写连接就可以只写相对网址
 
 meta 元数据，增加说明信息，比如作者、简介等等  
 
-style 增加 CSS 样式  
-
-rel 就是 relation  
-
-href 就是地址  
+style 增加 CSS 样式，rel 就是 relation，href 就是地址；可以通过 link 引入 CSS 样式    
 
 script 写 JavaScript 代码，可以写在 JS 文件中，然后用 script 引用，src 上写 JS 文件名  
 
@@ -25,7 +21,7 @@ a 链接，href 写网址， target=\_blank 是在新窗口打开，target=\_sel
 
 有了 base，后面就可以用相对 URL  
 
-href=\# 相对坐标，可以实现在页面内部跳转，比如跳转到某一个标题部分  
+href=\# 相对坐标，锚点，可以实现在页面内部跳转，比如跳转到某一个标题部分  
 
 b 粗体 bold，em 斜体强调，i 也是斜体，和 em 很像，用于术语  
 
@@ -60,8 +56,6 @@ article 文章
 aside 边栏  
 
 #### 表格  
-
-现在用的不多了  
 
 table 表格、tr 一行 table row，td 一列，th 表头 table header，有个黑体的样式  
 
@@ -127,6 +121,11 @@ sessionstorage 存储 session，关闭以后存储就消失了
 SQL storage 就是用数据库来存储  
 
 
-
-
-
+select 下拉菜单  
+```html
+<select>  
+  <option>北京市</option>
+  <option>广州市</option>
+  <option>兰州市</option>
+</select>  
+```
