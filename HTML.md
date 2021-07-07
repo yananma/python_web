@@ -1,4 +1,6 @@
 
+ HTML HyperText Markup Language, 超文本标记语言 超文本是说不只是文本，还包括图片、视频等等  
+
 href 是 Hypertext Reference 的缩写。意思是指定超链接目标的 URL。href 属性的值可以是任何有效文档的相对或绝对 URL，包括片段标识符和 JavaScript 代码段。  
 
 引入 CSS 和 JavaScript 就是 import，按照路径引入  
