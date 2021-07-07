@@ -1,7 +1,7 @@
 
 一节课一行笔记，写实现某项功能的关键  
 
-### 排错清单  
+### 常见错误清单  
 单词写错了  
 缺括号  
 Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
@@ -157,7 +157,9 @@ def run_server():
         else:
             response = b'404 not found'
         conn.send(response)
-        conn.close()
+        conn.close()  #	HTTP 短连接，比如打开百度，看到百度页面的时候，其实是没有连接的，因为如果所有的显示都连接，百度的服务器承受不了，看到的只是返回结果
+
+# 短连接就是最后的 conn.close() 实现的，发送完就关闭，实现以后，还是 True，还会在服务端等待连接
 
 
 if __name__ == '__main__':
@@ -178,6 +180,8 @@ python manage.py 的所有可用命令都在 django/core/management/commands 文
 添加到 INSTALLED_APPS 中，就是源码中的 app_label    
 项目是应用的容器  
 BASE_DIR 就是项目文件夹  
+STATIC_URL = '/static/' 当 html 前端 link 的 CSS 中有 static 的时候，就会去下面的 STATICFILES_DIRS 中去找 CSS 文件  
+STATICFILES_DIRS 必须叫 STATICFILES_DIRS，这个名字是在 global_settings.py 中定义的  
 
 创建模型，继承自 models.Model，添加一些字段  
 生成迁移表：`python manage.py makemigrations polls`  
@@ -250,10 +254,71 @@ views 后面接函数名，不加括号是函数，加括号是函数的返回�
 跳转到详细页面，移除硬编码，可以使用 `{% url 'detail' question.id %}`，这里单引号里的 detail 是 path 里面的 name  
 在 View 函数中第一句做一个验证，`question = get_object_or_404(Question, pk=question_id)`  
 `selected_choice = question.choice_set.get(pk=request.POST['choice'])` ['choice'] 中的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
-request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容   
+request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容，一般用 get() 方法取值   
+在走 POST 方法的时候，print(request.POST) 就全部看清楚了  
+
+GET 获得请求头，请求体没有数据；POST 获取请求体内容，
+request.GET 最重要的功能就是取 url 中的 query_str 的键比如 ?wd=python 中的 wd   
 
 最后返回，`HttpResponseRedirect(reverse('result'))` 这里 result 也是 path 里面的 name，会根据 url 配置找到 result 视图函数  
 
+HttpResponse(字符串)，HttpResponse 返回字符串，写的是内容；  
+render 返回的才是模板，是模板路径，render 源码用的就是 HttpResponse。  
+redirect 返回跳转地址  
+
+所有的重定向都是浏览器完成的，Django 只是在响应头中加上一个 LOCATION 和要跳转到的地址  
+
+
+HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视图函数(模板 + 数据进行渲染) --\> 返回给用户(响应头)  
+
+分页就是分批获取数据  
+本质就是切片  
+Blog.objects.all()[0:10]  
+Blog.objects.all()[10:20]  
+
+Django 自带分页，`from django.core.paginator import Paginator, Page`  
+`paginator = Paginator(blog_list, per_page=10)`  
+paginator 自带一些方法，可以看源码    
+比如 current_page_posts = paginator.page(显示第几页)  
+current_page_posts 也自带一些方法  
+因为 paginator.page() 调用了 \_get_page 方法，而 \_get_page 方法就是返回 Page()，所以就继承了 Page 的方法，比如 has_next、has_previous、object_list 等  
+object_list 是分页以后的数据  
+
+视图函数：
+```python 
+current_page = request.GET.get('page')  
+current_page = int(current_page)  
+blog_list = Blogs.objects.all()  
+paginator = Paginator(blog_list, per_page=10)  
+current_page_posts = paginator.page(1)   # paginator.page(显示第几页)  
+ctx = {'posts':current_page_posts}
+```
+
+前端 html  
+```html
+<body>  
+    <h1>用户列表</h1>
+    <ul>
+    {% for row in posts.object_list %}
+	    <li>{{ row.name }}</li>
+    {% endfor %}
+    </ul>
+    <div>
+        {% if posts.has_previous %} 
+	    <a href='/index.html?page={{ posts.previous_page_number }}'>下一页</a>
+	{% endif %}
+	{% if posts.has_next %} 
+	    <a href='/index.html?page={{ posts.next_page_number }}'>下一页</a>
+	{% endif %}
+    </div>
+</body>	
+```
+
+1: 0-10  
+2: 10-20  
+3: 20-30  
+start = (current_page - 1) * per_page
+end = current_page * per_page  
 
 #### 模板  
 要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
@@ -264,15 +329,24 @@ request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是�
 
 理解模板继承的时候，想象中应该是把 base.html 的内容拿到当前的模板文件中，然后结合 {% block %} 部分  
 
+登录的视图函数中，写的是 `return render(request, 'login.html', {'error_msg':'用户名或密码错误！'})`  
+前端 html 页面写的是 `<h3 style="color:red">{{error_msg}}</h3>` 所以就是一个简单的 {{ }} 变量替换  
+
 `choice{{ forloop.counter }}` 拿到 choice1，choice2，choice3  
+可以用数字索引查询，{{ item.0 }}、{{ item.1 }}  
+
+删除功能 `<a href=/del/?nid={{ item.id }}>删除</a>`，在循环体中，点击哪个 id，就跳转到哪个页面  
+
 
 
 #### 表单  
 浏览器提交内容就要用到表单  
 
 有两种方式：  
-一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值  
+一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值    
 第二种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
+form 表单提交，页面就会刷新，刷新，提交表单就会消失，想要不刷新，就要用 ajax  
+ajax 绕过了表单  
 
 
 #### 用户  
@@ -280,7 +354,16 @@ user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和
 
 
 #### 路由  
-路由就是给谁  
+路由就是给谁，路由本质上就是正则匹配  
+
+一种是 http://127.0.0.1:8000/edit/?nid=fff 
+path('edit', ...)
+这种取值用的是 request.GET.get(nid)  
+
+一种是 http://127.0.0.1:8000/edit/fff 
+path('edit/<int:nid>', ...)  
+这种在视图函数中要传入 id  
+前端写的时候，比如 a 链接，也不加问号，而是 href='edit/{{nid}}'  
 
 
 
