@@ -1,4 +1,17 @@
 
+Call a local script on the server /api/getWeather with the query parameter zipcode=97201 and replace the element #weather-temp's html with the returned text.
+```js
+$.ajax({
+  url: "/api/getWeather",
+  data: {
+    zipcode: 97201   # 这里是 query string  
+  },
+  success: function( result ) {
+    $( "#weather-temp" ).html( "<strong>" + result + "</strong> degrees" );
+  }
+});
+```
+
 引入 jQuery  
 ```js
 $.ajax({
