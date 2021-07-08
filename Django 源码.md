@@ -5,7 +5,7 @@
 
 自己学习的感受就是，学会源码再看视频看书，就是一览众山小的感觉，学习起来如同秋风扫落叶，势如破竹。很长的项目课程，一天就能学完，而且 100% 吸收理解，清清楚楚  
 
-最重要的是通过阅读 Django 源码，有了阅读源码的能力，可以读所有的 Python 框架和包，比如 flask、Django REST framework、SQLAlchemy 等等  
+最重要的是通过阅读 Django 源码，有了阅读源码的能力，可以读所有的 Python 框架和包，比如 flask、Django REST framework、SQLAlchemy、Redis 等等  
 
 # 源码面前，了无秘密。  
 
