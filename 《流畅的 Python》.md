@@ -154,6 +154,8 @@ Python 不像 Java 那样使用 private 来创建私有属性，但是 Python �
 
 
 
+有了 @property 装饰器，调用的时候，就直接当一个属性来调用，不用加括号了   
+
 
 ## 其他  
 
