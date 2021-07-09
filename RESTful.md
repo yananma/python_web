@@ -141,8 +141,6 @@ RESTful 可以通过一套统一的接口为 Web，iOS 和 Android 提供服务�
 
 
 
-
-
 ## 其他  
 
 进入环境：`activate django_rest`  
