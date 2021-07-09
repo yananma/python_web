@@ -9,9 +9,79 @@ REST API pretty works like web does，是在网络中 client 和 server 的一�
 
 方法：写项目，读源码
 
+
+## Django REST framework 使用与源码分析  
+
+用 postman  
+
+#### RESTful 规范  
+
+REST 全称是 Representational State Transfer，中文意思是表述性状态转移。  
+
+遵守统一的 RESTful API 规范，对于前端和后端都会非常方便，在 url 中就包含了操作信息  
+
+要实现增删改查，就要有 4 个分别对应的 url  
+RESTful 规范建议使用 1 个 url，通过方法实现增删改查的功能，比如 if request.method == 'GET' 等判断  
+
+API 与用户的通信协议，总是使用 HTTPs 协议。  
+
+域名  
+`https://api.example.com`                         尽量将 API 部署在专用域名 （会存在跨域问题）  
+`https://example.org/api/`                        API 很简单  
+
+版本  
+URL，如：`https://api.example.com/v1/`  
+请求头                                                  跨域时，引发发送多次请求  
+
+路径，视网络上任何东西都是资源，均使用名词表示（可复数）  
+`https://api.example.com/v1/zoos`    
+`https://api.example.com/v1/animals`    
+`https://api.example.com/v1/employees`    
+
+method  
+GET      ：从服务器取出资源（一项或多项）  
+POST    ：在服务器新建一个资源  
+PUT      ：在服务器更新资源（客户端提供改变后的完整资源）  
+PATCH  ：在服务器更新资源（客户端提供改变的属性）  
+DELETE ：从服务器删除资源  
+
+过滤，通过在url上传参的形式传递搜索条件  
+`https://api.example.com/v1/zoos?limit=10`：指定返回记录的数量  
+`https://api.example.com/v1/zoos?offset=10`：指定返回记录的开始位置  
+`https://api.example.com/v1/zoos?page=2&per_page=100`：指定第几页，以及每页的记录数  
+`https://api.example.com/v1/zoos?sortby=name&order=asc`：指定返回结果按照哪个属性排序，以及排序顺序  
+`https://api.example.com/v1/zoos?animal_type_id=1`：指定筛选条件  
+
+状态码  
+ 常用状态码列表  
+错误处理，状态码是4xx时，应返回错误信息，error当做key。  
+
+{  
+    error: "Invalid API key"  
+}  
+返回结果，针对不同操作，服务器向用户返回的结果应该符合以下规范。  
+
+GET /collection：返回资源对象的列表（数组）  
+GET /collection/resource：返回单个资源对象  
+POST /collection：返回新生成的资源对象  
+PUT /collection/resource：返回完整的资源对象  
+PATCH /collection/resource：返回完整的资源对象  
+DELETE /collection/resource：返回一个空文档  
+Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。  
+
+{"link": {
+  "rel":   "collection https://www.example.com/zoos",
+  "href":  "https://api.example.com/zoos",
+  "title": "List of zoos",
+  "type":  "application/vnd.yourformat+json"
+}}
+
+
+
+
 ## 文档  
 
-#### Tutorial 1: Serialization  
+### Tutorial 1: Serialization  
 
 先创建模型，然后迁移到数据库，然后要使用 Web API 第一件要做的事就是 serializing 导入的 model 实例为 json 格式，在 app 目录下创建 serializer.py 文件，继承 serializers.Serializer，内容和 Django forms 差不多  
 
@@ -32,7 +102,7 @@ views 这里用的是函数
 可以从实现中看到 GET 方法就是从数据库中取数据，POST 是存数据  
 
 
-#### Tutorial 2: Requests and Responses  
+### Tutorial 2: Requests and Responses  
 
 request.data 和 request.POST 意思差不多，但是功能更强大  
 
@@ -45,7 +115,7 @@ urls.py 添加 suffixes
 使用浏览器查看内容是一种极大的优势，自己可以很方便地查看和使用，也可以让别人更容易接触  
 
 
-#### Tutorial 3: Class-based Views  
+### Tutorial 3: Class-based Views  
 
 views 使用的是 APIView  
 
@@ -56,7 +126,7 @@ views 使用的是 APIView
 可以使用 generic class-based views，这个最简洁  
 
 
-#### Tutorial 4: Authentication & Permissions  
+### Tutorial 4: Authentication & Permissions  
 
 删除 db.sqlite 的时候，要先停止服务器  
 
@@ -65,12 +135,12 @@ views 使用的是 APIView
 可以添加权限，没有登录的用户，没有权限添加数据  
 
 
-#### Tutorial 5: Relationships & Hyperlinked APIs  
+### Tutorial 5: Relationships & Hyperlinked APIs  
 
 这里的 serializer 用的是 HyperlinkedModelSerializer，自动添加超链接  
 
 
-#### Tutorial 6: ViewSets & Routers  
+### Tutorial 6: ViewSets & Routers  
 
 这一节用的 ViewSets 是最简单的  
 
@@ -101,10 +171,6 @@ exempt 免除，豁免
 继承 serializers.ModelSerializer 就非常简洁，指定 model 和 fields 就可以了  
 
 继承 serializers.HyperlinkedModelSerializer 可以实现使用超链接点击跳转  
-
-
-## Django REST framework 使用与源码分析  
-
 
 
 
