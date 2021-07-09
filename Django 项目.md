@@ -9,11 +9,11 @@ Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存
 
 
 #### 固定步骤  
+
 创建模型，添加到 admin，后台添加数据，在视图函数中，从数据库取值，共享到前端，前端替换     
 写完视图函数添加 url   
 修改 models.py 以后，要 makemigrations、migrate  
 创建应用以后，在 INSTALLED_APPS 中添加  
-
 
 想法  
 是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例   
@@ -21,16 +21,9 @@ Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存
 
 
 ## Django 基础知识  
-框架的作用：  
-封装：大量功能的封装  
-简化：复杂功能封装以后做到了简化  
-优化：框架做了大量的优化  
-安全：框架有完善的安全机制  
-管理：模块化，层次划分清晰，易于管理维护  
 
 Django 是一个重度框架，大而全，适合大型团队管理。学习成本高一些。  
 Django 可以做网站开发、微信公众号、小程序后端开发等，只要是有 HTTP 的地方，都可以用 Django  
-人工智能平台融合，前面是打车微信小程序，中间是 Django，后面是人工智能系统。  
 
 浏览器本质上就是一个 socket 客户端，就是 TCP，不断开就一直连接。HTTP 建立在 TCP 之上，其实就是 TCP  
 HTTP 无状态，短连接。HTTP 是无状态的，本质上就是因为 TCP 连接断开以后，再次连接不知道对方原来是否连接过，所以就有了 cookie 和 session 来解决这个问题  
@@ -51,6 +44,7 @@ while True:
     conn.send(b'connect server successfully')
     conn.close()
 ```
+
 HTTP 协议规定了请求和响应的格式  
 
 网络框架的核心代码  
@@ -172,6 +166,7 @@ MTV 核心思想就是解耦，便于开发维护，增加模块的可重用性�
 
 
 #### 前期配置  
+
 python manage.py 的所有可用命令都在 django/core/management/commands 文件夹下面  
 
 创建项目：`django-admin startproject mysite`  
@@ -190,26 +185,20 @@ STATICFILES_DIRS 必须叫 STATICFILES_DIRS，这个名字是在 global_settings
 
 
 #### 模型操作  
+
 模型是你的数据的唯一的，权威的信息源，包含所存储的必要字段，一个模型对应数据库中的一张表，一个字段对应于数据表中的一列  
 Django ORM 可以用相同的接口操作不同的数据库，做了底层封装；更加安全；易读性更高；不用因为修改数据库而修改代码  
 ORM 做的事情就是把 Python 类，拼接成 SQL 语句  
-每个字段都是 Field 子类的实例；每个字段都是模型的类属性    
+每个字段都是 Field 子类的实例，比如 username = models.CharField() username 就是 CharField 的实例；每个字段都是模型的类属性    
 在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
 def \_\_str__(self)，是点进去以后实例显示的内容  
 字段的 verbos_name 是再点进去编辑的时候，左侧显示的名字  
-DateField 日期  
-DateTimeField 时间  
-auto_now_add 创建时间  
-auto_now 修改时间   
+DateField 日期、DateTimeField 时间、auto_now_add 创建时间、auto_now 修改时间   
 修改属性：模型对象.属性 = 新值，然后 save()  
 除了关联关系之外，一般第一个属性都是字段的自述名，就是 verbose_name  
-blank 是用于前端表单的，默认是不可以输入空值的，设置了以后可以不填  
-unique 唯一性约束，比如邮箱、手机号、身份证号码  
-null，如果设置了 null=True，在数据库中会把空值设置为 NULL，CharField 类型不要设置，因为会有空字符串和 NULL  
-choices 就是一个下拉列表  
 max_length 是 CharField 的必填字段，在 \_\_init__方法中有一个 MaxLengthValidator 验证    
 
-
+filter 内部有多个过滤条件的时候，是 AND，filter 不能实现 OR，如果想要实现，就要用 Q  
 filter(类，子类), filter 内部是拼接 WHERE 语句，是与的关系  
 
 关联关系：多对一、一对一、多对多  
@@ -226,6 +215,7 @@ model 操作 API，创建一个实例，save()、filter()、get()、delete()、u
 
 
 #### 后台管理  
+
 Django 相较于其他的框架的一个大的优势就是有一个功能完善的后台系统，不用从头搭建  
 
 创建账号：`python manage.py createsuperuser`  
@@ -246,11 +236,13 @@ django/contrib/admin/templates/admin/base_site.html
 
 
 #### 视图  
-在 views.py 中创建视图函数，写完视图函数配置 url  
+
+先写 url，然后写视图函数  
 浏览器找的时候是通过 url 找到 urls.py，从 urls.py 的配置中找到 views 函数，通过 views 函数返回响应  
 路由列表必须叫 urlpatterns，因为源码里是 `getattr(urlconf_module, 'urlpatterns')`  
 views 后面接函数名，不加括号是函数，加括号是函数的返回值；  
-继承 View 类的时候，as_view() 加括号，加括号源码最后返回的是 as_view 内部定义的 view 函数，所以还是函数  
+继承 View 类的时候，as_view() 加括号，加括号源码最后返回的是 as_view 内部定义的 view 函数，是 get 就走 get，是 post 就走 post，所以还是函数  
+
 跳转到详细页面，移除硬编码，可以使用 `{% url 'detail' question.id %}`，这里单引号里的 detail 是 path 里面的 name  
 在 View 函数中第一句做一个验证，`question = get_object_or_404(Question, pk=question_id)`  
 `selected_choice = question.choice_set.get(pk=request.POST['choice'])` ['choice'] 中的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
@@ -258,7 +250,7 @@ request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是�
 在走 POST 方法的时候，print(request.POST) 就全部看清楚了  
 
 GET 获得请求头，请求体没有数据；POST 获取请求体内容，
-request.GET 最重要的功能就是取 url 中的 query_str 的键比如 ?wd=python 中的 wd   
+request.GET 最重要的功能就是取 url 中的 query_string 的键比如 ?wd=python 中的 wd 和表单中的 name  
 
 最后返回，`HttpResponseRedirect(reverse('result'))` 这里 result 也是 path 里面的 name，会根据 url 配置找到 result 视图函数  
 
@@ -267,7 +259,6 @@ render 返回的才是模板，是模板路径，render 源码用的就是 HttpR
 redirect 返回跳转地址  
 
 所有的重定向都是浏览器完成的，Django 只是在响应头中加上一个 LOCATION 和要跳转到的地址  
-
 
 HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视图函数(模板 + 数据进行渲染) --\> 返回给用户(响应头)  
 
@@ -321,6 +312,7 @@ start = (current_page - 1) * per_page
 end = current_page * per_page  
 
 #### 模板  
+
 要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
 
 变量：{{ }}  
@@ -338,22 +330,25 @@ end = current_page * per_page
 删除功能 `<a href=/del/?nid={{ item.id }}>删除</a>`，在循环体中，点击哪个 id，就跳转到哪个页面  
 
 
-
 #### 表单  
+
 浏览器提交内容就要用到表单  
 
-有两种方式：  
-一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值    
-第二种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
+有三种方式：  
+第一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值    
+第二种是 LoginForm(request.POST) 
+第三种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
 form 表单提交，页面就会刷新，刷新，提交表单就会消失，想要不刷新，就要用 ajax  
 ajax 绕过了表单  
 
 
 #### 用户  
+
 user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和它的父类 AbstractBaseUser 中，比如 username、is_active，比如 is_authenticated  
 
 
 #### 路由  
+
 路由就是给谁，路由本质上就是正则匹配  
 
 一种是 http://127.0.0.1:8000/edit/?nid=fff 
@@ -364,7 +359,6 @@ path('edit', ...)
 path('edit/<int:nid>', ...)  
 这种在视图函数中要传入 id  
 前端写的时候，比如 a 链接，也不加问号，而是 href='edit/{{nid}}'  
-
 
 
 ## 留言板项目  
