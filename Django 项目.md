@@ -262,54 +262,7 @@ redirect 返回跳转地址
 
 HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视图函数(模板 + 数据进行渲染) --\> 返回给用户(响应头)  
 
-分页就是分批获取数据  
-本质就是切片  
-Blog.objects.all()[0:10]  
-Blog.objects.all()[10:20]  
 
-Django 自带分页，`from django.core.paginator import Paginator, Page`  
-`paginator = Paginator(blog_list, per_page=10)`  
-paginator 自带一些方法，可以看源码    
-比如 current_page_posts = paginator.page(显示第几页)  
-current_page_posts 也自带一些方法  
-因为 paginator.page() 调用了 \_get_page 方法，而 \_get_page 方法就是返回 Page()，所以就继承了 Page 的方法，比如 has_next、has_previous、object_list 等  
-object_list 是分页以后的数据  
-
-视图函数：
-```python 
-current_page = request.GET.get('page')  
-current_page = int(current_page)  
-blog_list = Blogs.objects.all()  
-paginator = Paginator(blog_list, per_page=10)  
-current_page_posts = paginator.page(1)   # paginator.page(显示第几页)  
-ctx = {'posts':current_page_posts}
-```
-
-前端 html  
-```html
-<body>  
-    <h1>用户列表</h1>
-    <ul>
-    {% for row in posts.object_list %}
-	    <li>{{ row.name }}</li>
-    {% endfor %}
-    </ul>
-    <div>
-        {% if posts.has_previous %} 
-	    <a href='/index.html?page={{ posts.previous_page_number }}'>下一页</a>
-	{% endif %}
-	{% if posts.has_next %} 
-	    <a href='/index.html?page={{ posts.next_page_number }}'>下一页</a>
-	{% endif %}
-    </div>
-</body>	
-```
-
-1: 0-10  
-2: 10-20  
-3: 20-30  
-start = (current_page - 1) * per_page
-end = current_page * per_page  
 
 #### 模板  
 
@@ -366,12 +319,30 @@ path('edit/<int:nid>', ...)
 5 个方法  
 权限  
 用户登录验证  
+黑名单/白名单  
 csrf_token  
+
 
 csrf_token 是在 process_view 中实现的，因为要走到视图函数，看有没有 csrf_exempt 装饰器  
 
+AOP Aspect Oriented Programming 面向切面编程。AOP 的目的主要是针对业务处理过程的切面进行提取，它所面对的是处理过程中的某个步骤或阶段，以获得逻辑过程中各个部分之间低耦合的隔离效果。  
+
+写 middleware 中间件，继承 MiddlewareMixin，在 settings 中注册  
+
 
 #### 缓存  
+
+统计功能：IP 统计、浏览器统计  
+实现权重控制，返回的概率不一样，if random.randrange(100) > 20 或 > 80 实现  
+黑名单/白名单  
+实现反爬虫，实现频率控制，比如 10 秒之内只能访问一次  
+```python 
+if request.path == '/app/search/:
+     result = cache.get(ip):
+     if result:
+         return response('请 10 秒后访问')
+     cache.set(ip, ip, timeout=10)
+```
 
 将执行的操作数据存储下来，在一定时间内，再次获取数据的时候，直接从缓存中获取。从而提升服务器响应速度。  
 
@@ -379,6 +350,139 @@ csrf_token 是在 process_view 中实现的，因为要走到视图函数，看�
 
 `python manage.py createcachetable`  
 
+缓存配置和数据库配置格式差不多  
+
+缓存在视图函数中使用最多   
+
+@cache_page()  
+
+视图函数先取缓存中查数据，如果缓存中没有才去数据库中查，去数据库中查到数据以后，还有存在缓存中  
+
+不用装饰器  
+cache.get() 取值  
+cache.set() 存值  
+
+
+可以使用 Redis 实现缓存功能  
+
+黑名单，用 cookie 和 session，就是一个 if 判断，if ip == '黑名单 ip' 就 return HttpResponse('字符串')   
+
+
+#### 分页
+
+分页属于优化加载  
+
+分页就是分批获取数据  
+本质就是切片  
+Blog.objects.all()[0:10]  
+Blog.objects.all()[10:20]  
+
+Django 自带分页，`from django.core.paginator import Paginator, Page`  
+Paginator 是分页器，Page 是某一个页面  
+`paginator = Paginator(blog_list, per_page=10)`  
+paginator 自带一些方法，看源码，比如 count 对象总数，num_pages 总页数，page_range 页码列表    
+比如 current_page_posts = paginator.page(第几页)，会显示一个页面  
+current_page_posts 也自带一些方法  
+因为 paginator.page() 调用了 \_get_page 方法，而 \_get_page 方法就是返回 Page()，所以就继承了 Page 的方法，比如 has_next、has_previous、object_list 等  
+object_list 是当前页面的所有数据  
+
+视图函数：
+```python 
+current_page = request.GET.get('page')  
+current_page = int(current_page)  
+blog_list = Blogs.objects.all()  
+paginator = Paginator(blog_list, per_page=10)  
+current_page_posts = paginator.page(1)   # paginator.page(显示第几页)  
+ctx = {'posts':current_page_posts}
+```
+
+前端 html  
+```html
+<body>  
+    <h1>用户列表</h1>
+    <ul>
+    {% for row in posts.object_list %}
+	    <li>{{ row.name }}</li>
+    {% endfor %}
+    </ul>
+    <div>
+        {% if posts.has_previous %} 
+	    <a href='/index.html?page={{ posts.previous_page_number }}'>下一页</a>
+	{% endif %}
+	{% for page_index in page_range %}  
+	    <li><a href="{% url 'app:students_page' %}?page={{ page_index }}">{{ page_index }}</a></li>
+	{% endfor %}    
+	{% if posts.has_next %} 
+	    <a href='/index.html?page={{ posts.next_page_number }}'>下一页</a>
+	{% endif %}
+    </div>
+</body>	
+```
+
+用 Bootstrap 样式，先搜 Bootstrap cdn 和 jQuery cdn，导入，然后复制 Bootstrap 样式  
+
+1: 0-10  
+2: 10-20  
+3: 20-30  
+start = (current_page - 1) * per_page
+end = current_page * per_page  
+
+
+#### 验证码  
+
+要用 Pillow 库  
+
+自己绘制也很简单，一个坐标系，左上角开始，向右是 x 轴，向下是 y 轴，然后要有一块画布，一支画笔。  
+
+Image 是画布，ImageDraw 是画笔，ImageFont 是字体  
+
+```python 
+def get_code(request):
+    mode = 'RGB'  
+    size = (200, 100) 
+    color_bg = (255, 0, 0) 
+    image = Image.new(mode=mode, size=size, color=color_bg) 
+    image_draw = ImageDraw(image, mode=mode)  
+    image_font = ImageFont.truetype(settings.FONT_PATH, 50(字号))
+    image_draw.text(xy=(0, 0), text='Rock') 
+    fp = ByteIO() 
+    image.save(fp, 'png') 
+    return HttpResponse(fp.getvalue(), content_type='image/png')
+```
+设置随机字符串，随机颜色，随机线条，随机噪点
+
+找一份字体，配置路径  
+
+用 session 存储生成的验证码，做验证  
+```python 
+receive_code = request.GET.get('verify_code') 
+store_code = request.session.get('verify_code') 
+if receive_code.lower() != store_code.lower():
+    return redirect(reverse('app:login'))
+return HttpResponse('登录成功')
+```
+
+用 jQuery 实现点击验证码刷新功能  
+```js
+$(function) {
+    $("img").click(function ()) {
+        $(this).attr("src", "app/getcode/?t=" + Math.random());   // 不加 random，浏览器就不会刷新  
+    }
+}
+```
+
+
+#### 富文本  
+
+就写博客有用，干别的用不着  
+
+富文本就是添加样式的文档，就是添加 HTML 标签  
+
+`pip install tinymce`  
+
+在 settings 中配置路径  
+
+配置 url，配置函数，在 HTML 中引入 js，并且初始化  
 
 
 
