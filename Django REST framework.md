@@ -7,12 +7,11 @@ url -> views -> models 数据库取值 -> serializer 序列化成 json 格式 ->
 
 REST API pretty works like web does，是在网络中 client 和 server 的一种交互形式，server can receive data from applications，可以是电脑端、iOS 和 Android，allows one software talk to another  
 
-方法：写项目，读源码
+方法：写项目，读源码  
 
 
 ## Django REST framework 使用与源码分析  
 
-用 postman  
 
 #### RESTful 规范  
 
@@ -56,9 +55,10 @@ DELETE ：从服务器删除资源
  常用状态码列表  
 错误处理，状态码是4xx时，应返回错误信息，error当做key。  
 
-{  
-    error: "Invalid API key"  
-}  
+    {  
+        error: "Invalid API key"  
+    }  
+
 返回结果，针对不同操作，服务器向用户返回的结果应该符合以下规范。  
 
 GET /collection：返回资源对象的列表（数组）  
@@ -69,12 +69,114 @@ PATCH /collection/resource：返回完整的资源对象
 DELETE /collection/resource：返回一个空文档  
 Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。  
 
-{"link": {
-  "rel":   "collection https://www.example.com/zoos",
-  "href":  "https://api.example.com/zoos",
-  "title": "List of zoos",
-  "type":  "application/vnd.yourformat+json"
-}}
+    {"link": {
+      "rel":   "collection https://www.example.com/zoos",
+      "href":  "https://api.example.com/zoos",
+      "title": "List of zoos",
+      "type":  "application/vnd.yourformat+json"
+    }}
+
+#### 认证
+
+APIView 继承自 Django 的 View，但是又定义了很多方法，实现了很多功能  
+
+越往下继承，包含的功能越多，ModelViewSet 继承了 6 个类，这六个类中还有父类，所以功能非常多。   
+
+源码从 dispatch 入手  
+
+APIView 自己实现了 dispatch 方法，在 dispatch 方法中  
+```python
+request = self.initialize_request(request, *args, **kwargs)
+self.request = request
+```
+已经不是 Django 原始的 request 了，是 Django REST framework 处理过的 request，丰富了一些功能  
+
+比如在里面就做了用户认证  
+
+用 Django REST framework 提供了 API 接口，这个接口要控制，有人能访问，有人访问不了，怎么控制？就是要用户认证  
+
+先走 APIView 的 dispatch 方法，在方法中对 request 进行了封装，用户认证系统，先看 views.py 中是不是自己定义了认证方法，如果没有就用 Django REST framework 自己在 settings 里配置的方法认证。然后执行 Django REST framework 自己的 initial 方法，进行认证。然后在 initial 方法中执行 perform_authentication，在 perform_authentication 方法中，调用了 request.user，然后要去 Request 类中找 user 方法，在 user 方法中调用了 self.\_authencate()，在 \_authencate() 方法中循环 authencator，循环认证类的所有对象，在这里调用了 authenticate 方法进行验证。这里返回的是 user_auth_tuple，所以必须是 tuple。如果一个返回了 None，就进行下一次循环，交给下一个循环来处理。       
+
+可以自己配置路径  
+
+没有登录，默认设置的是 AnonymousUser  
+
+内置认证在 rest_framework 的 authentication.py 中  
+
+自己写认证，必须继承 BasicAuthentication 类  
+
+#### 权限  
+
+比如设置 user_type 为普通用户、VIP，设置对应的 id 为 1、2，所谓权限就是判断如果 user_type_id == 2，有权访问，如果不等于 2，就返回无权访问。  
+
+方法就是写一个权限类，然后在视图函数中使用就可以了  
+
+流程和用户认证前半部分差不多，要更简单  
+
+内置权限  
+
+
+#### 访问频率控制  
+
+访问记录通过拿到用户 IP 地址实现  
+
+实现方法非常巧妙，用列表存储访问记录，比如限制 60 秒之内访问 10 次，用 while 循环，如果最后一条，在 60 之外就 pop，直到所有的都在 60 秒之内，然后判断列表中的元素个数是否大于 10.  
+
+用缓存实现的  
+
+
+#### 版本  
+
+这个不重要，一次配置，以后不用  
+
+可以通过 url 的 query string 传参，通过 get 拿到，不推荐使用   
+
+最好还是使用 /v1/ 的方式传，用 URLPathVersioning 取到  
+
+源码，还是先走 dispath 方法，在 initial 方法里有 self.determine_version，返回的两个值赋值给 request，在 determin_version 中又调用了 self.version_class，self.version_class 调用的是设置中的 version。  
+
+
+#### 解析器  
+
+不重要  
+
+Django 自带的 request.POST / request.body  
+当请求头中有 Content-Type: application/x-www-form-urlencoded 时，post 中才有值   
+
+Django REST framework 的解析器  
+解析器就是对请求体中的数据进行解析  
+Django REST framework 的解析器，比 Django 自己的解析器要强大很多  
+parser_classes = [JSONParser]，看 JSONParser 源码  
+JSON 格式是最常用的  
+
+
+#### 序列化  
+
+最重要，每个都要用  
+
+序列化有两大功能：对请求验证，对 query_set 进行序列化  
+
+serializers.Serializer  
+
+serializers.ModelSerializer，字段多的时候用    
+
+
+#### 分页  
+
+PagerSerializer   
+
+PageNumberPagination  
+
+
+#### 视图  
+
+
+#### 路由  
+
+
+#### 渲染  
+
+
 
 
 
