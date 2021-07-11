@@ -39,6 +39,8 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 项目下面有包，包里面有各种模块  
 
+[PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)
+
 
 #### 其他设置
 
