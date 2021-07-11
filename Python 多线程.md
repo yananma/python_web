@@ -184,4 +184,75 @@ GIL 是设计之初是为了规避并发的数据同步问题而引入的，它�
 join() 就是子线程运行完了以后再执行 join() 下面的内容  
 
 
+## 协程和异步  
+
+可以提升性能，越来越多的框架开始往这个方向发展，以后会越来越流行  
+
+#### 协程  
+
+协程不是在计算机真实存在的，计算机中只有进程和线程，协程是程序员人为创造出来的  
+
+协程又可以称为微线程  
+
+就是让一个线程在代码之间切换着游走着去运行  
+
+yield 关键字[了解即可，没人用这个写]  
+
+asyncio 装饰器  
+```python 
+import asyncio 
+
+@asyncio.coroutin 
+def func1():
+    print(1)  
+    yield from asyncio.sleep(2)    # 遇到 IO 耗时操作，自动切换到 tasks 的其他任务  
+    print(2)  
+    
+@asyncio.coroutin 
+def func2():
+    print(3)  
+    yield from asyncio.sleep(2)    # 遇到 IO 耗时操作，自动切换到 tasks 的其他任务  
+    print(4)  
+    
+tasks = [
+    asyncio.ensure_future( func1() ), 
+    asyncio.ensure_future( func1() ), 
+]        
+
+loop = asyncio.get_event_loop()  
+loop.run_until_complete(asyncio.wait(tasks)
+```
+
+async await 关键字[推荐方式]  
+```python 
+import asyncio 
+
+async def func1():
+    print(1)  
+    await asyncio.sleep(2)    # 遇到 IO 耗时操作，自动切换到 tasks 的其他任务  
+    print(2)  
+    
+async  def func2():
+    print(3)  
+    await asyncio.sleep(2)    # 遇到 IO 耗时操作，自动切换到 tasks 的其他任务  
+    print(4)  
+    
+tasks = [
+    asyncio.ensure_future( func1() ), 
+    asyncio.ensure_future( func1() ), 
+]        
+
+loop = asyncio.get_event_loop()  
+loop.run_until_complete(asyncio.wait(tasks)
+```
+
+#### 协程的意义  
+
+在一个线程中遇到 IO 等待的时候，线程会利用空闲时间去完成其他的任务  
+
+同步：就是普通的方式，排队等待  
+异步：开始了一个任务，不等结果，又去做其他的任务  
+
+
+
 
