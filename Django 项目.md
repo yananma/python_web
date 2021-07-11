@@ -2,32 +2,45 @@
 一节课一行笔记，写实现某项功能的关键  
 
 ### 常见错误清单  
-单词写错了  
-缺括号  
-Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
-类中的方法没写 self  
 
+单词写错了  
+
+缺括号  
+
+Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
+
+类中的方法没写 self  
 
 #### 固定步骤  
 
 创建模型，添加到 admin，后台添加数据，在视图函数中，从数据库取值，共享到前端，前端替换     
+
 写完视图函数添加 url   
+
 修改 models.py 以后，要 makemigrations、migrate  
+
 创建应用以后，在 INSTALLED_APPS 中添加  
 
 想法  
 是一个具体的东西，就要创建 model，比如合作机构，比如友情链接，这些都是类的实例   
+
 添加数据的本质就是创建一个类的实例  
 
 
 ## Django 基础知识  
 
 Django 是一个重度框架，大而全，适合大型团队管理。学习成本高一些。  
+
 Django 可以做网站开发、微信公众号、小程序后端开发等，只要是有 HTTP 的地方，都可以用 Django  
 
-浏览器本质上就是一个 socket 客户端，就是 TCP，不断开就一直连接。HTTP 建立在 TCP 之上，其实就是 TCP  
+浏览器本质上就是一个 socket 客户端，就是 TCP。HTTP 建立在 TCP 之上，其实就是 TCP  
+
 HTTP 无状态，短连接。HTTP 是无状态的，本质上就是因为 TCP 连接断开以后，再次连接不知道对方原来是否连接过，所以就有了 cookie 和 session 来解决这个问题  
+
+短连接是 conn.close() 实现的  
+
 浏览器（socket 客户端），GitHub 网站（也就是 web 应用程序）（socket 服务器），服务器先运行起来，会一直监听 IP 和 80，客户端连接以后，客户端发数据，服务器返回响应  
+
 服务器，my_server.py，所有的框架，所有的网站，本质上就是这几行代码    
 ```python 
 import socket
@@ -48,6 +61,7 @@ while True:
 HTTP 协议规定了请求和响应的格式  
 
 网络框架的核心代码  
+
 ```python 
 import socket
 import pymysql
@@ -170,47 +184,72 @@ MTV 核心思想就是解耦，便于开发维护，增加模块的可重用性�
 python manage.py 的所有可用命令都在 django/core/management/commands 文件夹下面  
 
 创建项目：`django-admin startproject mysite`  
+
 配置 MySQL，不用记，代码 settings 里面有网址，复制就行  
+
 创建应用：`django-admin startapp polls`  
+
 添加到 INSTALLED_APPS 中，就是源码中的 app_label    
+
 项目是应用的容器  
+
 BASE_DIR 就是项目文件夹  
+
 STATIC_URL = '/static/' 当 html 前端 link 的 CSS 中有 static 的时候，就会去下面的 STATICFILES_DIRS 中去找 CSS 文件  
+
 STATICFILES_DIRS 必须叫 STATICFILES_DIRS，这个名字是在 global_settings.py 中定义的  
 
 创建模型，继承自 models.Model，添加一些字段  
+
 生成迁移表：`python manage.py makemigrations polls`  
+
 查看 SQL 语句：`python manage.py sqlmigrate polls 0001`  
+
 迁移到数据库：`python manage.py migrate`  
 
 
 #### 模型操作  
 
 模型是你的数据的唯一的，权威的信息源，包含所存储的必要字段，一个模型对应数据库中的一张表，一个字段对应于数据表中的一列  
+
 Django ORM 可以用相同的接口操作不同的数据库，做了底层封装；更加安全；易读性更高；不用因为修改数据库而修改代码  
+
 ORM 做的事情就是把 Python 类，拼接成 SQL 语句  
+
 每个字段都是 Field 子类的实例，比如 username = models.CharField() username 就是 CharField 的实例；每个字段都是模型的类属性    
+
 在 model.py 的模型类中，class Meta 的 verbose_name，是类显示的名字，是点进去之前显示的。  
+
 def \_\_str__(self)，是点进去以后实例显示的内容  
+
 字段的 verbos_name 是再点进去编辑的时候，左侧显示的名字  
+
 DateField 日期、DateTimeField 时间、auto_now_add 创建时间、auto_now 修改时间   
+
 修改属性：模型对象.属性 = 新值，然后 save()  
+
 除了关联关系之外，一般第一个属性都是字段的自述名，就是 verbose_name  
+
 max_length 是 CharField 的必填字段，在 \_\_init__方法中有一个 MaxLengthValidator 验证    
 
 filter 内部有多个过滤条件的时候，是 AND，filter 不能实现 OR，如果想要实现，就要用 Q  
+
 filter(类，子类), filter 内部是拼接 WHERE 语句，是与的关系  
 
 关联关系：多对一、一对一、多对多  
+
 ForeignKey，Comment 中的 ForeignKey 是 Blog，所以 Comment 直接就有 Blog 字段，所以取值的时候直接取，comment.blog.title  
+
 Blog 中没有 Comment 字段，所以取的时候是反向查询，blog = Blog.objects.get(id=1)，blog.comment_set.all()，其中 comment_set 是自动添加的查询管理器  
 
 大部分的展示信息，都是用的 `模型类.objects.all()`  
+
 关联信息会用到反向查询和关联关系查询，对于 ForeignKey，ForeignKey 写在一对多的那个多的类中，比如 Topic 和 Comment，写在 Comment 类里，因为添加 Comment 必须要有 Topic，但是添加 Top 不用写 Comment。查询的时候，Topic 中没有 Comment 字段，所以用的是反向查询，自动添加了 comment_set 查询管理器，Topic.comment_set.all()。Comment 中有 Topic 字段，查询的时候直接查就可以，在前端可以通过 comment.topic.name 取值。  
+
 比如通过标签查博客，先通过标签 id 取到特定标签，然后通过反向查询 Tags.blog_set.all() 取到所有有这个标签的 blog  
 
-
 进入 shell 环境：`python manage.py shell`  
+
 model 操作 API，创建一个实例，save()、filter()、get()、delete()、update()、  
 
 
@@ -219,6 +258,7 @@ model 操作 API，创建一个实例，save()、filter()、get()、delete()、u
 Django 相较于其他的框架的一个大的优势就是有一个功能完善的后台系统，不用从头搭建  
 
 创建账号：`python manage.py createsuperuser`  
+
 输入账号密码：  
 admim  
 admin@qq.com  
@@ -230,26 +270,35 @@ password1234
 `admin.site.register(Question)`  
 
 可以自己设置后台显示样式  
+
 admin.site.site_header = '在线教育平台后台管理系统'  
-django/contrib/admin/templates/admin/base_site.html  
-在文件夹下面有很多 HTML 页面  
+django/contrib/admin/templates/admin/base_site.html，在文件夹下面有很多 HTML 页面  
 
 
 #### 视图  
 
 先写 url，然后写视图函数  
+
 浏览器找的时候是通过 url 找到 urls.py，从 urls.py 的配置中找到 views 函数，通过 views 函数返回响应  
+
 路由列表必须叫 urlpatterns，因为源码里是 `getattr(urlconf_module, 'urlpatterns')`  
+
 views 后面接函数名，不加括号是函数，加括号是函数的返回值；  
+
 继承 View 类的时候，as_view() 加括号，加括号源码最后返回的是 as_view 内部定义的 view 函数，是 get 就走 get，是 post 就走 post，所以还是函数  
 
 跳转到详细页面，移除硬编码，可以使用 `{% url 'detail' question.id %}`，这里单引号里的 detail 是 path 里面的 name  
+
 在 View 函数中第一句做一个验证，`question = get_object_or_404(Question, pk=question_id)`  
+
 `selected_choice = question.choice_set.get(pk=request.POST['choice'])` ['choice'] 中的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
+
 request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容，一般用 get() 方法取值   
+
 在走 POST 方法的时候，print(request.POST) 就全部看清楚了  
 
 GET 获得请求头，请求体没有数据；POST 获取请求体内容，
+
 request.GET 最重要的功能就是取 url 中的 query_string 的键比如 ?wd=python 中的 wd 和表单中的 name  
 
 最后返回，`HttpResponseRedirect(reverse('result'))` 这里 result 也是 path 里面的 name，会根据 url 配置找到 result 视图函数  
@@ -263,7 +312,6 @@ redirect 返回跳转地址
 HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视图函数(模板 + 数据进行渲染) --\> 返回给用户(响应头)  
 
 
-
 #### 模板  
 
 要看是不是要有一个新的页面，如果是一个全新的页面，比如 vip 页面，就要添加一个 html 模板，然后要添加视图  
@@ -275,9 +323,11 @@ HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视�
 理解模板继承的时候，想象中应该是把 base.html 的内容拿到当前的模板文件中，然后结合 {% block %} 部分  
 
 登录的视图函数中，写的是 `return render(request, 'login.html', {'error_msg':'用户名或密码错误！'})`  
+
 前端 html 页面写的是 `<h3 style="color:red">{{error_msg}}</h3>` 所以就是一个简单的 {{ }} 变量替换  
 
 `choice{{ forloop.counter }}` 拿到 choice1，choice2，choice3  
+
 可以用数字索引查询，{{ item.0 }}、{{ item.1 }}  
 
 删除功能 `<a href=/del/?nid={{ item.id }}>删除</a>`，在循环体中，点击哪个 id，就跳转到哪个页面  
@@ -292,6 +342,7 @@ HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视�
 第二种是 LoginForm(request.POST) 
 第三种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
 form 表单提交，页面就会刷新，刷新，提交表单就会消失，想要不刷新，就要用 ajax  
+
 ajax 绕过了表单  
 
 
@@ -305,23 +356,28 @@ user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和
 路由就是给谁，路由本质上就是正则匹配  
 
 一种是 http://127.0.0.1:8000/edit/?nid=fff 
+
 path('edit', ...)
+
 这种取值用的是 request.GET.get(nid)  
 
 一种是 http://127.0.0.1:8000/edit/fff 
+
 path('edit/<int:nid>', ...)  
+
 这种在视图函数中要传入 id  
+
 前端写的时候，比如 a 链接，也不加问号，而是 href='edit/{{nid}}'  
 
 
 #### 中间件  
 
 5 个方法  
+
 权限  
 用户登录验证  
 黑名单/白名单  
 csrf_token  
-
 
 csrf_token 是在 process_view 中实现的，因为要走到视图函数，看有没有 csrf_exempt 装饰器  
 
@@ -333,8 +389,11 @@ AOP Aspect Oriented Programming 面向切面编程。AOP 的目的主要是针�
 #### 缓存  
 
 统计功能：IP 统计、浏览器统计  
+
 实现权重控制，返回的概率不一样，if random.randrange(100) > 20 或 > 80 实现  
+
 黑名单/白名单  
+
 实现反爬虫，实现频率控制，比如 10 秒之内只能访问一次  
 ```python 
 if request.path == '/app/search/:
@@ -362,7 +421,6 @@ if request.path == '/app/search/:
 cache.get() 取值  
 cache.set() 存值  
 
-
 可以使用 Redis 实现缓存功能  
 
 黑名单，用 cookie 和 session，就是一个 if 判断，if ip == '黑名单 ip' 就 return HttpResponse('字符串')   
@@ -373,17 +431,25 @@ cache.set() 存值
 分页属于优化加载  
 
 分页就是分批获取数据  
+
 本质就是切片  
 Blog.objects.all()[0:10]  
 Blog.objects.all()[10:20]  
 
 Django 自带分页，`from django.core.paginator import Paginator, Page`  
+
 Paginator 是分页器，Page 是某一个页面  
+
 `paginator = Paginator(blog_list, per_page=10)`  
+
 paginator 自带一些方法，看源码，比如 count 对象总数，num_pages 总页数，page_range 页码列表    
+
 比如 current_page_posts = paginator.page(第几页)，会显示一个页面  
+
 current_page_posts 也自带一些方法  
+
 因为 paginator.page() 调用了 \_get_page 方法，而 \_get_page 方法就是返回 Page()，所以就继承了 Page 的方法，比如 has_next、has_previous、object_list 等  
+
 object_list 是当前页面的所有数据  
 
 视图函数：
@@ -485,7 +551,6 @@ $(function) {
 配置 url，配置函数，在 HTML 中引入 js，并且初始化  
 
 
-
 ## 留言板项目  
 
 视图函数全部都是使用 View 创建的，读完就学会 View 类写视图了  
@@ -494,8 +559,11 @@ $(function) {
 ## 博客项目  
 
 #### 前期准备  
+
 项目演示  
+
 下载安装  
+
 创建项目，创建应用  
 
 [models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E5%8D%9A%E5%AE%A2/models.py)  
@@ -508,6 +576,7 @@ STATICFILES_DIRS = [
 ```
 
 配置视图和 url  
+
 后台注册  
 
 ### 首页  
@@ -597,6 +666,7 @@ ctx = {
 
 #### 搜索功能
 要创建一个视图函数，用的是 list 列表页模板  
+
 前端 index.html 是一个 form 表单    	
 ```python
 <form class="navbar-form" action="/search" method="post">
@@ -786,7 +856,9 @@ class CommentView(View):
 	# comment 有视图，没有自己 HTML  
 ```
 配置 url：`path('comment/<int:bid>', views.CommentView.as_view(), name='comment')`  
+
 在 blog_detail 视图函数中取值，`comment_list = post.comment_set.all()`
+
 显示评论列表  
 ```html
  {% for comment in comment_list %}
@@ -805,7 +877,9 @@ class CommentView(View):
 
 #### 登录功能  
 配置 url  
+
 `path('login', views.LoginView.as_view(), name='login')`  
+
 写视图函数  
 ```python 
 class LoginView(View):
@@ -827,6 +901,7 @@ class LoginView(View):
             return render(request, 'login.html', {'error_msg':'用户名或密码错误！'})
 ```
 最开始走的是 get 方法，展示页面以后，填写提交，走的是 post 方法  
+
 登录成功以后，前端右上角显示用户名  
 ```python 
 {% if user.is_authenticated %}
@@ -866,6 +941,7 @@ class RegisterView(View):
 
 #### 激活用户  
 要先在 settings 里面配置  
+
 ```python
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
@@ -963,8 +1039,11 @@ def my_logout(request):
 
 #### 富文本编辑器  
 GitHub 搜 kindeditor  
+
 下载 zh-CN zip 包，解压  
+
 在 static/js 下创建一个 editor 文件夹，复制包里面的 lang、plugins、themes、kindeditor-all.js  
+
 在 editor 文件夹下创建一个 config.js，添加代码    
 ```js 
 KindEditor.ready(function(K) {
@@ -996,10 +1075,13 @@ admin.site.register(Post, PostAdmin)
 `activate django`  
 `django-admin startproject xxkt`  
 `python manage.py startapp myapp`  
+
 在 INSTALLED_APPS 列表中添加 myapp   
 
 配置数据库  
+
 在 settings.py 里有数据库配置的文档  
+
 删除数据库：`drop database xxkt_db;`  
 创建数据库：`create database xxkt_db;`  
 `python manage.py makemigrations`  
@@ -1017,15 +1099,20 @@ password1234
 
 
 #### 创建课程相关模型  
+
 myapp 的 models.py 添加 Banner 类  
+
 python manage.py makemigrations myapp 生成中间表  
+
 然后执行 python manage.py migrate 根据中间表生成数据库中的一张 table  
 
 [models.py](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/Django%20%E9%A1%B9%E7%9B%AE/%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E5%B9%B3%E5%8F%B0/models.py)  
 
 
 #### 重写用户模型  
+
 settings.py 中，添加 AUTH_USER_MODEL = 'myapp.XXUser'  
+
 models.py   
 ```python 
 class XXUser(AbstractUser):
@@ -1035,12 +1122,15 @@ class XXUser(AbstractUser):
 
 #### 模板  
 配置模板，创建 templates 文件夹，os.path.join(BASE_DIR, 'templates')、创建视图函数，配置应用 url，include 到项目 url  
+
 模板继承  
 
 #### 轮播图  
+
 创建模型，添加到 admin，后台添加数据，在 index 视图函数中，从数据库取值，共享到前端，前端替换   
 
 #### 课程分类展示  
+
 这个是展示，不是查询，展示就是从数据库取值  
 `category_list = Category.objects.all()[:6]`  
 
@@ -1053,6 +1143,7 @@ category_count = Category.objects.count()
 ```
 
 #### 最新课程  
+
 后台设置  
 ```python 
 class CourseAdmin(admin.ModelAdmin):
@@ -1064,6 +1155,7 @@ admin.site.register(Course, CourseAdmin)
 `course_list = Course.objects.order_by('-pub_date').all()`  
 
 #### 明星学员  
+
 在前端有一个判断，active 的展示出来，如果不设置，最后就会像一个栈一样，都显示出来了  
 ```html
 {%for stu in  starstudent_list %}
@@ -1080,6 +1172,7 @@ admin.site.register(Course, CourseAdmin)
 ```
 
 #### 课程分类查询  
+
 views.py 的 course  
 ```python 
 category_list = Category.objects.all()
@@ -1104,6 +1197,7 @@ if category_id:
 ```
 
 #### 课程详细页面  
+
 不使用 DetailView，而是写函数  
 ```python 
 def course_detail(request, cid):
@@ -1115,21 +1209,29 @@ def course_detail(request, cid):
     return render(request, 'courses-detail.html', ctx)
 ```
 配置 url `path('course-detail/<int:cid>', views.course_detail, name='course-detail')`  
+
 这个 id 是从前面的 HTML 里来的；`<a href="course-detail/{{course.id}}" class="title">{{course.title}}</a>`  
+
 根据 course.id 进入 course_detail 视图函数，然后从数据库中根据特定 id 取到这一篇 course  
 
 取出课程所有的章节 `{% for section in course.section_set.all %}`  
 
+
 #### 推荐课程  
+
 课程详细页面右侧的推荐课程，不是最新课程  
+
 在 course_detail 视图函数中取值就可以了  
+
 `course_list = Course.objects.filter(recommend=True)[:3]`  
 
 课程详细页面右侧的分类，也可以做查询，前端的路由的写法`<a href="{% url 'course' %}?category_id={{category.id}}">`  
 
 
 #### 修改评论  
+
 在 forms.py 中写验证表单  
+
 ```python 
 class CommentForm(forms.Form):
     comment_text = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'请输入评论',
@@ -1137,7 +1239,9 @@ class CommentForm(forms.Form):
 								'class':'form-control form-input'}))
 ```
 定义视图  
+
 在 blog_detail 视图函数中实例化 form，并且共享到前端页面 `form = CommentForm()`  
+
 前端没有实现 {{ form }}，还是用的 html 的表单，这种不用 Django 表单验证的方式不太好，不过这里主要是理解思路  
 ```python 
 def comment_update(request, id, bid):
@@ -1162,6 +1266,7 @@ def comment_update(request, id, bid):
 ```
 
 #### 删除评论  
+
 ```python 
 def comment_del(request, id, bid):
     comment = Comment.objects.get(id=id)
@@ -1170,7 +1275,9 @@ def comment_del(request, id, bid):
 ```
 
 #### 视频播放  
+
 GitHub 搜 videojs  
+
 使用 cdn  
 ```python
 {%block custom_css%}
@@ -1201,23 +1308,28 @@ GitHub 搜 videojs
 ```
 
 
-## 爱鲜蜂项目  
-这个老师写的代码太乱，所以不记代码，只写思路  
-
 ### celery   
+
 耗时操作  
+
 定时请求，比如证券行情，比如天气的温度  
 
 celery，1) 把耗时任务放到 celery 中执行；2) 定时请求  
 
 任务：就是一个 Python 函数  
+
 队列：要执行的任务  
+
 工人：执行任务  
+
 代理：代理负责调度，部署环境中，一般使用 Redis  
 
 ### 首页
+
 配置路由和视图   
+
 移动端，最下面有 4 个选项，其实就是 4 个页面，配置 4 个路由，对应的视图函数，创建对应的模板和静态文件  
+
 移动端和网页端的最大的区别就是 CSS 中宽高大小的值  
 
 轮播图  
