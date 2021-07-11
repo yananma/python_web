@@ -11,15 +11,18 @@ bootstrap 不要记，知道有这么个样式，用的时候去复制就行了
 
 自己用 CSS 和 JavaScript 很难写出好看的页面，Bootstrap 就是一个包含了 CSS 和 JS 的类库，别人已经都写好了，非常漂亮，直接拿来用就行了  
 
-
+工作的时候用百度的 cdn，减轻自己服务器的负担，而且别人的更快  
 
 样式 CSS、组件、JavaScript  
+
 响应式，可以兼容各种分辨率的设备，可以根据移动端自动改变样式，@media，本质上就是 if 判断    
 
 不用记样式，记住网址就行了  
 
 下载包，添加到 static 中，在模板中引入  
+
 最重要的就是 bootstrap.min.css 和 bootstrap.min.js 这两个文件    
+
 下载 jQuery，bootstrap 所有的 js 代码都是基于 jQuery 的，所以必须要下载 jQuery，而且要放到前面  
 ```js
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +33,7 @@ bootstrap 不要记，知道有这么个样式，用的时候去复制就行了
 然后去官网找 CSS 全局样式，改变样式，或选择组件，来添加组件  
 
 复制图标，就打开检查，选  
+
 图标可以去 fontawsome 找  
 
 
@@ -45,7 +49,8 @@ bootstrap 不要记，知道有这么个样式，用的时候去复制就行了
 
 Bootstrap 需要为页面内容和栅格系统包裹一个 .container 容器。我们提供了两个作此用处的类。注意，由于 padding 等属性的原因，这两种 容器类不能互相嵌套。  
 
-.container 类用于固定宽度并支持响应式布局的容器。  
+\.container 类用于固定宽度并支持响应式布局的容器。  
+
 页面两侧会留有一些空白，默认选项，一般都要加这个选项   
 ```html
 <div class="container">
@@ -64,8 +69,11 @@ Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，�
 container、row、xs(xsmall phones)、sm(small tables)、md(middle desktops)、lg(larger desktops)  
 
 div 一般自己就占一行  
+
 列组合  
+
 列的总数不超过 12，超过了会换行到下面来  
+  
 ```html
 <div class="row">
   <div class="col-md-4">.col-md-4</div>
@@ -73,13 +81,18 @@ div 一般自己就占一行
   <div class="col-md-4">.col-md-4</div>
 </div>
 ```
+
 使用列偏移实现移动效果，总数也不要超过 12，超过 12 就会换行  
+
 使用 .col-md-offset-* 类可以将列向右侧偏移。  
 ```html
 <div class="col-md-4 col-md-offset-4">.col-md-4 .col-md-offset-4</div>  
 ```
+
 列排序  
+
 通过使用 .col-md-push-* 和 .col-md-pull-* 类就可以很容易的改变列（column）的顺序。  
+
 后面的元素会覆盖前面的元素  
 ```html
 <div class="row">
@@ -87,12 +100,15 @@ div 一般自己就占一行
   <div class="col-md-3 col-md-pull-9">.col-md-3 .col-md-pull-9</div>
 </div>
 ```
+
 列嵌套  
+
 已经分了的，内部还可以再分  
 
 ### 常用样式  
 
 #### 排版  
+
 标题  
 bootstrap 会覆盖原来标题样式，bootstrap 样式会有略微调整  
 后面加 <small> 或 添加 class='small' 来添加副标题  
