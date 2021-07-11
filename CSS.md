@@ -77,7 +77,7 @@ required、optional
 
 position: fixed 是说固定在窗口的某个地方，位置是 left、right、bottom、top 等所指定的  
 opacity：透明度  
-z-index：上下优先级  
+z-index：层级，上下优先级，相当于加了一个 z 轴    
 
 颜色属性值  
 
