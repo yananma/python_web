@@ -7,7 +7,7 @@
 
 缺括号  
 
-Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存  
+Ctrl + Shift + r 清除缓存刷新，很多问题都是因为有缓存，因为 Django 只会自动刷新 Django 后台，而不会更新 HTML 页面  
 
 类中的方法没写 self  
 
@@ -352,6 +352,8 @@ user 的方法和属性都在 django/contrib/auth/models.py 的 AbstractUser 和
 
 
 #### 路由  
+
+写路由配置，最后应该加上一个 /，因为不加会有一个重定向，会加上以后跳转    
 
 路由就是给谁，路由本质上就是正则匹配  
 
