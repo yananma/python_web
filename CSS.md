@@ -75,10 +75,14 @@ required、optional
 
 
 
-position: fixed 是说固定在窗口的某个地方，位置是 left、right、bottom、top 等所指定的  
+position: fixed 是说固定在窗口的某个地方，是相对于浏览器的定位，位置是 left、right、bottom、top 等所指定的  
+  
 opacity：透明度  
+  
 z-index：层级，上下优先级，相当于加了一个 z 轴    
-
+  
+dl 自定义列表  
+  
 颜色属性值  
 
 长度单位，绝对长度单位(in, cm, nn, pt 用得不多)；相对长度单位(px像素, em, ex)  
