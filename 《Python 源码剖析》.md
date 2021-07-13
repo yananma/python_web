@@ -63,5 +63,19 @@ Python 通过对一个对象的引用计数的管理来维护对象在内存中�
 
 ## 第2章 Python中的整数对象  
 
+Python 中的整数是通过 PyIntObject 对象来实现的。PyIntObject 的对象是一个不变(immutable)对象，也就是说，在创建了一个 PyIntObject 的对象之后，我们就再也不能改变该对象的值了。  
+
+```c
+[intobject.h]
+typedef struct {
+    PyObject_HEAD
+    long ob_ival; 
+} PyIntObject;
+``` 
+
+可以看到，Python 中的 PyIntObject 实际上就是对 C 中 long 的一个简单包装。  
+
+
+
 
 
