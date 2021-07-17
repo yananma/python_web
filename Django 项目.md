@@ -894,7 +894,7 @@ class LoginView(View):
         if user:    # 如果通过，就是说已经匹配成功了
             if user.is_active:    # 这里的 login 就是前端显示用的，并没有验证功能
                 login(request, user)    # 读源码，是先 user = request.user，添加 session，然后 request.user = user  
-		request.session['user_id'] = user.id
+		request.session['user_id'] = user.id    # 这里的 session 是为了保持登录状态，不至于每次都重新登录。  
 		request.session['username'] = user.username		
                 return HttpResponseRedirect(reverse("index"))
             else:
