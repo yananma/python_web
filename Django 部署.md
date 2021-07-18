@@ -1,7 +1,7 @@
 
 service nginx start  
-service nginx stop  
-service nginx restart  
+nginx -s stop  
+nginx -s reload    
 
 uwsgi --ini /home/xxkt_uwsgi/xxkt_uwsgi.ini   
 ps -aux | grep uwsgi  
@@ -84,7 +84,7 @@ vim /etc/nginx/sites-available/xxkt.conf
         }
 
         location / {
-            uwsgi_pass 127.0.0.1:8001;
+            uwsgi_pass 127.0.0.1:8001;     # 这个是接 uwsgi 用的  
             include /etc/nginx/uwsgi_params;
         }
     }
@@ -108,7 +108,7 @@ vim xxkt_uwsgi.ini
     gid = 2000  
 
     pidfile = /home/xxkt_uwsgi/master.pid  
-    daemonize = /home/xxkt_uwsgi/xxkt.log  
+    daemonize = /home/xxkt_uwsgi/xxkt.log     # 在这里可以看 log  
     vacuum = True  
 
 [Django 文档，看 uwsgi 参数意义和配置](https://docs.djangoproject.com/zh-hans/3.1/howto/deployment/wsgi/uwsgi/)  
