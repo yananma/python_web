@@ -108,6 +108,243 @@ def product(request, cid, sid):
 综合排序，里面是有多种选择条件的，办法就是在视图函数中做多次判断，视图函数中要传入一个 order_id，oid，然后把排序情况赋值为数字，如果 oid 等于某一个条件的 id，就按某一种方式 order_by。  
 
 
+#### 用户页面  
+
+先要设计表结构，用户包括 username、password、email、phone、thumbnail、is_active、is_deleted  
+
+定义 AXFUser，直接继承自 models.Model  
+
+在 bootstrap 上找登录注册的样式  
+
+然后在视图函数中做判断，如果 method 是 POST 的时候，从前端拿到这些属性的值，然后实例化一个 user，属性赋值，最后 save()。  
+
+用户名设置了 unque=True，如果输入了相同的用户名，提交以后就会报错。不过这种方案不好，因为这个不应该是后台判断的。因为想用户名想了半天，写了邮箱密码等很多其他的表单，最后报错，体验非常不好，应该再前端进行判断。  
+
+应该是自动触发查询，应该是内容改变之后，而不是失去焦点之后更好。  
+
+```js
+$(function) {
+    var username = $("$username_input").trim().val();  
+    username.change(function(){
+        if (username.length){
+            $.getJSON(
+                '/axf/check_user/', 
+                {'username': username}, 
+                function(data) {
+                    var username_info = $('#username_info')
+                    if(data['status] == 200){
+                        username_info.html('用户名可用').css('color': 'green')
+                    }else{
+                        username_info.html('用户名已被占用').css('color': 'red')
+                    }
+            })
+            
+        }
+    })
+}
+```
+
+然后添加 check_user 的 url，写 check_user 函数。  
+```python 
+def check_user(request):
+    username = request.GET.get('username')  
+    user = AXFUser.objects.get(username=username)  
+    data = {} 
+    if user.exists:
+        data['status'] = 自己创造一个号码，和前端协商好  
+        data['msg'] = '用户名已被占用'  
+    return JsonResponse(data=data)         
+```
+
+如果用户名已经存在，那么注册功能应该是不可用的。在 form 中添加 onsubmit 属性，`onsubmit="return check()"`  
+
+然后再 js 文件中写 check 函数  
+```js
+function check() {
+    var info_color = $('#username_info').css('color'); 
+    // console.log(info_color)  
+    if (info_color == 'rgb(255, 0, 0)'){
+        return false 
+    }
+    return true 
+}
+```
+
+没有输入用户名的时候，也不能注册，办法就是获取 username，如果为空，return false。输入两次密码，也是这么验证。  
+
+密码要加密，如果不加密，后台是可以看见的，如果员工复制了密码跑了，就有大麻烦了  
+
+用 Django 自带的 make_password  
+
+验证密码  
+```python 
+user = AXFUser.objects.get(username=username)  
+if user.exists():
+    if check_password(password, user.password): 
+        request.session['user_id'] = user.id 
+        return redirect(reverse('index'))  
+    else:
+        return redirect(reverse('axf:login'))  
+```
+
+版本升级以后，密码策略不兼容问题。比如第一版是明文，第二版是哈希，第三版是哈希加时间戳。兼容办法就是加版本号，然后做判断。   
+
+然后写一个个人中心页面的视图函数。  
+
+`user_id = request.session.get['user_id']`  
+
+注销的时候清空 session  
+
+`request.session.flush()`  
+
+用户激活认证，一般而言有三种方式，邮件激活、短信认证、人工审核。  
+
+发送邮件，看官网教程。  
+
+send_mail() 函数，有一个必填参数 message，是个占位参数，内容可以随便写，但是必须要有；使用 html_message 传递要发送的内容。  
+
+send_mail() 函数在 `/django/core/mail/__init__.py` 中   
+
+写一个激活 html 页面，把页面 render 以后，传到 html_message 中发送过去。  
+
+链接中存在用户唯一标识，把 token 作为键放到缓存中，值为 user_id  
+
+token 用 uuid 生成：`token = uuid.uuid4().hex`  
+
+要在 settings 中配置 CACHE，格式和 MySQL 的配置差不多。  
+
+设置缓存：`cache.set(token, user_id, timeout=60 * 60 * 24)`  
+
+激活函数   
+```python 
+def active(request):
+    token = request.GET.get('token') 
+    user_id = cache.get(token)  
+    if user_id:
+        cache.delete(token)    # 验证链接，只能使用一次  
+        user = AXFUser.objects.get(pk=user_id)  
+        user.is_active = True 
+        user.save() 
+        return redirect(reverse('axf:login'))  
+    return render(request, 'axf/active_fail.html')  
+```
+
+错误信息提示，因为有好几个错误都会 redirect 到 login 页面，如果没有错误提示，就不知道是那种错误造成的，用户体验非常不好。  
+
+要把错误信息保存到 session 中  
+要在错误显示页面获取错误信息  
+保证错误信息只能出现一次  
+获取数据后，删除 session 中的错误信息。`del request.session['error_message']`  
+
+
+#### 购物车页面  
+
+购物车页面比较复杂，如果这个可以弄明白，那么在工作中的很多业务都可以完成。  
+
+要先设计表，把表结构理清了，后面就容易多了  
+
+购物车中用户和商品是多对多关系  
+
+多个已购商品最后变成一个订单，用的是 ForeignKey  
+
+```python 
+class Cart(models.Model):
+    c_user = models.ForeignKey(AXFUser)  
+    c_goods = models.ForeignKey(Goods) 
+    c_goods_num = models.IntegerField(default=1) 
+    c_is_selected = models.BooleanField(default=True) 
+    
+    class Meta:
+        db_table = 'axf_cart'  
+```
+
+商品加入购物车，点击加减号，先写 JavaScript 代码，先获取元素，然后添加点击事件，先不写逻辑代码，而是先写 console.log()，验证 click 事件是否成功。  
+
+添加商品，要获取用户，知道是哪个用户买的，然后获取商品，知道用户买的是哪个商品，把这两个结合起来就是一个购物车数据；还要判断是否还有库存。  
+
+点击加号的时候，要获取商品 id，前端获取商品 id，在 add 和 sub 的属性中添加 goods_id 属性。`goods_id = {{ goods.id }}`，然后获取商品 id  
+``js 
+var add = $(this);  
+add.attr('goods_id')    # jQuery 获取对象属性，attr 是可以获取所有属性  
+// add.prop('goods_id')    # prop 只能获取内置属性  
+```
+
+在后台取值的时候，应该是两个过滤，先根据 user 进行 filter，后面再根据商品 id 就行 filter  
+
+购物车页面设计  
+
+
+添加到购物车的商品，点击减号的时候，要先根据 id 取到商品，然后数量减 1，如果没有了，就删除这个商品，把信息通过 JsonResponse 共享到前端，前端用 ajax 实现。  
+```python 
+def sub_shopping(request):
+    cart_id = request.GET.get('cart_id')  
+    cart_obj = Cart.objects.get(pk=cart_id)  
+    data = {'status': 200, 'msg': 'ok'}  
+    if cart_obj.c_goods_num > 1:
+        cart_obj.c_goods_num -= 1 
+        cart_obj.save() 
+    else:
+        cart_obj.delete()  
+    return JsonResponse(data=data)  
+```
+
+购物车全选逻辑：  
+默认状态：全选按钮是选中的，那么所有商品都是选中状态；全选按钮未选中，内部商品只要存在未选中的，全选就应该是未选中  
+点击全选：原状态是选中的，全选和所有商品都变成未选中；原状态是未选中，全选和所有商品都变成选中。  
+点击单个商品：商品由选中变成未选中，全选一定变成未选中；商品由未选中变成选中，则全选的默认状态是未选中，全选有可能变成选中  
+
+价格，每一次添加或删除一个商品以后都要重新算一遍，计算价格是后端完成的。    
+
+订单页面要创建一个订单的url 和 html 页面。  
+
+会有 Python 的小数点的问题，比如 3 个 9 块，总价 price 会是 27.00000003  
+
+办法：`'%.2f' %price` 或 `"{:.2f}".format(price)`  
+
+支付就是调用接口  
+读支付宝文档  
+
+去 GitHub 搜 python-Alipay-sdk  
+
+
+#### Nginx  
+
+Nginx 可以直接访问静态文件，这时候就是 HTTP 服务器  
+
+如果 Nginx 只是转发请求，那么就是反向代理服务器  
+
+可以通过系统管理 systemctl 来开启 Nginx，但是不推荐这种方式，因为这种方式不会加载配置文件，会出很多奇怪的错误。  
+
+Nginx 的核心就是配置文件  
+
+Nginx 的配置文件非常简单  
+
+Nginx 配置文件结构  
+
+    main    全局设置  
+
+    events {    工作模式，连接配置  
+        ......
+    }
+
+    http {    http 配置  
+        ......
+        upstream xxx {    负载均衡配置  
+            ......
+        }
+        server { 主机配置
+            ...... 
+            location xxx {    静态文件 url 配置  
+                ...... 
+            }
+        }
+    }
+
+
+
+
+
+
 
 
 
