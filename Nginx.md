@@ -41,6 +41,10 @@ location 实现动静分离，其实就是 url
 
 部署其实也很简单的，Nginx 和 uwsgi 的配置和命令都极其简单，没有任何难度  
 
+通用的方向代理参数是 proxy_pass，对于 uwsgi 可以是用 uwsgi_pass，因为 uwsgi 和 Nginx 有合作，做了特定的优化  
+
+gunicorn 的使用也非常简单，`gunicorn --help` 看参数    
+
 
 1、[正向代理和反向代理](https://www.zhihu.com/question/24723688/answer/128105528)  
 正向代理隐藏真实客户端，反向代理隐藏真实服务端。  
