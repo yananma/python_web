@@ -1,12 +1,15 @@
+`nginx` 启动  
+`nginx -s stop` 停止  
+`nginx -s quit` 安全退出  
+`nginx -s reload` 重新加载，用的非常多，每次更改配置文件，都要执行 reload  
+`nginx -t` 查看 nginx 的状态  
 
-service nginx start  
-nginx -s stop  
-nginx -s reload    
+`ps -aux | grep nginx`  
 
-uwsgi --ini /home/xxkt_uwsgi/xxkt_uwsgi.ini   
-ps -aux | grep uwsgi  
-uwsgi --stop /home/xxkt_uwsgi/master.pid  
-uwsgi --reload /home/xxkt_uwsgi/master.pid  
+`uwsgi --ini /home/xxkt_uwsgi/xxkt_uwsgi.ini`   
+`ps -aux | grep uwsgi`  
+`uwsgi --stop /home/xxkt_uwsgi/master.pid`  
+`uwsgi --reload /home/xxkt_uwsgi/master.pid`  
 
 
 ### 安装软件：
@@ -61,7 +64,14 @@ apt-get install python3.6-dev
 pip3 install mysqlclient  
 
 
-4、安装配置 Nginx  
+4、安装 Redis  
+
+apt-get install redis-server  
+service redis-server start  
+sudo service redis-server stop  
+
+
+5、安装配置 Nginx  
 apt-get install nginx  
 
 cd /etc/nginx  
@@ -119,16 +129,8 @@ vim xxkt_uwsgi.ini
 
 ln -s /etc/nginx/sites-available/xxkt.conf /etc/nginx/sites-enabled/xxkt.conf  
 
-nginx -t 看一下 nginx 的状态  
 
-service nginx start  
-service nginx stop  
-service nginx restart  
-
-history | grep nginx  
-
-
-5、安装配置 uwsgi  
+6、安装配置 uwsgi  
 pip3 install uwsgi  
 
 mkdir xxkt_uwsgi  
