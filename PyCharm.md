@@ -39,7 +39,6 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 项目下面有包，包里面有各种模块  
 
-[PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)
 
 
 #### 其他设置
@@ -52,6 +51,11 @@ Alt + Enter 快速修复错误
 
 进入全屏：View -> Appearance -> Enter Full Screen    
 
+PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测试    
+
+连接数据库也非常简单，输入用户名密码和数据库名字即可  
+
+[PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)
 
 
 ### debug：不会 debug 根本就不可能学会编程
