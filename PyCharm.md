@@ -15,6 +15,8 @@ Alt + 7 查看方法列表
 
 切换 Alt + 方向键  
 
+
+
 *** 
 
 可以 debug，选择 dj 项目，有些是要在网页发送请求的时候才会触发  
@@ -56,6 +58,10 @@ PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测�
 连接数据库也非常简单，输入用户名密码和数据库名字即可  
 
 [PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)：`set global time_zone = '+8:00';`  
+
+
+自动导入包设置：File -> Settings -> General -> Auto Import -> Python -> Show import popup  
+导入包是alt + enter 键组合，如果弹出下拉菜单选项，说明缺少依赖，选择即可导入（不知道为什么自己设置没有效果）  
 
 
 ### debug：不会 debug 根本就不可能学会编程
