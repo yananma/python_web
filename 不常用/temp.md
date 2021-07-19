@@ -263,7 +263,7 @@ class Cart(models.Model):
 添加商品，要获取用户，知道是哪个用户买的，然后获取商品，知道用户买的是哪个商品，把这两个结合起来就是一个购物车数据；还要判断是否还有库存。  
 
 点击加号的时候，要获取商品 id，前端获取商品 id，在 add 和 sub 的属性中添加 goods_id 属性。`goods_id = {{ goods.id }}`，然后获取商品 id  
-``js 
+```js 
 var add = $(this);  
 add.attr('goods_id')    # jQuery 获取对象属性，attr 是可以获取所有属性  
 // add.prop('goods_id')    # prop 只能获取内置属性  
@@ -273,8 +273,8 @@ add.attr('goods_id')    # jQuery 获取对象属性，attr 是可以获取所有
 
 购物车页面设计  
 
-
 添加到购物车的商品，点击减号的时候，要先根据 id 取到商品，然后数量减 1，如果没有了，就删除这个商品，把信息通过 JsonResponse 共享到前端，前端用 ajax 实现。  
+
 ```python 
 def sub_shopping(request):
     cart_id = request.GET.get('cart_id')  
@@ -341,8 +341,101 @@ Nginx 配置文件结构
     }
 
 
+location 实现动静分离，其实就是 url  
 
+    location /static {
 
+    }
+
+就是访问 url 包含 static 的时候，会访问内部的内容  
+
+部署其实也很简单的，Nginx 和 uwsgi 的配置和命令都极其简单，没有任何难度  
+
+通用的方向代理参数是 proxy_pass，对于 uwsgi 可以是用 uwsgi_pass，因为 uwsgi 和 Nginx 有合作，做了特定的优化  
+
+gunicorn 的使用也非常简单，`gunicorn --help` 看参数  
+
+阿里云：安装软件，配置环境，配置安全组  
+
+可以使用 PyCharm 远程连接阿里云  
+
+可以使用百度统计，友盟统计查看网站访问数据  
+
+#### RESTful  
+
+REST Representational State Transfer 表现层状态转移，这里省略了主语，主语是资源 resource，资源的表现层状态转移  
+
+PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测试     
+
+主要的工具还是 Postman  
+
+```python 
+def index(request):
+    data = {
+        'status': 200,
+        'msg': 'ok',
+    }
+
+    return JsonResponse(data=data)
+```
+
+大体上都是这种结构  
+
+自己写，最麻烦的就是转换成 JSON 数据，数据多的时候，非常繁琐，所以要使用 Django REST framework，而且 serialization 是 Django REST framework 的核心    
+
+Django REST framework 是基于 Django 的重量级框架，可以自己开发网站  
+
+serialization 是 Django REST framework 的核心  
+
+serialization 就是把模型数据编程 json 格式  
+
+model 指定模型  
+
+fields 指定字段   
+
+有简洁的页面，可以点击 get、post、delete 等等，非常方便，自己写的话，要写视图函数，视图函数中要写各种方法  
+
+写的顺序：model、serializer、views、urls  
+
+serializer.Serializer 手动序列化，手动添加 serializers.CharField()，自己写 create()、update() 方法  
+
+```python 
+class SnippetSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    code = serializers.CharField(style={'base_template': 'textarea.html'})
+    linenos = serializers.BooleanField(required=False)
+    language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default='python')
+    style = serializers.ChoiceField(choices=STYLE_CHOICES, default='friendly')
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Snippet.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Snippet` instance, given the validated data.
+        """
+        instance.title = validated_data.get('title', instance.title)
+        instance.code = validated_data.get('code', instance.code)
+        instance.linenos = validated_data.get('linenos', instance.linenos)
+        instance.language = validated_data.get('language', instance.language)
+        instance.style = validated_data.get('style', instance.style)
+        instance.save()
+        return instance
+```
+
+serializers.ModelSerializer  
+```python 
+class SnippetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Snippet
+        fields = ['id', 'title', 'code', 'linenos', 'language', 'style']
+```
+
+JSONParser().parse() 源码中做的事情就是 json.load()  
 
 
 
