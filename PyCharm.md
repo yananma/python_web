@@ -55,7 +55,7 @@ PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测�
 
 连接数据库也非常简单，输入用户名密码和数据库名字即可  
 
-[PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)
+[PyCharm 连接 MySQL 报错解决办法](https://blog.csdn.net/liuqiker/article/details/102455077)：`set global time_zone = '+8:00';`  
 
 
 ### debug：不会 debug 根本就不可能学会编程
