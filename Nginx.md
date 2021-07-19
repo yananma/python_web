@@ -1,4 +1,46 @@
 
+Nginx 可以直接访问静态文件，这时候就是 HTTP 服务器  
+
+如果 Nginx 只是转发请求，那么就是反向代理服务器  
+
+可以通过系统管理 systemctl 来开启 Nginx，但是不推荐这种方式，因为这种方式不会加载配置文件，会出很多奇怪的错误。  
+
+Nginx 的核心就是配置文件  
+
+Nginx 的配置文件非常简单  
+
+Nginx 配置文件结构  
+
+    main    全局设置  
+
+    events {    工作模式，连接配置  
+        ......
+    }
+
+    http {    http 配置  
+        ......
+        upstream xxx {    负载均衡配置  
+            ......
+        }
+        server { 主机配置
+            ...... 
+            location xxx {    静态文件 url 配置  
+                ...... 
+            }
+        }
+    }
+
+
+location 实现动静分离，其实就是 url  
+
+    location /static {
+
+    }
+
+就是访问 url 包含 static 的时候，会访问内部的内容  
+
+部署其实也很简单的，Nginx 和 uwsgi 的配置和命令都极其简单，没有任何难度  
+
 
 1、[正向代理和反向代理](https://www.zhihu.com/question/24723688/answer/128105528)  
 正向代理隐藏真实客户端，反向代理隐藏真实服务端。  
