@@ -311,6 +311,12 @@ redirect 返回跳转地址
 
 HTTP 生命周期：请求头 --\> 提取 url --\> 路由关系匹配 --\> 视图函数(模板 + 数据进行渲染) --\> 返回给用户(响应头)  
 
+类视图 TemplateView，使用非常简单  
+```python 
+class IndexView(TemplateView):
+    template_name = 'hello.html'  
+```
+
 
 #### 模板  
 
