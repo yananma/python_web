@@ -178,6 +178,122 @@ PageNumberPagination
 
 
 
+## 爱鲜蜂项目 RESTful  
+
+REST Representational State Transfer 表现层状态转移，这里省略了主语，主语是资源 resource，资源的表现层状态转移  
+
+PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测试     
+
+主要的工具还是 Postman  
+
+```python 
+def index(request):
+    data = {
+        'status': 200,
+        'msg': 'ok',
+    }
+
+    return JsonResponse(data=data)
+```
+
+大体上都是这种结构  
+
+#### serialization
+
+自己写，最麻烦的就是转换成 JSON 数据，数据多的时候，非常繁琐，所以要使用 Django REST framework，而且 serialization 是 Django REST framework 的核心    
+
+Django REST framework 是基于 Django 的重量级框架，可以自己开发网站  
+
+serialization 是 Django REST framework 的核心  
+
+serialization 就是把模型数据编程 json 格式  
+
+model 指定模型  
+
+fields 指定字段   
+
+有简洁的页面，可以点击 get、post、delete 等等，非常方便，自己写的话，要写视图函数，视图函数中要写各种方法  
+
+写的顺序：model、serializer、views、urls  
+
+serializer.Serializer 手动序列化，手动添加 serializers.CharField()，自己写 create()、update() 方法  
+
+```python 
+class SnippetSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    code = serializers.CharField(style={'base_template': 'textarea.html'})
+    linenos = serializers.BooleanField(required=False)
+    language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, default='python')
+    style = serializers.ChoiceField(choices=STYLE_CHOICES, default='friendly')
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Snippet.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Snippet` instance, given the validated data.
+        """
+        instance.title = validated_data.get('title', instance.title)
+        instance.code = validated_data.get('code', instance.code)
+        instance.linenos = validated_data.get('linenos', instance.linenos)
+        instance.language = validated_data.get('language', instance.language)
+        instance.style = validated_data.get('style', instance.style)
+        instance.save()
+        return instance
+```
+
+serializers.ModelSerializer  
+```python 
+class SnippetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Snippet
+        fields = ['id', 'title', 'code', 'linenos', 'language', 'style']
+```
+
+JSONParser().parse() 源码中做的事情就是 json.load()  
+
+serializer.data 是字典格式  
+
+`content = JSONRenderer().render(serializer.data)` 把字典格式转化成二进制 bytes，源码是 `return bytes(ret.encode('utf-8'))`   
+
+设置 `many=True` 可以序列化多个对象  
+
+
+#### Requests 和 Responses  
+
+Django REST framework 封装了 Django 的 request 对象，增加了功能，原来是 request.POST，现在使用 request.data 更好，同时兼容 POST、PUT、PATCH，request.data 方法的核心是 \_load_data_and_files 方法，这个方法的作用是 Parses the request content into self.data.     
+
+APIView 弄明白了，Django REST framework 就理解的差不多了，把 APIView 源码流程给面试官讲一遍，工作基本上就有了。  
+
+核心就是 dispatch() 方法  
+
+默认配置在 rest_framework 的 settings.py 中，如果自己在 Django 的 settings 中设置了 REST_FRAMEWORK 那就会替换默认的 setting，读源码可以看到，在 reload 方法中    
+
+APIView 的 dispatch 方法中，有一个 initialize_request()，在这个方法中，给 request 添加了一些特性  
+
+dispatch 方法中还有一个 initial 方法，执行了认证、权限和限流操作  
+
+其中认证函数 `perform_authentication()` 的内容就是 request.user，这个 user 就是 Django REST framework 的 user 方法，加了 @property 装饰器，内容就是验证，验证方法是 \_authenticate() 方法，这个方法的作用就是遍历认证器，认证成功返回一个元组，元组的第一个元素就是 user，第二个元素就是 auth，也就是 token。    
+
+check_permissions() 方法会遍历权限检测器，只要有一个不满足，就调用 permission_denied() 函数，拒绝访问，
+
+check_throttles() 方法和上面的道理是一样的，如果没有通过就 wait  
+
+所以 Django REST framework 的 dispatch 方法比原来的 dispatch 方法要强大很多。  
+
+as_view() 方法中最后返回 csrf_exempt(view)，所以 APIView 的所有子类都是 csrf_exempt 的  
+
+response 也是封装的 Django 的 response  
+
+状态码都在 rest_framework 的 status.py 中  
+
+APIView 的子类都在 generic.py 中，有：GenericAPIView、CreateAPIView、ListAPIView、RetrieveAPIView、DestroyAPIView、UpdateAPIView 等等，这些的实现都很简单，读源码就可以理解，不过基本的都要再往深读一层，才能看到具体功能的实现。  
+
+ModelViewSet 继承了所有的方法，是封装功能最多的  
 
 
 
