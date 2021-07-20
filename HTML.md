@@ -71,7 +71,9 @@ caption 标题
 
 #### 表单
 
-表单 form，method 有 post 和 get，action 会跳转到指定的页面  
+表单 form，method 有 post 和 get  
+
+action 是表单提交的地址    
 
 用户名 type=text  
 密码 type=password，就显示星号或者小圆点  
