@@ -3,15 +3,12 @@
 
 Django REST framework 在 Django 的基础上，去掉了模板的部分，提供了一个 REST 接口  
 
-url -> views -> models 数据库取值 -> serializer 序列化成 json 格式 -> 返回响应到浏览器  
-
-REST API pretty works like web does，是在网络中 client 和 server 的一种交互形式，server can receive data from applications，可以是电脑端、iOS 和 Android，allows one software talk to another  
+在 model 和视图之间添加了一层 serializer，实现序列化，转换成 json 格式  
 
 方法：写项目，读源码  
 
 
 ## Django REST framework 使用与源码分析  
-
 
 #### RESTful 规范  
 
@@ -19,30 +16,35 @@ REST 全称是 Representational State Transfer，中文意思是表述性状态�
 
 遵守统一的 RESTful API 规范，对于前端和后端都会非常方便，在 url 中就包含了操作信息  
 
+一个视图就是一个接口  
+
 要实现增删改查，就要有 4 个分别对应的 url  
-RESTful 规范建议使用 1 个 url，通过方法实现增删改查的功能，比如 if request.method == 'GET' 等判断  
+RESTful 规范建议使用 1 个 url，通过方法实现增删改查的功能，比如 if request.method == 'GET' 等判断，最常用的还是继承自 view 类，def get() 方法。  
 
 API 与用户的通信协议，总是使用 HTTPs 协议。  
 
 域名  
-`https://api.example.com`                         尽量将 API 部署在专用域名 （会存在跨域问题）  
-`https://example.org/api/`                        API 很简单  
+`https://api.example.com`                         推荐方式，尽量将 API 部署在专用域名 （因为会存在跨域问题）  
+`https://example.org/api/`                          
 
 版本  
-URL，如：`https://api.example.com/v1/`  
-请求头                                                  跨域时，引发发送多次请求  
+版本写在 URL 中，如：`https://api.example.com/v1/`  
 
-路径，视网络上任何东西都是资源，均使用名词表示（可复数）  
+
+路径
+只用名词，不用动词，用名词复数    
 `https://api.example.com/v1/zoos`    
 `https://api.example.com/v1/animals`    
 `https://api.example.com/v1/employees`    
 
 method  
-GET      ：从服务器取出资源（一项或多项）  
-POST    ：在服务器新建一个资源  
-PUT      ：在服务器更新资源（客户端提供改变后的完整资源）  
-PATCH  ：在服务器更新资源（客户端提供改变的属性）  
-DELETE ：从服务器删除资源  
+GET：从服务器取出资源（一项或多项）  
+POST：在服务器新建一个资源  
+PUT：在服务器更新资源（客户端提供改变后的完整资源）  
+PATCH：在服务器更新资源（客户端提供改变的属性）  
+DELETE：从服务器删除资源  
+
+通过方法和路由，就可以一目了然知道要做的事情  
 
 过滤，通过在url上传参的形式传递搜索条件  
 `https://api.example.com/v1/zoos?limit=10`：指定返回记录的数量  
@@ -52,7 +54,8 @@ DELETE ：从服务器删除资源
 `https://api.example.com/v1/zoos?animal_type_id=1`：指定筛选条件  
 
 状态码  
- 常用状态码列表  
+常用状态码列表    
+
 错误处理，状态码是4xx时，应返回错误信息，error当做key。  
 
     {  
@@ -75,6 +78,7 @@ Hypermedia API，RESTful API最好做到Hypermedia，即返回结果中提供链
       "title": "List of zoos",
       "type":  "application/vnd.yourformat+json"
     }}
+
 
 #### 认证
 
@@ -104,6 +108,7 @@ self.request = request
 内置认证在 rest_framework 的 authentication.py 中  
 
 自己写认证，必须继承 BasicAuthentication 类  
+
 
 #### 权限  
 
