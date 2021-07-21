@@ -16,7 +16,6 @@ Alt + 7 查看方法列表
 切换 Alt + 方向键  
 
 
-
 *** 
 
 可以 debug，选择 dj 项目，有些是要在网页发送请求的时候才会触发  
@@ -47,6 +46,8 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 pycharm 非常强大，可以创建 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
 
+创建 Django 项目：File -> New Project -> Django -> Existing interpreter -> 右侧... -> Conda Environment -> 右侧... -> 上排 Show Hidden Files and Directories -> 选择 C:\ProgramData\Miniconda3\envs\django\python.exe -> 点击两次 OK -> 这个时候在 Existing interpreter 中就有了 django interpreter 了  
+
 打开 settings，可以使用快捷键 Ctrl + Alt + s，可以配置  
 
 Alt + Enter 快速修复错误  
@@ -61,7 +62,7 @@ PyCharm -> Tools -> HTTP Client -> Test RESTful Web Service 可以做简单测�
 
 
 自动导入包设置：File -> Settings -> General -> Auto Import -> Python -> Show import popup  
-导入包是alt + enter 键组合，如果弹出下拉菜单选项，说明缺少依赖，选择即可导入（不知道为什么自己设置没有效果）  
+导入包是 alt + enter 键组合，如果弹出下拉菜单选项，说明缺少依赖，选择即可导入（不知道为什么自己设置没有效果）  
 
 
 ### debug：不会 debug 根本就不可能学会编程
