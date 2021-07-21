@@ -75,7 +75,7 @@ caption 标题
 
 GET 会把参数显示在地址栏中  
 
-action 是表单内容提交的地址    
+action 是表单内容提交的地址，把数据提交给这个 url，这个 url 会去匹配 urls.py 里的路由，然后根据路由找到视图函数，在视图函数中拿到数据，执行跳转，也是在视图函数中执行的。    
 
 用户名 type=text  
 密码 type=password，就显示星号或者小圆点  
@@ -85,6 +85,7 @@ enctype 字符编码
 input 属性，autofocus，自动聚焦，就是打开网页鼠标自动到 input 上，disabled 禁用，灰色  
 
 button 设置 type='submit' 提交，type='reset' 就是清空  
+
 
 #### 表单 input  
 
@@ -104,6 +105,7 @@ required='True' 必填
 
 textarea 富文本框，比如留言板，评论区等等  
 
+
 #### 嵌入内容  
 
 img 就可以嵌入图片，src 写文件路径加文件名  
@@ -114,6 +116,7 @@ progress 进步条
 
 Canvas 就是画布的意思  
 
+
 #### 多媒体  
 
 video 视频，src 写文件名，poster 封面，autoplay 自动播放，controls 底下出现进度条暂停播放按钮音量全屏，source 格式  
@@ -121,6 +124,7 @@ video 视频，src 写文件名，poster 封面，autoplay 自动播放，contro
 audio 音频，和 video 差不多  
 
 可以通过 DOM 操作多媒体  
+
 
 #### web 存储  
 
