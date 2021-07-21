@@ -199,6 +199,8 @@ STATIC_URL = '/static/' 当 html 前端 link 的 CSS 中有 static 的时候，�
 
 STATICFILES_DIRS 必须叫 STATICFILES_DIRS，这个名字是在 global_settings.py 中定义的  
 
+MEDIA_ROOT 上传文件路径  
+
 创建模型，继承自 models.Model，添加一些字段  
 
 生成迁移表：`python manage.py makemigrations polls`  
@@ -272,6 +274,8 @@ password1234
 可以自己设置后台显示样式  
 
 admin.site.site_header = '在线教育平台后台管理系统'  
+admin.site.site_title
+admin.site.index_title
 django/contrib/admin/templates/admin/base_site.html，在文件夹下面有很多 HTML 页面  
 
 
@@ -293,7 +297,7 @@ views 后面接函数名，不加括号是函数，加括号是函数的返回�
 
 `selected_choice = question.choice_set.get(pk=request.POST['choice'])` ['choice'] 中的 choice 是表单里的 name，前端代码是：`<input type="radio" name="choice">`  
 
-request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容，一般用 get() 方法取值   
+request.POST 得到的就是一个 QueryDict，就是一个字典，[''] 就是字典取值，key 就是前端表单的名字，value 就是表单提交内容，一般用 get() 方法取值，这个 get 是 QueryDict 的父类 MultiValueDict 的方法，`get(self, key, default=None)`   
 
 在走 POST 方法的时候，print(request.POST) 就全部看清楚了  
 
@@ -343,11 +347,15 @@ class IndexView(TemplateView):
 
 浏览器提交内容就要用到表单  
 
+action 是表单内容提交的地址    
+
 有三种方式：  
 第一种是使用 HTML 的表单，视图函数中使用 request.POST.get('username') 取值    
 第二种是 LoginForm(request.POST) 
 第三种是使用 Django 的 form 表单系统。在 forms.py 中定义 form，然后在 views.py 中 import form 类，在视图函数的 get 方法中第一行先实例化，然后把 form 实例 render 到前端，在模板中使用 {{ form }}，最后生成的 form 不是 HTML 写的 form，是 Django forms.py 生成的 form，然后走 POST 方法的时候，再做验证。这种方法取值的使用用的是 clean_data 取值，关于 clean_data 读源码     
 form 表单提交，页面就会刷新，刷新，提交表单就会消失，想要不刷新，就要用 ajax  
+
+添加了 `{% csrf_token %}` 以后，提交表单，使用浏览器检查，就可以看到生成了一个 input 标签，type=hidden，name='csrfmiddlewaretoken'，value='一串随机数字'，后面就是根据这个取值验证。这部分内容是在请求体中，而不是请求头中   
 
 ajax 绕过了表单  
 
@@ -557,6 +565,7 @@ $(function) {
 在 settings 中配置路径  
 
 配置 url，配置函数，在 HTML 中引入 js，并且初始化  
+
 
 
 ## 留言板项目  
