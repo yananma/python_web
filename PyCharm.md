@@ -46,7 +46,9 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 
 pycharm 非常强大，可以创建 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
 
-创建 Django 项目：File -> New Project -> Django -> Existing interpreter -> 右侧... -> Conda Environment -> 右侧... -> 上排 Show Hidden Files and Directories -> 选择 C:\ProgramData\Miniconda3\envs\django\python.exe -> 点击两次 OK -> 这个时候在 Existing interpreter 中就有了 django interpreter 了  
+PyCharm 这个一点儿都不好用，还是用命令行操作  
+
+创建 Django 项目：File -> New Project -> Django -> Existing interpreter -> 右侧... -> Conda Environment -> 右侧... -> 上排 Show Hidden Files and Directories -> 选择 C:\ProgramData\Miniconda3\envs\django\python.exe -> 点击两次 OK -> 这个时候在 Existing interpreter 中就有了 django interpreter 了（但是会提示 installing django）  
 
 打开 settings，可以使用快捷键 Ctrl + Alt + s，可以配置  
 
