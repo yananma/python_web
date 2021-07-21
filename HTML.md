@@ -73,6 +73,8 @@ caption 标题
 
 表单 form，method 有 post 和 get  
 
+GET 会把参数显示在地址栏中  
+
 action 是表单内容提交的地址    
 
 用户名 type=text  
