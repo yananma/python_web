@@ -61,6 +61,7 @@ import 的时候，可以看一看用到的文件，可以看整篇 .py 文件
 用到的某一个函数，想要了解，可以 Ctrl 跳转到源码  
 报错的时候 import pysnooper  
 
+读源码核心在 try 里面，不是在 except 里面  
 
 ### 具体源码内容
 Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
