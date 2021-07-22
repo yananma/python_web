@@ -233,7 +233,13 @@ serializer 类主要接受两个参数，序列化时接受的 instance 和反�
 
 ModelSerializer 更简洁，自己默认用 ModelSerializer  
 
+不是自己写字段，而是引入 Model，可以自动生成字段  
 
+ModelSerializer 中定义了 create 和 update 方法。  
+
+在 ModelSerializer 中也可以像在 Serializer 中一样定义字段，因为 ModelSerializer 是继承自 Serializer，所以肯定是可以的。  
+
+使用 extra_kwargs 可以修改选项参数。  
 
 
 #### 反序列化  
@@ -272,6 +278,49 @@ create 方法
 update 方法  
 `instance.title = validated_data.get('title')`  
 
+
+#### Django REST framework 中的 request 和 response  
+
+Request 和 Response 都对 Django 中自带的进行了封装，增加了功能。  
+
+在 Request 中增加了 parser 解析器，可以根据请求头中 content-type 自动进行类型转换  
+
+request.data 包含了原来的 POST 和 FILES 属性，包含了 POST、PUT、PATCH 请求方式解析后的数据  
+
+request.query_params 和 Django 中的 request.GET 一样，就是换了一个名字，源码就是 `self._request.GET`  
+
+response.data 是已经序列化但是还没有 render 的数据（这里的 render 不是渲染，而是进一步的数据处理） 
+
+response.status_code 状态码数字  
+
+response.content 经过 render 处理后的数据  
+
+
+#### APIView  
+
+APIView 是 Django REST framework 中所有类视图的基类  
+
+APIView 继承自 Django 的 View，不过传入的 request 和返回的 response 都是 Django REST framework 的 request 和 response  
+
+而且 APIView 在 dispatch 方法中增加了身份认证、权限检查和流量控制  
+
+```python 
+class SnippetList(APIView):
+    """
+    List all snippets, or create a new snippet.
+    """
+    def get(self, request, format=None):
+        snippets = Snippet.objects.all()
+        serializer = SnippetSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = SnippetSerializer(data=request.data)    # 反序列化
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+```
 
 
 
