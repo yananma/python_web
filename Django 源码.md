@@ -66,6 +66,8 @@ import 的时候，可以看一看用到的文件，可以看整篇 .py 文件
 
 assert 后面的内容不重要  
 
+熟悉了以后还是应该 debug，多 debug 几遍就好了  
+
 
 ### 具体源码内容
 Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
