@@ -1,6 +1,11 @@
 
 ## Django REST framework 框架经典教程  
 
+serializer 主要有两种：Serializer 和 ModelSerializer  
+
+视图主要有四种：APIView、GenericAPIView 结合 Mixin、ViewSet、GenericViewSet  
+
+
 #### RESTful 规范  
 
 前后端分离，后端只写一套代码即可，可以服务于各种前端场景  
@@ -298,11 +303,17 @@ response.content 经过 render 处理后的数据
 
 #### APIView  
 
+视图函数非常简单：主要就是数据和序列化器  
+
 APIView 是 Django REST framework 中所有类视图的基类  
 
 APIView 继承自 Django 的 View，不过传入的 request 和返回的 response 都是 Django REST framework 的 request 和 response  
 
 而且 APIView 在 dispatch 方法中增加了身份认证、权限检查和流量控制  
+
+authentication_classes 身份认证类  
+permissoin_classes 权限检查类  
+throttle_classes 流量控制类  
 
 ```python 
 class SnippetList(APIView):
@@ -321,6 +332,113 @@ class SnippetList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
+
+
+#### GenericAPIView  
+
+继承自 APIVIew，主要增加了操作序列化器和数据库查询的方法，作用是为下面 Mixin 扩展类的执行提供方法支持。通常在使用时，可搭配一个或多个 Mixin 扩展类。  
+
+关于序列化器使用的属性与方法  
+
+serializer_class 指明视图使用的序列化器  
+
+get_serializer_class(self) 返回序列化器类，默认返回serializer_class，可以重写。  
+
+get_serializer(self, args, \*kwargs) 返回序列化器对象，主要用来提供给Mixin扩展类使用，如果我们在视图中想要获取序列化器对象，也可以直接调用此方法。  
+
+关于数据库查询的属性与方法  
+
+queryset 指明使用的数据查询集  
+
+get_queryset(self) 返回视图使用的查询集，主要用来提供给Mixin扩展类使用，是列表视图与详情视图获取数据的基础，默认返回queryset属性，可以重写。  
+
+get_object(self) 返回详情视图所需的模型类数据对象（获取单一模型对象），主要用来提供给Mixin扩展类使用。  
+
+GenericAPIView 结合 Mixin 可以极大地减少代码量  
+```python 
+class SnippetList(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+```
+
+#### ViewSet  
+
+ViewSet 源码主要就是重写了 as_view() 方法，目的就是可以把增删改查所有的接口都可以写在一个类视图里面  
+
+list() 提供一组数据  
+retrieve() 提供单个数据  
+create() 创建数据  
+update() 保存数据  
+destory() 删除数据  
+
+ViewSet 视图集类不再实现 get()、post() 等方法，而是实现动作 action 如 list() 、create() 等。  
+
+视图集只在使用 as_view() 方法的时候，才会将 action 动作与具体请求方式对应上。  
+
+也就是把请求方法写在 as_view() 里，把请求方法和视图方法绑定在一起 as_view({'get': 'list'}) 获取列表，as_view({'get': 'retrieve'}) 获取详细（视图类中定义了 list 和 retrieve 方法）  
+
+```python 
+class BookInfoViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        books = BookInfo.objects.all()
+        serializer = BookInfoSerializer(books, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        try:
+            books = BookInfo.objects.get(id=pk)
+        except BookInfo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = BookInfoSerializer(books)
+        return Response(serializer.data)
+```
+
+路由  
+```python 
+urlpatterns = [
+    url(r'^books/$', BookInfoViewSet.as_view({'get':'list'}),
+    url(r'^books/(?P<pk>\d+)/$', BookInfoViewSet.as_view({'get': 'retrieve'})
+]
+```
+
+ViewSet 继承自 APIView，GenericViewSet 继承自 GenericAPIView  
+
+
+使用ViewSet通常并不方便，因为list、retrieve、create、update、destory等方法都需要自己编写，而这些方法与前面讲过的Mixin扩展类提供的方法同名，所以我们可以通过继承Mixin扩展类来复用这些方法而无需自己编写。但是Mixin扩展类依赖与GenericAPIView，所以还需要继承GenericAPIView。
+
+GenericViewSet 就帮助我们完成了这样的继承工作，继承自 GenericAPIView 与 ViewSetMixin，在实现了调用 as_view() 时传入字典（如 {'get':'list'}）的映射处理工作的同时，还提供了GenericAPIView 提供的基础方法，可以直接搭配 Mixin 扩展类使用。  
+
+```python 
+class BookInfoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
+    queryset = BookInfo.objects.all()
+    serializer_class = BookInfoSerializer
+```
+
+可以直接使用 ModelViewSet，就不用再写 Mixin 了。ModelViewSet 继承自 GenericViewSet，同时包括了ListModelMixin、RetrieveModelMixin、CreateModelMixin、UpdateModelMixin、DestoryModelMixin。  
+
+
+#### 路由器
+
+路由器只能结合视图集一起使用，其他情况还是用 Django 的 path 配置路由  
+
+可以不指定 base_name 属性，读源码就可以看到，Django REST framework 会自己去找 model 的 name  
+
+
+### 其他功能  
+
+作为了解  
+
+
+#### 
 
 
 
