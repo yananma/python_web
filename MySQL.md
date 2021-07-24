@@ -6,9 +6,7 @@ group by 关注的是每个后面的内容
 order by 关注的是从按到排序之间的内容，order by 一般放在最后    
 
 
-
 ## MySQL 基础  
-
 
 MySQL 占比第一，学就对了  
 
@@ -19,6 +17,7 @@ MySQL 学好学精了，就不愁找不到工作了
 数据库有一套完整的管理系统  
 
 垃圾场里的东西是不要了的，可以随便扔，但是仓库里的东西是要再次使用的，所以一定是有组织存储的  
+
 
 ### 数据库的相关概念
 
@@ -42,6 +41,7 @@ SQL 简单易学
 
 数据库最终还是把数据存成电脑上的文件了，只不过是可以通过数据库来管理  
 
+
 ### 常见命令介绍
 
 `mysql (-h主机名 -P端口号) -u用户名 -p没有空格输密码`  
@@ -49,6 +49,7 @@ SQL 简单易学
 `show databases;`  
 `use xxkt_db;`  
 `show tables;`  
+`drop table stuinfo;`  
 
     mysql> create table stuinfo(
         -> id int,
