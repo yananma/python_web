@@ -3,14 +3,12 @@
 
 Django REST framework 在 Django 的基础上，去掉了模板的部分，提供了一个 REST 接口  
 
-在 model 和视图之间添加了一层 serializer，实现序列化，转换成 json 格式  
-
-方法：写项目，读源码  
+在 model 和视图之间添加了一层 serializer，实现序列化，转换成 json 格式；反序列化的时候，加了一层验证。  
 
 
 ## [Django REST framework 框架经典教程](https://www.bilibili.com/video/BV1Sz4y1o7E8?p=1)  
 
-这门课是讲的最好的，过几个月有时间还要再看一遍。  
+这门课是讲的最好的，过几个月有时间还要再看一遍。（07.25）  
 
 serializer 主要有两种：Serializer 和 ModelSerializer  
 
