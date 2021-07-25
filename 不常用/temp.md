@@ -1,5 +1,7 @@
 
-## Django REST framework 框架经典教程  
+## [Django REST framework 框架经典教程](https://www.bilibili.com/video/BV1Sz4y1o7E8?p=1)  
+
+这门课是讲的最好的，过几个月有时间还要再看一遍。  
 
 serializer 主要有两种：Serializer 和 ModelSerializer  
 
@@ -437,8 +439,124 @@ class BookInfoViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericV
 
 作为了解  
 
+#### 认证   
 
-#### 
+Authentication  
+
+就是状态保持，如果认证通过就是还会保持登录状态。  
+
+就是判断是登录用户还是匿名用户。  
+
+要进行认证的核心原因是 HTTP 协议是无状态的，但是有些页面却是要登录以后才可以访问。  
+
+认证要配合权限才能看出效果。  
+
+写在 settings 中就是全局变量，所有的视图中都可以用。写在视图中 authentication_classes 是局部变量，只有访问这个视图的时候才可以用。  
+
+认证一般写在全局中。  
+
+认证失败会有两种可能的返回值：  
+401 Unauthorized 未认证  
+403 Permission Denied 权限被禁止  
+
+
+#### 权限   
+
+权限和认证一样，可以写在 settings 里面，作为全局变量，也可以写在类视图的 permission_classes 中。  
+
+权限一般写在局部视图中。因为写在 settings 里，很多功能都不能用了。  
+
+默认权限是 AllowAny 允许所有用户。  
+
+permission_classes = (IsAuthenticated, ) IsAuthenticated 仅通过认证的用户。意思就是已经登录的用户。  
+
+可以自定义权限。比如 VIP 用户不用看广告。  
+
+自定义权限，需继承rest_framework.permissions.BasePermission父类，并实现以下两个任何一个方法或全部  
+
+.has_permission(self, request, view)  
+是否可以访问视图， view表示当前视图对象  
+
+.has_object_permission(self, request, view, obj)  
+是否可以访问数据对象， view表示当前视图， obj 为单一数据对象  
+
+```python 
+class MyPermission(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        """控制对 obj 对象的访问权限，此案例拒绝所有对对象的访问"""
+        return False
+
+class BookInfoViewSet(ModelViewSet):
+    queryset = BookInfo.objects.all()
+    serializer_class = BookInfoSerializer
+    permission_classes = [IsAuthenticated, MyPermission]
+```
+
+
+#### 限流   
+
+对接口访问的频次进行限制，以减轻服务器压力。买服务器很贵；访问量过大会服务器死机。  
+
+也是可以配置全局和局部。   
+
+
+#### 过滤   
+
+过滤就是得到自己想要的，排除自己不想要的。  
+
+过滤用在查询所有的时候，对应的是列表视图。  
+
+restful 建议，过滤信息都应该通过查询字符串实现。   
+
+不加查询字符串的时候，是查询所有，加了查询字符串，就是过滤。  
+
+
+#### 排序   
+
+排序也是一种过滤，按照自己想要的方式展示出来。  
+
+很简单，指定过滤后端，指定排序字段。  
+
+
+#### 分页   
+
+分页也是对应于增删改查中的查，而且是对应于查询所有。  
+
+分页继承自 PageNumberPagination。  
+
+页数不需要控制，需要控制的是每页显示多少条数据。  
+
+page_size 每页数目  
+page_query_param 前端发送的页数关键字名，默认为 "page"  
+page_size_query_param 前端发送的每页数目关键字名，默认为 None  
+max_page_size 前端最多能设置的每页数量  
+
+还有一种方式是 limit 和 offset。和分页效果是一样的，不过用的不太多。  
+
+
+#### 异常处理  
+
+REST framework定义的异常  
+APIException 所有异常的父类  
+ParseError 解析错误  
+AuthenticationFailed 认证失败  
+NotAuthenticated 尚未认证  
+PermissionDenied 权限决绝  
+NotFound 未找到  
+MethodNotAllowed 请求方式不支持  
+NotAcceptable 要获取的数据格式不支持  
+Throttled 超过限流次数  
+ValidationError 校验失败  
+
+
+#### 自动生成接口文档   
+
+安装 coreapi  
+
+大部分还是手写。  
+
+
+
 
 
 
