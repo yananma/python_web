@@ -1,4 +1,6 @@
 
+### 快捷键
+
 Ctrl + Alt + 方向键左键 跳回光标原来所在的位置；读源码用  
 
 Shift + F10 运行  
@@ -16,7 +18,10 @@ Alt + 7 查看方法列表
 切换 Alt + 方向键  
 
 
-*** 
+### 设置  
+
+自动换行显示，View -> Active Editor -> Soft Wrap  
+
 
 可以 debug，选择 dj 项目，有些是要在网页发送请求的时候才会触发  
 
@@ -24,10 +29,10 @@ Alt + 7 查看方法列表
 
 可以使用右上角的搜索功能，查找类和函数，读源码非常有帮助  
 
-点进源码以后，点击左侧 Structure 可以看到所有的类；读源码非常有用，自己写 model 或 view 导包的时候，可以点进去看还有什么相似的方法       
+点进源码以后，点击左侧 Structure 可以看到所有的类；自己写 model 或 view 导包的时候，可以点进去看还有什么相似的方法       
 
 
-PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建标签，非常方便    
+PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建标签    
 
 可以数值切分页面，这样就可以在写 CSS 的时候，可以看到 HTML 页面  
 
@@ -45,8 +50,6 @@ PyCharm 在编写标签的时候，输入 if 按 Tab 键，就可以自动创建
 #### 其他设置
 
 pycharm 非常强大，可以创建 Django flask 项目、可以连接数据库、可以使用 git 进行版本控制、可以登录 GitHub、  
-
-PyCharm 这个一点儿都不好用，还是用命令行操作  
 
 创建 Django 项目：File -> New Project -> Django -> Existing interpreter -> 右侧... -> Conda Environment -> 右侧... -> 上排 Show Hidden Files and Directories -> 选择 C:\ProgramData\Miniconda3\envs\django\python.exe -> 点击两次 OK -> 这个时候在 Existing interpreter 中就有了 django interpreter 了（但是会提示 installing django）  
 
