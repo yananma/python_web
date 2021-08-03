@@ -128,11 +128,18 @@ t[0] = 100`
 
 `l = [(3, 'cat'), (1, 'bag'), (2, 'apple')]`  
 
-`print(sorted(l, key=lambda x:x[0]))`  
-lambda 是 key 的 lambda，这个是按数字排序  
+看的话其实不看 lambda x，直接看匿名函数的内容就行，比如第一个直接看 key=x[0] 更清楚。  
+```python 
+In [2]: print(sorted(l, key=lambda x: x[0]))
+[(1, 'bag'), (2, 'apple'), (3, 'cat')]
+# lambda 是 key 的 lambda，这个是按数字排序  
 
-`print(sorted(l, key=lambda x:x[1]))`  
-这个是按字母排序  
+
+In [3]: print(sorted(l, key=lambda x: x[1]))
+[(2, 'apple'), (1, 'bag'), (3, 'cat')]
+# 这个是按字母排序  
+```
+
 
 #### 字符串
 
