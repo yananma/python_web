@@ -1,17 +1,13 @@
 
 #### 课程简介  
 
-ElasticSearch 就是搜索用的，可以就把 ElasticSearch 当做一个数据库，具有搜索和存储功能  
-
-用传统数据库会非常慢  
+ElasticSearch 就是搜索用的，可以就把 ElasticSearch 当做一个数据库，具有搜索和存储功能。用传统数据库会非常慢。  
 
 做大数据开发一定会用到  
 
-RESTful 操作 search  
+RESTful 操作  
 
 ES 就是重复的 CRUD  
-
-库就是索引  
 
 
 #### Lucene 简介  
@@ -47,10 +43,15 @@ ElasticSearch 仅支持 json 格式，只支持这一种就够了
 解压即用  
 
 bin 启动文件  
+
 config 配置文件  
+
 lib 相关包  
+
 modules 功能模块  
+
 plugins 插件  
+
 log 日志  
 
 默认 9200 端口  
@@ -63,8 +64,11 @@ ElasticSearch 是面向文档的
 ElasticSearch 中一切都是 json  
 
 索引 indices 就是数据库 database  
+
 type 就是表 table（慢慢会被弃用）  
+
 document 是行 row  
+
 fields 是字段 column  
 
 ElasticSearch 在后台把每个索引划分成多个分片，每份分片都可以在集群中的不同服务器间迁移  
