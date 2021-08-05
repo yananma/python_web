@@ -130,7 +130,42 @@ PUT /test2
 
 这个和数据库建表是一样的  
 
+或者使用 PUT /索引名/\_doc/1 默认类型就是 doc    
+```json 
+PUT /test3/_doc/1  
+{
+    "name": "mayanan", 
+    "age": 30, 
+    "birthday": "1991", 
+}
 
+GET /test3  
+```
+
+如果没有指定类型，ES 会自动指定字段类型  
+
+可以使用 PUT 修改数据，其实这种方法就是覆盖  
+
+比如  
+```json 
+PUT /test3/_doc/1  
+{
+    "name": "mayanan123", 
+    "age": 30, 
+    "birthday": "1991", 
+}
+
+GET /test3  
+```
+
+
+GET 索引名 获取索引的信息    
+
+GET /索引名/表名/文档名 写到哪一层，就得到哪一层的信息  
+
+GET \_cat 查看 ES 信息  
+
+GET \_cat/indices?v  
 
 
 
