@@ -97,4 +97,40 @@ RESTful 风格就是用不同的命令实现不同的操作。
 
 创建索引用 PUT  
 
+PUT /索引名/类型名（可以不写）/id  
+
+```json 
+PUT /test1/type1/1  
+{
+    "name": "mayanan", 
+    "age": 30, 
+}
+```
+
+上面这种是文档，也可以只是添加库，添加规则  
+
+```json 
+PUT /test2  
+{
+    "mappings": {
+        "properties": {
+            "name": {
+                "type": "text"
+            }, 
+            "age": {
+                "type": "long"
+            }, 
+            "birthday": {
+                "type": "date"
+            }
+        }
+    }
+}
+```
+
+这个和数据库建表是一样的  
+
+
+
+
 
