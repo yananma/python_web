@@ -262,5 +262,20 @@ GET /vip/_search
 
 其中，match 是模糊查询，就是 like % %  
 
+返回的结果中，hits 包含索引和文档信息。查询总数在 total 里面。后面就是查询出来的具体的文档，就可以遍历文档。  
+
+我们可以通过最后返回的 score 判断哪个更加符合  
+
+通过 \_source 可以选择要的字段，`"_source": ["title", "desc"]`，就是一种结果的过滤，就好比是 MySQL 里面的 `select name, desc from user` 是一样的    
+
+可以指定排序，排序是 sort，指定排序字段，和升序降序，指定了排序以后，分值 \_score 就是 null 了  
+
+分页，指定 from 起始值，从第几个开始，下标默认从零开始；指定 size，返回多少条数据，就是一页的数量  
+
+布尔查询，就是多条件查询，指定 bool，后面接 must（或其他），后面就可以做多条件匹配，must 里的条件都要符合，比如 match name，match age，name 和 age 都符合的才会返回，就是 and 查询，等价于 `where name=name and age=age`  
+
+用 should 实现 or 查询。  
+
+
 
 
