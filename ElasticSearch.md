@@ -188,7 +188,7 @@ DELETE 删除索引
 DELETE test1  
 ```
 
-#### 关于文档的基本操作（重点）   
+#### 关于文档的基本操作   
 
 先创建数据  
 
@@ -210,18 +210,57 @@ PUT /vip/user/2
     "desc": "very good", 
     "tags": ["运动", "读书"] 
 }
-```
 
-查询  
-```json 
 GET /vip/user/1
 ```
 
 如果再次 PUT 的 url 是已经存在的，就会是 update 操作，返回的数据，version 加 1，返回的 result 状态为 update  
 
+不要用 PUT 更新，因为 PUT 更新，如果字段比原来的少，原来多的字段就没有了。用 POST /\_update 更新，update 更新以后，只是更新指定的字段，没有指定的字段保持不变。  
 
+```json 
+POST /vip/user/2/update  
+{
+    "doc": {
+        "name": "nanyama"
+    }
+}
 
+GET /vip/user/2
+```
 
+#### 查询（重点）
+
+查询操作，最常见的就是根据 id 查询  
+
+`GET /vip/user/1`  
+
+这就是简单的条件查询，就是在查询的后面跟参数。  
+
+`GET /vip/_search?q=name:yananma`   
+
+这里的 q 就是 query  
+
+分词器不会在 keyword 上发挥作用，所以 keyword 是精确匹配  
+
+\_score 值就是匹配度，如果查询结果有多条，匹配度越高的分值越高。  
+
+如果按照分值匹配，就可以把分值高的排在前面  
+
+查询的常见结构就是下面这种形式  
+
+```json 
+GET /vip/_search  
+{
+    "query": {
+        "match": {
+            "name": "yananma"
+        }
+    }
+}
+```
+
+其中，match 是模糊查询，就是 like % %  
 
 
 
