@@ -95,7 +95,7 @@ ik_max_word 穷尽词库的可能
 可以自己配置分词  
 
 
-#### REST 操作  
+#### 关于索引的基本操作  
 
 RESTful 风格就是用不同的命令实现不同的操作。  
 
@@ -161,7 +161,18 @@ PUT /test3/_doc/1
 
 GET /test3  
 ```
+PUT 完以后，版本号 version 会增加  
 
+PUT 方法不太好，比较好的方法是使用 POST 方法，后面接 update 更新  
+
+```json 
+POST /test3/_doc/1/_update  
+{
+    "doc": {
+        "name": "yananma"  
+    }
+}
+```
 
 GET 索引名 获取索引的信息    
 
@@ -170,6 +181,47 @@ GET /索引名/表名/文档名 写到哪一层，就得到哪一层的信息
 GET \_cat 查看 ES 信息  
 
 GET \_cat/indices?v  
+
+DELETE 删除索引  
+
+```json
+DELETE test1  
+```
+
+#### 关于文档的基本操作（重点）   
+
+先创建数据  
+
+```json 
+PUT /vip/user/1
+{
+    "name": "mayanan", 
+    "age": 30, 
+    "desc": "very good", 
+    "tags": ["运动", "读书"] 
+}
+```
+
+```json 
+PUT /vip/user/2
+{
+    "name": "yananma", 
+    "age": 30, 
+    "desc": "very good", 
+    "tags": ["运动", "读书"] 
+}
+```
+
+查询  
+```json 
+GET /vip/user/1
+```
+
+如果再次 PUT 的 url 是已经存在的，就会是 update 操作，返回的数据，version 加 1，返回的 result 状态为 update  
+
+
+
+
 
 
 
