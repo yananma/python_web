@@ -1,33 +1,24 @@
 
 #### 课程简介  
 
-ElasticSearch 就是搜索用的，可以就把 ElasticSearch 当做一个数据库，具有搜索和存储功能。用传统数据库会非常慢。  
+ElasticSearch 就是做文本搜索用的，可以就把 ElasticSearch 当做一个搜索和存储功能的数据库。用传统数据库做搜索会非常慢。  
 
-做大数据开发一定会用到  
+RESTful 操作，上手非常简单，从接触到熟练，两天就行了。    
 
-RESTful 操作  
-
-ES 就是重复的 CRUD  
-
-
-#### Lucene 简介  
-
-Lucene 是一个用于文本搜索的函数库，目的是为各种中小型应用软件加入全文检索功能。  
-
-ElasticSearch 是基于 Lucene 做了一些封装和增强，上手十分简单，做和 ES 相关的工作非常轻松  
-
-从接触到熟练，两天就行了  
+ES 就是重复的 CRUD，做和 ES 相关的工作非常轻松。    
 
 
 #### ElasticSearch 概述  
 
 ElasticSearch 是一个开源的高扩展的全文分布式搜索引擎，它可以近乎实时的存储和查询数据，查询效率非常高，本身扩展性很好，可以扩展到上百台服务器，处理 PB 级别的数据。  
 
+Lucene 是一个用于文本搜索的函数库，目的是为各种中小型应用软件加入全文检索功能。  
+
+ElasticSearch 是基于 Lucene 做了一些封装和增强  
+
 设计的目的是通过简单的 RESTful API 封装 Lucene 的复杂性，从而让全文搜索变得简单。  
 
-ElasticSearch 现在是排名第一的全文搜索类应用。  
-
-使用的网站：维基百科、新闻网站、github、Stack Overflow、电商等等  
+ElasticSearch 是排名第一的全文搜索类应用。使用的网站：维基百科、新闻网站、github、Stack Overflow、电商等等  
 
 用于全文搜索、结构化搜索、分析以及将这三者混合使用  
 
@@ -42,17 +33,7 @@ ElasticSearch 仅支持 json 格式，只支持这一种就够了
 
 解压即用  
 
-bin 启动文件  
-
-config 配置文件  
-
-lib 相关包  
-
-modules 功能模块  
-
-plugins 插件  
-
-log 日志  
+bin 启动文件、config 配置文件、lib 相关包、modules 功能模块、plugins 插件、log 日志  
 
 默认 9200 端口  
 
@@ -88,7 +69,7 @@ ElasticSearch 用的就是 Lucene 的倒排索引，做了一个聚合
 
 搜索里面做的最重要的事情就是分词  
 
-ik 分词用的  
+ik 分词器就是分词用的  
 
 ik_max_word 穷尽词库的可能  
 
@@ -103,7 +84,7 @@ RESTful 风格就是用不同的命令实现不同的操作。
 
 PUT /索引名/类型名（可以不写）/id  
 
-```json 
+```python 
 PUT /test1/type1/1  
 {
     "name": "mayanan", 
@@ -113,7 +94,7 @@ PUT /test1/type1/1
 
 上面这种是文档，也可以只是添加库，添加规则  
 
-```json 
+```python 
 PUT /test2  
 {
     "mappings": {
@@ -135,7 +116,7 @@ PUT /test2
 这个和数据库建表是一样的  
 
 或者使用 PUT /索引名/\_doc/1 默认类型就是 doc    
-```json 
+```python 
 PUT /test3/_doc/1  
 {
     "name": "mayanan", 
@@ -151,7 +132,7 @@ GET /test3
 可以使用 PUT 修改数据，其实这种方法就是覆盖  
 
 比如  
-```json 
+```python 
 PUT /test3/_doc/1  
 {
     "name": "mayanan123", 
@@ -165,7 +146,7 @@ PUT 完以后，版本号 version 会增加
 
 PUT 方法不太好，比较好的方法是使用 POST 方法，后面接 update 更新  
 
-```json 
+```python 
 POST /test3/_doc/1/_update  
 {
     "doc": {
@@ -192,7 +173,7 @@ DELETE test1
 
 先创建数据  
 
-```json 
+```python 
 PUT /vip/user/1
 {
     "name": "mayanan", 
@@ -202,7 +183,7 @@ PUT /vip/user/1
 }
 ```
 
-```json 
+```python 
 PUT /vip/user/2
 {
     "name": "yananma", 
@@ -218,7 +199,7 @@ GET /vip/user/1
 
 不要用 PUT 更新，因为 PUT 更新，如果字段比原来的少，原来多的字段就没有了。用 POST /\_update 更新，update 更新以后，只是更新指定的字段，没有指定的字段保持不变。  
 
-```json 
+```python 
 POST /vip/user/2/update  
 {
     "doc": {
@@ -239,7 +220,7 @@ GET /vip/user/2
 
 `GET /vip/_search?q=name:yananma`   
 
-这里的 q 就是 query  
+q 就是 query  
 
 分词器不会在 keyword 上发挥作用，所以 keyword 是精确匹配  
 
@@ -249,7 +230,7 @@ GET /vip/user/2
 
 查询的常见结构就是下面这种形式  
 
-```json 
+```python 
 GET /vip/_search  
 {
     "query": {
@@ -260,22 +241,119 @@ GET /vip/_search
 }
 ```
 
-其中，match 是模糊查询，就是 like % %  
+match 是模糊查询，就是 like % %  
 
-返回的结果中，hits 包含索引和文档信息。查询总数在 total 里面。后面就是查询出来的具体的文档，就可以遍历文档。  
+hits 包含索引和文档信息。前面是信息，后面是文档。拿到文档就可以遍历文档。  
 
-我们可以通过最后返回的 score 判断哪个更加符合  
+total 查询结果总数。
 
-通过 \_source 可以选择要的字段，`"_source": ["title", "desc"]`，就是一种结果的过滤，就好比是 MySQL 里面的 `select name, desc from user` 是一样的    
+score 可以判断判断哪个结果更加符合  
 
-可以指定排序，排序是 sort，指定排序字段，和升序降序，指定了排序以后，分值 \_score 就是 null 了  
+\_source 可以选择要的字段，`"_source": ["title", "desc"]`，就是一种结果的过滤，就好比是 MySQL 里面的 `select name, desc from user` 是一样的    
 
-分页，指定 from 起始值，从第几个开始，下标默认从零开始；指定 size，返回多少条数据，就是一页的数量  
+sort 可以指定排序字段和升序降序，指定了排序以后，分值 \_score 就是 null 了  
 
-布尔查询，就是多条件查询，指定 bool，后面接 must（或其他），后面就可以做多条件匹配，must 里的条件都要符合，比如 match name，match age，name 和 age 都符合的才会返回，就是 and 查询，等价于 `where name=name and age=age`  
+from 是分页起始值，从第几个开始，下标默认从零开始；
 
-用 should 实现 or 查询。  
+size 返回多少条数据，就是一页的数量  
 
+bool 布尔查询，就是多条件查询，所有的查询条件都放到 bool 里面，后面接 must、must_not、should 等等，后面就可以做多条件匹配。  
 
+must 里的条件都要符合，比如 match name，match age，name 和 age 都符合的才会返回，就是 and 查询，等价于 `where name=name and age=age`  
+
+should 就是 or 查询  
+
+must_not 就是 not 查询（就是 exclude）  
+
+filter 过滤查询，指定 field，然后通过 gt 和 lt 指定查询区间    
+
+term 精确查询，term 查询是直接通过倒排索引指定的词条进行精确查找的。    
+
+（term 是直接倒排索引精确查询的，查询范围小，查找的词少，所以速度非常快。（可能对中文不是很好，没有空格，可以会把一句话就当成一个词了，试一试）
+match 会使用分词器，满足其中一个就会被查出来）  
+
+也可以用 term 精确查询多个值，查询办法就是使用 should 里面套多个 term  
+
+text 类型会被分词器解析，keyword 类型不会被分词器解析  
+
+highlight 指定高亮字段，可以自己指定前缀和后缀标签  
+
+```python 
+```
+
+must_not 例子  
+
+```python 
+GET /vip/_search  
+{
+    "query": {
+        "bool": {
+            "must_not": [
+                {
+                    "match": {
+                        "age": 30
+                    }
+                }
+            ]
+        }
+    }
+}
+```
+
+filter 例子  
+```python 
+GET /vip/_search  
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "name": "ma"
+                    }
+                }
+            ], 
+            "filter": {
+                "range": {
+                    "age": {
+                        "gt": 10
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+多个词查询，查询条件之间用空格隔开，查询之间是 or 关系，只要满足其中一个就可以被查出，可以看到 score 值    
+```python 
+GET /vip/_search  
+{
+    "query": {
+        "match": {
+            "tags": "第一个词 第二个词"
+        }
+    }
+}
+```
+
+高亮  
+```python 
+GET /vip/_search
+{
+    "query":{
+        "match": {
+            "name": "图书"
+        }
+    }, 
+    "highlight": {
+        "pre_tags": "<span class='key' style='color:red'>", 
+        "post_tags": "</span>"  
+        "fields": {
+            "name": {}
+        }
+    }
+}
+```
 
 
