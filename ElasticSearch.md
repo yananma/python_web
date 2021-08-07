@@ -28,29 +28,16 @@ ElasticSearch 用的是自身的分布式协调管理功能
 
 ElasticSearch 仅支持 json 格式，只支持这一种就够了  
 
-
-#### ElasticSearch 安装  
-
-解压即用  
+解压即用，默认 9200 端口    
 
 bin 启动文件、config 配置文件、lib 相关包、modules 功能模块、plugins 插件、log 日志  
-
-默认 9200 端口  
 
 
 #### ES 核心概念  
 
-ElasticSearch 是面向文档的  
+ElasticSearch 是面向文档的，ElasticSearch 中一切都是 json  
 
-ElasticSearch 中一切都是 json  
-
-索引 indices 就是数据库 database  
-
-type 就是表 table（慢慢会被弃用）  
-
-document 是行 row  
-
-fields 是字段 column  
+索引 indices 就是数据库 database，type 就是表 table（慢慢会被弃用），document 是行 row，fields 是字段 column  
 
 ElasticSearch 在后台把每个索引划分成多个分片，每份分片都可以在集群中的不同服务器间迁移  
 
