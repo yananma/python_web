@@ -344,3 +344,32 @@ GET /vip/_search
 ```
 
 
+### ElasticSearch  
+
+ES 遇到问题自己用 kibana 写代码试   
+
+
+`GET test-zky/_count`  
+
+query 是查询条件  
+
+选中执行  
+
+索引相当于表  
+
+data_normalize.py  
+
+zky-all 是备份  
+
+5 种筛选数据的规则，满足任意一条就可以通过    
+作者、域名、media 板块、child_map 域名后边带东西 比如 `finance.sina.com.cn/tech`，看 url 是否在目标的 url 里，在就返回 True，不在就返回 False，用 in 判断、site_name 和作者名都要符合的，用 and 关系    
+
+
+一个 data 就是一条 kafka 数据  
+
+helps 是 ES 的库，helpers.bulk 是批量操作，比如批量插入，如果数据重复就报错，一般忽略重复，不做重复判断    
+
+
+flush_else() 把数据上传到 ES 以后删除内存里的数据    
+
+
