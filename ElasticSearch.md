@@ -8,7 +8,7 @@ GET test-zky/_search
 {
   "query": {
     "bool": {
-      "must": [
+      "should": [
         {
           "query_string": {
             "default_field": "text",
@@ -24,6 +24,10 @@ GET test-zky/_search
 ``` 
 
 多条件查询（这里是 temp_titles 的精确查询，所以用了 term，查的是 title.keyword）  
+
+must 是 and 查询  
+
+should 是 or 查询  
 
 ```python 
 query_dict = {
