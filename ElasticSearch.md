@@ -308,7 +308,7 @@ hits 包含索引和文档信息。前面是信息，后面是文档。拿到文
 
 total 查询结果总数。
 
-score 可以判断判断哪个结果更加符合  
+score 可以判断判断哪个结果更加符合（用的是 TF/IDF）  
 
 \_source 可以选择要的字段，`"_source": ["title", "desc"]`，就是一种结果的过滤，就好比是 MySQL 里面的 `select name, desc from user` 是一样的    
 
@@ -445,5 +445,30 @@ helps 是 ES 的库，helpers.bulk 是批量操作，比如批量插入，如果
 
 
 flush_else() 把数据上传到 ES 以后删除内存里的数据    
+
+
+## kibana
+
+`GET /_cat/indices?v`，查看所有 indices  
+
+控制台插件提供一个用户界面来和 Elasticsearch 的 REST API 交互。控制台有两个主要部分： editor ，用来编写提交给 Elasticsearch 的请求； response 面板，用来展示请求结果的响应。  
+
+
+可以一次选择多个请求，控制台会依次提交请求到 Elasticsearch ，并将 Elasticsearch 返回的结果显示在右边窗口。这在调试问题或在多个场景中尝试查询组合时会非常方便。  
+
+小扳手里可以选择自动缩进格式化。  
+
+Ctrl + Enter 提交请求  
+
+Ctrl + Up/Down 跳转到上一个/下一个请求的开始或结束  
+
+点击窗口右上角的 History 即可查看历史记录。会打开历史记录面板，可以在其中查看历史请求。也可以在这里选择一个请求，它将被添加到编辑器中当前光标所在的位置。  
+
+在 Settings 里可以设置字符大小  
+
+
+
+
+
 
 
