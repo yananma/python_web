@@ -1,4 +1,43 @@
 
+### 查  
+
+query_string 查询  
+
+```python 
+GET test-zky/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "default_field": "text",
+            "query":' OR '.join(f'"{data}"' for data in source_data)
+          }
+        }
+      ]
+    }
+  },
+  "_source": ["title","text","url","post_time"],
+  "size": 1000
+}
+``` 
+
+
+
+```python 
+
+```
+
+
+
+
+### 增删改  
+
+
+
+
+
 #### 课程简介  
 
 ElasticSearch 就是做文本搜索用的，可以就把 ElasticSearch 当做一个搜索和存储功能的数据库。用传统数据库做搜索会非常慢。  
