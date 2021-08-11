@@ -23,10 +23,41 @@ GET test-zky/_search
 }
 ``` 
 
-
+多条件查询（这里是 temp_titles 的精确查询，所以用了 term，查的是 title.keyword）  
 
 ```python 
+query_dict = {
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "bool": {
+                        "should": [
 
+                        ]
+                    }
+                },
+                {
+                    "range": {
+                        "post_time": {
+                            "gte": "2021-05-04 00:00:00",
+                            "lt": "2021-08-05 00:00:00"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+}
+for data in source_data:
+    query_dict["query"]["bool"]['must'][0]['bool']['should'].extend([
+        {"term": {
+            "title.keyword": {
+                "value": data
+            }
+        }
+        }
+    ])
 ```
 
 
