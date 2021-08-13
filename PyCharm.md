@@ -1,4 +1,9 @@
 
+查找全部：Edit -> Find -> Find in Path  
+
+替换全部：Edit -> Find -> Replace in Path   
+
+
 ### 快捷键
 
 Ctrl + Alt + 方向键左键 跳回光标原来所在的位置；读源码用  
