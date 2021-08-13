@@ -72,6 +72,14 @@ for data in source_data:
 
 
 
+## 工作 ES 相关  
+
+提倡分多个索引，而不是一个索引里放很多东西  
+
+es_bulk_module.py ES 增删改  
+
+
+
 
 #### 课程简介  
 
@@ -450,8 +458,6 @@ flush_else() 把数据上传到 ES 以后删除内存里的数据
 ## kibana
 
 `GET /_cat/indices?v`，查看所有 indices  
-
-查看所有模板 `GET _template/*`   
 
 控制台插件提供一个用户界面来和 Elasticsearch 的 REST API 交互。控制台有两个主要部分： editor ，用来编写提交给 Elasticsearch 的请求； response 面板，用来展示请求结果的响应。  
 
