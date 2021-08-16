@@ -1,6 +1,15 @@
 
 ### 查  
 
+查询所有，就是不指定索引名查询  
+
+```python 
+GET _search
+{
+
+}
+```
+
 query_string 查询  
 
 ```python 
