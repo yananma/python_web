@@ -1,7 +1,23 @@
 
 ### 查  
 
-查询所有，就是不指定索引名查询  
+查看索引字段  
+`GET kejisousou`  
+
+查看所有别名  
+`GET _alias`  
+
+用通配符查看特定别名  
+`GET kejisousou*/_alias`  
+
+查看所有模板  
+`GET _template`  
+
+用通配符查看特定模板  
+`GET _template/kejisousou*`
+
+
+在所有索引中查询，就是不指定索引名查询  
 
 ```python 
 GET _search
@@ -78,19 +94,62 @@ for data in source_data:
 
 ### 增删改  
 
+添加索引  
+PUT /索引名/类型名（可以不写）/id  
 
+```python 
+PUT /test1/type1/1  
+{
+    "name": "mayanan", 
+    "age": 30, 
+}
+```
+
+删除索引
+`DELETE kejisousou-test`  
+
+
+#### 重建索引  
+
+https://www.cnblogs.com/juncaoit/p/12815582.html  
+
+新建一个索引，索引规则通过 GET 原索引名得到的结果获得。  
+
+同步数据，不用文章里的异步的参数。  
+
+删除旧索引。  
 
 
 ## 工作 ES 相关  
+
+ES 遇到问题自己用 kibana 写代码试   
 
 提倡分多个索引，而不是一个索引里放很多东西  
 
 es_bulk_module.py ES 增删改  
 
+`GET test-zky/_count`  
+
+query 是查询条件  
+
+data_normalize.py  
+
+zky-all 是备份  
+
+5 种筛选数据的规则，满足任意一条就可以通过    
+作者、域名、media 板块、child_map 域名后边带东西 比如 `finance.sina.com.cn/tech`，看 url 是否在目标的 url 里，在就返回 True，不在就返回 False，用 in 判断、site_name 和作者名都要符合的，用 and 关系    
+
+
+一个 data 就是一条 kafka 数据  
+
+helps 是 ES 的库，helpers.bulk 是批量操作，比如批量插入，如果数据重复就报错，一般忽略重复，不做重复判断    
+
+
+flush_else() 把数据上传到 ES 以后删除内存里的数据    
 
 
 
-#### 课程简介  
+## ElasticSearch 课程  
 
 ElasticSearch 就是做文本搜索用的，可以就把 ElasticSearch 当做一个搜索和存储功能的数据库。用传统数据库做搜索会非常慢。  
 
@@ -435,36 +494,7 @@ GET /vip/_search
 ```
 
 
-### ElasticSearch  
-
-ES 遇到问题自己用 kibana 写代码试   
-
-
-`GET test-zky/_count`  
-
-query 是查询条件  
-
-选中执行  
-
-索引相当于表  
-
-data_normalize.py  
-
-zky-all 是备份  
-
-5 种筛选数据的规则，满足任意一条就可以通过    
-作者、域名、media 板块、child_map 域名后边带东西 比如 `finance.sina.com.cn/tech`，看 url 是否在目标的 url 里，在就返回 True，不在就返回 False，用 in 判断、site_name 和作者名都要符合的，用 and 关系    
-
-
-一个 data 就是一条 kafka 数据  
-
-helps 是 ES 的库，helpers.bulk 是批量操作，比如批量插入，如果数据重复就报错，一般忽略重复，不做重复判断    
-
-
-flush_else() 把数据上传到 ES 以后删除内存里的数据    
-
-
-## kibana
+## kibana 文档
 
 `GET /_cat/indices?v`，查看所有 indices  
 
