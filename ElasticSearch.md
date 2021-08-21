@@ -89,7 +89,21 @@ for data in source_data:
     ])
 ```
 
-
+用 sort 排序实现查询第一条和最后一条  
+```python 
+GET kejisousou-test/_search
+{
+  "size": 1,
+  "_source": "post_time",
+  "sort": [
+    {
+      "post_time": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+```
 
 
 ### 增删改  
