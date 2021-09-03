@@ -106,6 +106,53 @@ GET kejisousou-test/_search
 ```
 
 
+反向过滤 must_not   
+
+```python 
+GET kejisousou-points-test/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "fields": [
+              "point_text"
+            ],
+            "query": "5G"
+          }
+        },
+        {
+          "bool": {
+            "must_not": [
+              {
+                "prefix": {
+                  "entry_name.keyword": {
+                    "value": "知乎"
+                  }
+                }
+              },
+              {
+                "prefix": {
+                  "entry_name.keyword": {
+                    "value": "微博"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "size": 1000,
+  "_source": [
+    "entry_name"
+  ]
+}
+```
+
+
 ### 增删改  
 
 添加索引  
