@@ -181,6 +181,20 @@ https://www.cnblogs.com/juncaoit/p/12815582.html
 删除旧索引。  
 
 
+#### 新建模板  
+
+比如照着 kejisousou-test 新建一个 kejisousou-testv2  
+
+先 GET 原来的模板  
+`GET /_template/kejisousou-test`  
+
+然后从结果里去掉最外面一层，否则会报错 [Validation Failed: 1: template is missing](https://blog.csdn.net/congcong0808/article/details/52127611)  
+
+然后改三个地方，一个是 PUT 命令后面那个模板名，一个是刚开始的 template 的值，`"template": "kejisousou-testv2-*"`，一个是最后的 aliases 的名字，`"kejisousou-testv2": {}`  
+
+最后 `PUT /_template/kejisousou-testv2`  
+
+
 ## 工作 ES 相关  
 
 ES 遇到问题自己用 kibana 写代码试   
