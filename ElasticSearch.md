@@ -1,5 +1,7 @@
 
 ### 查  
+查看所有索引，得出结果以后 Ctrl + F 搜索索引名    
+`GET _cat/indices?v`  
 
 查看索引字段  
 `GET kejisousou`  
