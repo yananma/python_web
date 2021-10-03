@@ -1,4 +1,12 @@
 
+配置远程环境：VCS -> Git -> Clone，clone 完成以后在 new window 打开  
+
+在配置 python 解释器之前要先在 Tools -> Deployment 中取消自动上传  
+
+add python interpreter，选择 ssh interpreter，选择 existing server configuration，然后再选择正确的 python 解释器，配置正确的路径  
+
+
+
 查找全部：Edit -> Find -> Find in Path  
 
 替换全部：Edit -> Find -> Replace in Path   
