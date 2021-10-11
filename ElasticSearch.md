@@ -172,6 +172,19 @@ PUT /test1/type1/1
 `DELETE kejisousou-test`  
 
 
+删除查询的结果  
+```python 
+POST suoyinming/_delete_by_query
+{
+  "query": { 
+    "match": {
+      "num": "39"
+    }
+  }
+}
+```
+
+
 #### 重建索引  
 
 https://www.cnblogs.com/juncaoit/p/12815582.html  
