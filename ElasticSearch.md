@@ -184,6 +184,29 @@ POST suoyinming/_delete_by_query
 }
 ```
 
+update 一条数据  
+
+```python 
+GET kejisousou-yuce-formal-v3/_update_by_query
+{
+  "script": {
+    "inline": "ctx._source['yuce_text']='充电桩的盈利'"
+  },
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "query_string": {
+            "default_field": "url",
+            "query": "\"https://www.toutiao.com/i7000203772555166244/\""
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 
 #### 重建索引  
 
