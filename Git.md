@@ -1,4 +1,74 @@
 
+为什么要学 Git？  
+
+1. GitHub 就是一个巨大的代码仓库，有众多的开源代码，可以创造巨大的价值，可以节省大量的时间和精力  
+2. 版本管理，可以恢复  
+3. 协同开发  
+
+## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
+
+### 第一章 Git 基础  
+
+#### 01 课程综述  
+
+没有 Git 之前，就是 copy 目录，自己设置版本，沟通成本极高，容易覆盖文件  
+
+分布式版本控制系统，各自都拥有完整的一套版本库。脱离服务端以后，客户端仍然可以管理版本  
+
+Git 的优势：最优的存储能力、非凡的性能、开源、容易备份、支持离线操作、容易定制工作流程  
+
+
+#### 02 安装 Git  
+
+安装教程：https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git  
+
+
+#### 03 Git 配置  
+
+`git config` 直接回车，显示的是各种可用参数  
+
+`git config --list` 查看所有配置  
+
+查看 git 的用户名和邮箱  
+```python 
+git config user.name
+git config user.email
+```
+
+设置 git 用户名和邮箱  
+```python 
+$ git config --global user.name  "mayanan"     
+$ git config --global user.email "yanan.ma@maixunbytes.com"          
+```
+
+设置了以后，就可以看到是谁提交的代码，有问题就可以发邮件交流  
+
+不写 global 参数，默认是 \-\-local 是对某一个仓库生效。不常用，global 最常用。    
+
+
+查看配置  
+```python 
+git config --list --local  
+git config --list --global  
+```
+
+
+#### 04 创建第一个仓库  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [Git 相关大全](https://gitee.com/all-about-git)  
 
 [learn-git-branching](https://oschina.gitee.io/learn-git-branching/)  
