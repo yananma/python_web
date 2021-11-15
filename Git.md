@@ -91,11 +91,12 @@ add 后面可以加多个文件，包括文件夹
 add 全部使用命令 `git add .` 或 `git add -u` 
 
 
+### 06 重命名文件  
+
+`git mv readme readme.md`  
 
 
-
-
-
+### 07 
 
 
 
