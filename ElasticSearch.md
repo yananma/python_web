@@ -168,6 +168,20 @@ PUT /test1/type1/1
 }
 ```
 
+添加字段  
+```python 
+PUT 索引名/_mapping/类型名  
+{
+  "properties": {
+    "include_time": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss"
+    }
+  }
+}
+```
+
+
 删除索引
 `DELETE kejisousou-test`  
 
