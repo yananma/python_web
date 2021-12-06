@@ -23,7 +23,6 @@
 
 ```python 
 GET _search
-{}
 ```
 
 查询 url 的时候，http 和 https 都试一试。有时候 http 查不出来，用 https 就能查出来。  
@@ -158,6 +157,27 @@ GET kejisousou-points-test/_search
 ### 增删改  
 
 添加索引  
+```python 
+PUT mayanan
+{
+  "mappings": {
+    "zky_doc": {
+      "properties": {
+        "author_id": {
+          "type": "integer",
+          "copy_to": ["author_id_str"]
+        },
+        "author_id_str": {
+          "type": "keyword",
+          "store": true
+        }
+      }
+    }
+  }
+}
+```
+
+直接添加数据  
 PUT /索引名/类型名（可以不写）/id  
 
 ```python 
