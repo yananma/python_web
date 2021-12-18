@@ -77,11 +77,17 @@ jQuery 是 JavaScript 的一个类库，非常强大，write less，do more.
 提供大量插件  
 与 ajax 结合的很好  
 
-官网：https://jquery.com/  
 
 #### 下载使用 jQuery  
-官网下载  
-不用安装，直接放到文件中就行，script 标签 src 导入，和 Python 的 import 一模一样  
+
+官网下载，官网：https://jquery.com/   
+
+点击 Download jQuery，选择 Download the uncompressed, development jQuery 3.6.0，点开以后看到的是源码，Ctrl + s 保存，然后复制到目录的 js 文件夹下，script 标签 src 导入，和 Python 的 import 一模一样  
+
+```html
+<script src="plugins/jquery/jquery.min.js"></script>
+```
+
 
 #### jQuery 的语法风格  
 用的最多的就是 `$` 符号，这个符号就是 jQuery 的缩写  
