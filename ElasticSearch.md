@@ -244,7 +244,7 @@ GET kejisousou-yuce-formal-v3/_update_by_query
 ### 新建索引  
 
 先找一个参考索引 `GET kejisousou-zhili-formal-v3/`  
-PUT 新索引名，比如 `PUT zjgdk-v1`
+PUT 新索引名，比如 `PUT zjgdk-v1`  
 复制查询结果里的 mappings，修改 \_doc   
 添加、删除、修改字段    
 执行 PUT 命令   
