@@ -241,34 +241,13 @@ GET kejisousou-yuce-formal-v3/_update_by_query
 }
 ```
 
+### 新建索引  
 
-#### 重建索引  
-
-https://www.cnblogs.com/juncaoit/p/12815582.html  
-
-新建一个索引，索引规则通过 GET 原索引名得到的结果获得。  
-
-同步数据，不用文章里的异步的参数。  
-
-删除旧索引。  
-
-
-#### 新建模板  
-
-比如照着 kejisousou-test 新建一个 kejisousou-testv2  
-
-先 GET 原来的模板  
-`GET /_template/kejisousou-test`  
-
-然后从结果里去掉最外面一层，这里说的最外面一层包括最外层的两个花括号和 "kejisousou-en-test":。否则会报错 [Validation Failed: 1: template is missing](https://blog.csdn.net/congcong0808/article/details/52127611)  
-
-然后改三个地方，一个是 PUT 命令后面那个模板名，一个是刚开始的 template 的值，`"template": "kejisousou-testv2-*"`，一个是最后的 aliases 的名字，`"kejisousou-testv2": {}`  
-
-最后 `PUT /_template/kejisousou-testv2`  
-
-跑英文版历史数据的命令，只改索引名字就行了：  
-
-`nohup python manage.py --settings=ZKY_Backend.settings_test upload_history_v2 -i "kejisousou-en-testv1" -tp 0 -file /home/test/syb/ZKY_Backend/resources/docs/program/中科院外文网站.xlsx -t "2021-09-13 00:00:00" --no-point -en &>> logs/upload_history_en.log &`  
+先找一个参考索引 `GET kejisousou-zhili-formal-v3/`  
+PUT 新索引名，比如 `PUT zjgdk-v1`
+复制查询结果里的 mappings，修改 \_doc   
+添加、删除、修改字段    
+执行 PUT 命令   
 
 
 ## 工作 ES 相关  
@@ -643,6 +622,35 @@ GET /vip/_search
     }
 }
 ```
+
+#### 重建索引  
+
+https://www.cnblogs.com/juncaoit/p/12815582.html  
+
+新建一个索引，索引规则通过 GET 原索引名得到的结果获得。  
+
+同步数据，不用文章里的异步的参数。  
+
+删除旧索引。  
+
+
+#### 新建模板  
+
+比如照着 kejisousou-test 新建一个 kejisousou-testv2  
+
+先 GET 原来的模板  
+`GET /_template/kejisousou-test`  
+
+然后从结果里去掉最外面一层，这里说的最外面一层包括最外层的两个花括号和 "kejisousou-en-test":。否则会报错 [Validation Failed: 1: template is missing](https://blog.csdn.net/congcong0808/article/details/52127611)  
+
+然后改三个地方，一个是 PUT 命令后面那个模板名，一个是刚开始的 template 的值，`"template": "kejisousou-testv2-*"`，一个是最后的 aliases 的名字，`"kejisousou-testv2": {}`  
+
+最后 `PUT /_template/kejisousou-testv2`  
+
+跑英文版历史数据的命令，只改索引名字就行了：  
+
+`nohup python manage.py --settings=ZKY_Backend.settings_test upload_history_v2 -i "kejisousou-en-testv1" -tp 0 -file /home/test/syb/ZKY_Backend/resources/docs/program/中科院外文网站.xlsx -t "2021-09-13 00:00:00" --no-point -en &>> logs/upload_history_en.log &`  
+
 
 
 ## kibana 文档
