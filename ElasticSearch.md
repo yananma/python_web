@@ -623,15 +623,9 @@ GET /vip/_search
 }
 ```
 
-#### 重建索引  
+#### 新建索引  
 
-https://www.cnblogs.com/juncaoit/p/12815582.html  
-
-新建一个索引，索引规则通过 GET 原索引名得到的结果获得。  
-
-同步数据，不用文章里的异步的参数。  
-
-删除旧索引。  
+[新建 index 的例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/%E5%85%B6%E4%BB%96/elasticsearch_index.md)   
 
 
 #### 新建模板  
@@ -643,13 +637,12 @@ https://www.cnblogs.com/juncaoit/p/12815582.html
 
 然后从结果里去掉最外面一层，这里说的最外面一层包括最外层的两个花括号和 "kejisousou-en-test":。否则会报错 [Validation Failed: 1: template is missing](https://blog.csdn.net/congcong0808/article/details/52127611)  
 
-然后改三个地方，一个是 PUT 命令后面那个模板名，一个是刚开始的 template 的值，`"template": "kejisousou-testv2-*"`，一个是最后的 aliases 的名字，`"kejisousou-testv2": {}`  
+然后改三个地方：
+1. PUT 命令后面那个模板名，`PUT /_template/kejisousou-testv2`  
+2. 刚开始的 template 的值，改成 `"template": "kejisousou-testv2-*"`  
+3. 最后的 aliases 的名字，改成 `"kejisousou-testv2": {}`  
 
-最后 `PUT /_template/kejisousou-testv2`  
-
-跑英文版历史数据的命令，只改索引名字就行了：  
-
-`nohup python manage.py --settings=ZKY_Backend.settings_test upload_history_v2 -i "kejisousou-en-testv1" -tp 0 -file /home/test/syb/ZKY_Backend/resources/docs/program/中科院外文网站.xlsx -t "2021-09-13 00:00:00" --no-point -en &>> logs/upload_history_en.log &`  
+[新建 \_template 的例子](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/%E5%85%B6%E4%BB%96/elasticsearch_template.md)   
 
 
 
