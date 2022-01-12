@@ -432,7 +432,7 @@ GET \_cat/indices?v
 
 DELETE 删除索引  
 
-```json
+```python
 DELETE test1  
 ```
 
