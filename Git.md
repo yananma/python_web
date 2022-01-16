@@ -1,4 +1,13 @@
 
+## 项目 push 到远程  
+
+1. 在 gitlab 上 new project   
+2. 创建同名仓库，不勾选 Initialize repository with a README
+3. 按照提示，选择 existing folders，复制命令运行  
+
+
+*** 
+
 为什么要学 Git？  
 
 1. GitHub 就是一个巨大的代码仓库，有众多的开源代码，可以创造巨大的价值，可以节省大量的时间和精力  
