@@ -1,4 +1,8 @@
 
+1. 取 bootstrap 上去复制代码  
+2. 在浏览器中，复制 css 样式  
+
+
 #### CSS 基础  
 
 CSS 层叠样式表 Cascading Style Sheets   
