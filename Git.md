@@ -46,6 +46,9 @@ git push --set-upstream origin mayanan-book
 
 # 删除分支  
 git branch -D mayanan-book  
+
+# 删除远程分支  
+git push origin --delete mayanan-project-patch-27407  
 ```
 
 
