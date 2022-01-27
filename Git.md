@@ -16,6 +16,39 @@
 
 ## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
 
+
+基础命令  
+```linux  
+git status  
+
+git add a.txt 
+git commit -m "add a.txt" 
+git push  
+
+git pull   
+
+```
+
+
+分支  
+```linux 
+# 创建分支  
+git branch mayanan-book  
+
+# 查看分支  
+git branch -av  
+
+# 切换分支  
+git checkout mayanan-book  
+
+# 当前分支，本地存在，远程不存在，push 到远程  
+git push --set-upstream origin mayanan-book
+
+# 删除分支  
+git branch -D mayanan-book  
+```
+
+
 ### 第一章 Git 基础  
 
 ### 01 课程综述  
