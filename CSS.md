@@ -2,6 +2,12 @@
 ### 1. 去 bootstrap 上复制代码  
 ### 2. 在浏览器中，复制 css 样式  
 
+***  
+
+容器居中：`margin: 0 auto`  
+容器居中指定上边距：`margin: 50px auto auto`  
+
+***  
 
 #### CSS 基础  
 
