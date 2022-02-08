@@ -3,6 +3,31 @@
 
 在浏览器里 debug   
 
+push 就是 append  
+
+```js
+send_list = []
+[]
+
+send_list.push(1) 
+1
+
+send_list
+[1]
+
+send_list.push(2) 
+2
+
+send_list
+(2) [1, 2]
+
+send_list.push(3) 
+3
+
+send_list
+(3) [1, 2, 3]
+```
+
 
 简单写一点笔记，一节课一两行，遇到了不懂的再查，再补充  
 
@@ -12,13 +37,14 @@
 
 script 里面的内容就是 js 代码，style 里面就是 css    
 
-```javascript
+```js
 function f1(){
     alert('hello world!')  
 }  
 ```
 
-#### 基本语法
+#### 基本语法  
+
 统一编码，Unicode  
 
 变量区分大小写，age 和 Age 是两个变量  
