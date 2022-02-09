@@ -17,7 +17,7 @@ CSS 层叠样式表 Cascading Style Sheets
 
 CSS 主要由两个部分构成：**选择器，以及一条或多条声明**，每条属性由一个属性和一个值构成  
 
-\h1(选择器)\{color:red(这两个是一条声明，color 是属性，red 是值);font-size:14px;}  
+h1(选择器) {color:red(这两个是一条声明，color 是属性，red 是值);font-size:14px;}  
 
 `p {color:red;text-align:center;}`  
 
