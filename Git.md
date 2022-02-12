@@ -14,8 +14,6 @@
 2. 版本管理，可以恢复  
 3. 协同开发  
 
-## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
-
 
 基础命令  
 ```linux  
@@ -32,6 +30,9 @@ git pull
 
 分支  
 ```linux 
+# 拉取特定分支  
+git clone -b branch-name url   
+
 # 创建分支  
 git branch mayanan-book  
 
@@ -50,6 +51,8 @@ git branch -D mayanan-book
 # 删除远程分支  
 git push origin --delete mayanan-project-patch-27407  
 ```
+
+## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
 
 
 ### 第一章 Git 基础  
