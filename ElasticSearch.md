@@ -202,6 +202,7 @@ PUT 索引名/_mapping/类型名
 ```
 
 
+
 删除索引
 `DELETE kejisousou-test`  
 
@@ -252,30 +253,17 @@ PUT 新索引名，比如 `PUT zjgdk-v1`
 
 ## 工作 ES 相关  
 
+keyword 类型，直接简历反向索引  
+text 类型，先分词，再建立反向索引  
+
+反向索引是根据内容的关键词建立索引  
+
+搜索引擎的原理就是建立反向索引   
+
+
+
+
 ES 遇到问题自己用 kibana 写代码试   
-
-提倡分多个索引，而不是一个索引里放很多东西  
-
-es_bulk_module.py ES 增删改  
-
-`GET test-zky/_count`  
-
-query 是查询条件  
-
-data_normalize.py  
-
-zky-all 是备份  
-
-5 种筛选数据的规则，满足任意一条就可以通过    
-作者、域名、media 板块、child_map 域名后边带东西 比如 `finance.sina.com.cn/tech`，看 url 是否在目标的 url 里，在就返回 True，不在就返回 False，用 in 判断、site_name 和作者名都要符合的，用 and 关系    
-
-
-一个 data 就是一条 kafka 数据  
-
-helps 是 ES 的库，helpers.bulk 是批量操作，比如批量插入，如果数据重复就报错，一般忽略重复，不做重复判断    
-
-
-flush_else() 把数据上传到 ES 以后删除内存里的数据    
 
 
 
