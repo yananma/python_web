@@ -25,6 +25,8 @@ git push
 
 git pull   
 
+# 比较文件工作区和暂存区之间的差异
+git diff -- 文件名 
 ```
 
 
