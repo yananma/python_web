@@ -251,3 +251,9 @@ url、关键字(none， inherit)
 盒子模型  
 
 文本样式  
+
+
+
+获取颜色：先用 QQ 截图，鼠标悬停会显示 RGB 值，取 https://tool.css-js.com/rgba.php 把 RGB 替换成 16 进制，写到 CSS 里就可以了  
+
+
