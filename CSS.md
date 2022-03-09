@@ -4,10 +4,22 @@
 
 *** 
 div 中包含 span，要让 span 居中，就要在 div 中添加样式：`vertical-align: middle; text-align: center;`  
+
 容器居中：`margin: 0 auto`  
+
 容器居中指定上边距：`margin: 50px auto auto`  
+
 去除 button 边框：`box-shadow: none`   
 
+bootstrap 长按 button 样式修改   
+```css
+.select-button:active {
+    background-color: #409EFF!important;
+    border-color: #409EFF!important;
+    color: #FFF!important;
+    box-shadow: none!important;  /*取消 button 阴影*/
+}
+```
 
 ***  
 
