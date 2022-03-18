@@ -108,6 +108,41 @@ GET page,wei,community2/_search
 }
 ```
 
+按时间日期查询，再排序   
+```python 
+GET zjgdk-v2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match_phrase": {
+            "text": "乘联会秘书长崔东树"
+          }
+        },
+        {
+          "range": {
+            "post_time": {
+              "gte": "2022-01-04 00:00:00",
+              "lte": "2022-01-06 00:00:00"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "post_time": {
+        "order": "desc"
+      }
+    }
+  ]
+  , "size": 200
+}
+```
+
+
 拼接用 print，不过前后要手动加上引号  
 ```python 
 print(('\\" OR \\"').join(li)) 
