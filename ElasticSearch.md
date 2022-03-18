@@ -82,6 +82,32 @@ GET kejisousou-en-formal/_search
 }
 ```
 
+按时间日期范围查询   
+```python 
+GET page,wei,community2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match_phrase": {
+            "text": "北京冬奥会"
+          }
+        },
+        {
+          "range": {
+            "post_time": {
+              "gte": "2021-12-06 00:00:00",
+              "lte": "2022-03-19 00:00:00"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 拼接用 print，不过前后要手动加上引号  
 ```python 
 print(('\\" OR \\"').join(li)) 
