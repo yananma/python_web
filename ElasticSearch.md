@@ -137,8 +137,8 @@ GET zjgdk-v2/_search
         "order": "desc"
       }
     }
-  ]
-  , "size": 200
+  ], 
+  "size": 200
 }
 ```
 
