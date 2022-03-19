@@ -495,6 +495,8 @@ GET kejisousou-zhili-formal-v3/_search
 用通配符查看特定模板  
 `GET _template/kejisousou*`
 
+删除模板   
+`DELETE _template/zjgdk-fullname-test*`  
 
 在所有索引中查询，就是不指定索引名查询  
 
@@ -726,6 +728,22 @@ PUT 新索引名，比如 `PUT zjgdk-v1`
 复制查询结果里的 mappings，修改 \_doc   
 添加、删除、修改字段    
 执行 PUT 命令   
+
+
+
+### 复制旧索引数据到新索引中   
+我们经常要按月分表，这种办法常常是不可行的   
+```python 
+POST _reindex
+{
+  "source": {
+      "index": "zjgdk-v2"
+  },
+  "dest": {
+      "index": "zjgdk-fullname-v1"
+  }
+}
+```
 
 
 ## 工作 ES 相关  
