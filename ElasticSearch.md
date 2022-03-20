@@ -117,7 +117,7 @@ GET zjgdk-v2/_search
       "must": [
         {
           "match_phrase": {
-            "text": "乘联会秘书长崔东树"
+            "text": "北京冬奥会"
           }
         },
         {
