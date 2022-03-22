@@ -486,8 +486,8 @@ GET kejisousou-zhili-formal-v3/_search
 查看所有别名  
 `GET _alias`  
 
-用通配符查看特定别名  
-`GET kejisousou*/_alias`  
+用通配符查看别名为 zjgdk-v2 的所有分月索引     
+`GET /_alias/zjgdk-v2*`
 
 查看所有模板  
 `GET _template`  
