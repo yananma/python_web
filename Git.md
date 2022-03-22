@@ -68,6 +68,20 @@ git branch -D mayanan-book
 git push origin --delete mayanan-project-patch-27407  
 ```
 
+删除远程 .idea 文件夹   
+```python 
+vim .gitignore   
+
+添加 .idea/  
+
+git rm --cache -r .idea  
+
+git commit -m "delete .idea"  
+
+git push   
+```
+
+
 ## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
 
 
