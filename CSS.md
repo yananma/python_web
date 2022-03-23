@@ -17,7 +17,7 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 #### 搜索框   
 
-要下载 ![icon](https://icons.bootcss.com/#install) 文件   
+要下载 [icon](https://icons.bootcss.com/#install) 文件   
 ```css
 <div class="input-group input-group" id="list-search-div">
     <label for="list-search"></label>
