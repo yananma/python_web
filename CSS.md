@@ -31,6 +31,16 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 ## 样式代码片段  
 
+#### 去除 a 标签默认样式  
+
+```css
+a {
+    text-decoration: none;
+    color: #212529;   /*去看没有 a 标签的时候的文字颜色，然后写在这里*/  
+}
+```
+
+
 #### bootstrap 长按 button 样式修改   
 ```css
 .select-button:active {
