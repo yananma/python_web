@@ -11,7 +11,27 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 去除 button 边框：`box-shadow: none`   
 
-bootstrap 长按 button 样式修改   
+
+
+## 组件代码片段   
+
+#### 搜索框   
+
+要下载 ![icon](https://icons.bootcss.com/#install) 文件   
+```css
+<div class="input-group input-group" id="list-search-div">
+    <label for="list-search"></label>
+    <input type="text" name="table_search" class="form-control" id="list-search">
+    <div class="input-group-append" id="search-btn">
+      <div class="input-group-text"><img src="plugins/bootstrap-icons-1.8.1/search.svg" alt="Bootstrap" id="search-icon"></div>
+    </div>
+</div>
+```
+
+
+## 样式代码片段  
+
+#### bootstrap 长按 button 样式修改   
 ```css
 .select-button:active {
     background-color: #409EFF!important;
