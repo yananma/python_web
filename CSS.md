@@ -17,6 +17,11 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 容器居中指定上边距：`margin: 50px auto auto`  
 
 
+#### float left   
+
+父元素：`position: relative`   
+所有子元素：`float: left`   
+
 ## 组件代码片段   
 
 #### 搜索框   
