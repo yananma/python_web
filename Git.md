@@ -11,12 +11,27 @@
 8. 不用 add 和 commit，直接 push：`git push -u origin main`   
 
 
-
-## 高版本 git，本地已有项目 push 到远程  
+#### 高版本 git，本地已有项目 push 到远程  
 
 1. 在 gitlab 上 new project，选择 Create blank project  
 2. 创建仓库，不勾选 Initialize repository with a README  
 3. 看 Push an existing folder，按照提示，复制命令运行    
+
+
+
+
+
+
+## 报错解决   
+
+### protect branch   
+
+在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
+
+
+### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
+
+在命令中添加用户名密码：git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git，只要配置一次，以后就都可以了。   
 
 
 
@@ -38,6 +53,8 @@ git commit -m "add a.txt"
 git push  
 
 git pull   
+
+# 删除文件要用 `git rm` 不要用 linux 的 rm 命令，如果用了 linux 的 rm 命令，就要 `git add .` 来使删除被 git 管理   
 
 # 比较文件工作区和暂存区之间的差异
 git diff -- 文件名 
