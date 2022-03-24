@@ -1,50 +1,6 @@
 
-## 低版本 git，本地已有项目 push 到远程  
+## 基础命令  
 
-1. 在 gitlab 上 new project，选择 Create blank project  
-2. 创建仓库，不勾选 Initialize repository with a README  
-3. 看 Push an existing folder，按照提示，复制命令运行
-4. 低版本没有 `git init --initial-branch=main`，要自己修改分支名    
-5. 先 `git init` 创建仓库，然后 `git add` 和 `git commit -m` 以后才会有 master 分支   
-6. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)   
-7. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
-8. 不用 add 和 commit，直接 push：`git push -u origin main`   
-
-
-#### 高版本 git，本地已有项目 push 到远程  
-
-1. 在 gitlab 上 new project，选择 Create blank project  
-2. 创建仓库，不勾选 Initialize repository with a README  
-3. 看 Push an existing folder，按照提示，复制命令运行    
-
-
-
-
-
-
-## 报错解决   
-
-### protect branch   
-
-在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
-
-
-### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
-
-在命令中添加用户名密码：git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git，只要配置一次，以后就都可以了。   
-
-
-
-*** 
-
-为什么要学 Git？  
-
-1. GitHub 就是一个巨大的代码仓库，有众多的开源代码，可以创造巨大的价值，可以节省大量的时间和精力  
-2. 版本管理，可以恢复  
-3. 协同开发  
-
-
-基础命令  
 ```linux  
 git status  
 
@@ -97,6 +53,48 @@ git commit -m "delete .idea"
 
 git push   
 ```
+
+
+
+## 低版本 git，本地已有项目 push 到远程  
+
+1. 在 gitlab 上 new project，选择 Create blank project  
+2. 创建仓库，不勾选 Initialize repository with a README  
+3. 看 Push an existing folder，按照提示，复制命令运行
+4. 低版本没有 `git init --initial-branch=main`，要自己修改分支名    
+5. 先 `git init` 创建仓库，然后 `git add` 和 `git commit -m` 以后才会有 master 分支   
+6. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)   
+7. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
+8. 不用 add 和 commit，直接 push：`git push -u origin main`   
+
+
+#### 高版本 git，本地已有项目 push 到远程  
+
+1. 在 gitlab 上 new project，选择 Create blank project  
+2. 创建仓库，不勾选 Initialize repository with a README  
+3. 看 Push an existing folder，按照提示，复制命令运行    
+
+
+
+## 报错解决   
+
+### protect branch   
+
+在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
+
+
+### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
+
+在命令中添加用户名密码：`git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git`，只要配置一次，以后就都可以了。   
+
+
+*** 
+
+为什么要学 Git？  
+
+1. GitHub 就是一个巨大的代码仓库，有众多的开源代码，可以创造巨大的价值，可以节省大量的时间和精力  
+2. 版本管理，可以恢复  
+3. 协同开发  
 
 
 ## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
