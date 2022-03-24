@@ -3,14 +3,18 @@
 ### 2. 在浏览器中，复制 css 样式  
 
 *** 
+
+## 单个样式    
+
 div 中包含 span，要让 span 居中，就要在 div 中添加样式：`vertical-align: middle; text-align: center;`  
+
+去除 button 边框：`box-shadow: none`   
+
+[margin 文档](https://www.w3school.com.cn/cssref/pr_margin.asp)  
 
 容器居中：`margin: 0 auto`  
 
 容器居中指定上边距：`margin: 50px auto auto`  
-
-去除 button 边框：`box-shadow: none`   
-
 
 
 ## 组件代码片段   
