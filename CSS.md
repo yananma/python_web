@@ -7,6 +7,7 @@
 ## 元素样式   
 
 #### a 链接  
+
 所有的 a 标签全部都取消下划线，全部都修改颜色   
 ```css 
 a {
@@ -15,16 +16,32 @@ a {
 ```
 
 
-#### button   
+#### [button](https://www.w3school.com.cn/jsref/dom_obj_pushbutton.asp)  
+
 去除 button 边框，展现扁平化效果：`border: none`   
 
 去除 button 边框：`box-shadow: none`   
 
 
+#### select   
+
+点击后去除黑框：`outline:none`，样式要作用在 select 上，不要作用在父级 wrapper 上，写在 wrapper 上不生效        
+
+不显示外面的 border：`border-style: none`   
+
 
 ## CSS 属性   
 
 ### 布局   
+
+#### [对齐](https://www.w3school.com.cn/css/css_align.asp)  
+
+button 右对齐：
+```css  
+float: right;   
+margin-right: 30px;   
+```
+
 
 #### margin   
 
