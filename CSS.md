@@ -6,11 +6,15 @@
 
 ## 单个样式    
 
-div 中包含 span，要让 span 居中，就要在 div 中添加样式：`vertical-align: middle; text-align: center;`  
-
 去除 button 边框：`box-shadow: none`   
 
+
+
 [margin 文档](https://www.w3school.com.cn/cssref/pr_margin.asp)  
+
+在 CSS 中对元素进行水平居中是非常简单的：如果它是一个行内元素，就对它的父元素应用 text-align: center；如果它是一个块级元素，就对它自身应用 margin: auto。   
+
+div 中包含 span，要让 span 居中，就要在 div 中添加样式：`vertical-align: middle; text-align: center;`  
 
 容器居中：`margin: 0 auto`  
 
