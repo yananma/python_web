@@ -4,11 +4,29 @@
 
 *** 
 
-## 单个样式    
+## 元素样式   
+
+#### a 链接  
+所有的 a 标签全部都取消下划线，全部都修改颜色   
+```css 
+a {
+    text-decoration: none;
+}
+```
+
+
+#### button   
+去除 button 边框，展现扁平化效果：`border: none`   
 
 去除 button 边框：`box-shadow: none`   
 
 
+
+## CSS 属性   
+
+### 布局   
+
+#### margin   
 
 [margin 文档](https://www.w3school.com.cn/cssref/pr_margin.asp)  
 
@@ -20,11 +38,48 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 容器居中指定上边距：`margin: 50px auto auto`  
 
+#### [float](https://www.w3school.com.cn/cssref/pr_class_float.asp)   
+
+浮动元素会生成一个块级框，而不论它本身是何种元素。   
+
+假如在一行之上只有极少的空间可供浮动元素，那么这个元素会跳至下一行，这个过程会持续到某一行拥有足够的空间为止。    
+
 
 #### float left   
 
 父元素：`position: relative`   
 所有子元素：`float: left`   
+
+
+### 样式   
+
+#### [font-size](https://www.w3school.com.cn/cssref/pr_font_font-size.asp)   
+
+如果一个 div 下有很多 a 链接，要改变所有的 a 链接字号，就在 div 里设置 font-size   
+
+可以设置大小   
+```css
+div.img-area {
+    font-size:18px; 
+}
+```
+
+可以通过形容词指定大小，默认 medium，可选项：xx-small、x-small、small、medium、large、x-large、xx-large   
+```css
+div.img-area {
+    font-size:large; 
+}
+```
+
+还可以指定百分比    
+
+
+#### [font-weight](https://www.w3school.com.cn/cssref/pr_font-weight.asp)   
+
+```css 
+font-weight:bold;   
+```
+
 
 ## 组件代码片段   
 
