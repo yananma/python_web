@@ -30,7 +30,8 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 #### 搜索框   
 
-要下载 [icon](https://icons.bootcss.com/#install) 文件   
+要下载 [icon](https://icons.bootcss.com/#install) 文件，不要全部都下载，数量太多了，上传下载到服务器，同步 gitlab 都很不方便，只下载需要的一两张 icon 就可以了    
+
 ```css
 <div class="input-group input-group" id="list-search-div">
     <label for="list-search"></label>
