@@ -1,4 +1,6 @@
 
+
+
 ### 1. 去 bootstrap 上复制代码  
 ### 2. 在浏览器中，复制 css 样式  
 
@@ -141,6 +143,29 @@ a {
     box-shadow: none!important;  /*取消 button 阴影*/
 }
 ```
+
+#### table 超出部分省略号   
+
+做 table 表格时，某一列字数比较多，希望超出宽度的部分以省略号显示。  
+
+设置 table 的布局 默认 automatic 以表格内容显示相应宽度 改成 fixed 以表格列宽显示内容  
+```css
+table{  
+    table-layout: fixed;  
+}  
+```
+
+在需要设置列加上   
+
+`<td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">`  
+
+white-space:nowrap; 文本以单行显示，不换行   
+
+overflow:hidden;      超出部分隐藏   
+
+text-overflow:ellipsis;  超出部分以省略号显示   
+
+
 
 ***  
 
