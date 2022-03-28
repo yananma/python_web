@@ -144,7 +144,7 @@ a {
 }
 ```
 
-#### table 超出部分省略号   
+#### [table 超出部分省略号](https://www.cnblogs.com/suni/p/8902249.html)   
 
 做 table 表格时，某一列字数比较多，希望超出宽度的部分以省略号显示。  
 
