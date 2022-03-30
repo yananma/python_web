@@ -71,6 +71,11 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 所有子元素：`float: left`   
 
 
+#### 换行   
+
+`display: block`    
+
+
 ### 样式   
 
 #### 去除 bootstrap 输入框、button、翻页阴影效果   
