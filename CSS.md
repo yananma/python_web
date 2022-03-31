@@ -4,6 +4,7 @@
 ### 3. icon 先在浏览器里下载，没有再去 bootstrap 或 iconfont 下载        
 ### 4. 要做适配   
 ### 5. 去 bootstrap 上复制代码  
+### 6. 通用属性用 class，特有属性用 id   
 
 <!-- 
 -->  
