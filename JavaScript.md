@@ -231,7 +231,36 @@ location.reload() 重新加载页面
 
 # Ajax  
 
-## 新笔记    
+## 实践笔记    
+
+#### 参数   
+
+async：异步。True 的时候是异步，不等待，False 的时候是同步，同步就是等待。   
+sync：同步   
+
+dataType:'json'   
+headers: {'token': localStorage.getItem("Authorization")}    
+
+
+#### 用法  
+
+GET 请求   
+
+```javascript  
+function user_info() {
+  $.ajax({
+    type: "GET",
+    url: "/account/info/",
+    async: false,
+    success: function (res) {
+      console.log(res)
+    },
+    error: function (e) {
+      console.log(e)
+    }
+  })
+}
+```
 
 
 ## 原来笔记   
