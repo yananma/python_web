@@ -229,6 +229,37 @@ $(function() {
 location.reload() 重新加载页面  
 
 
+
+## jQuery 实践笔记       
+
+#### 引入 html 文件    
+
+顺序是 url -> views 视图 -> 找到 html -> html 中引入 jQuery     
+
+核心是通过视图函数连接各个部分。      
+
+```python 
+from django.shortcuts import render
+from django.http import JsonResponse
+
+
+def list_view(request):
+    return render(request, 'list.html')
+
+
+def detail_view(request):
+    return render(request, 'detail.html')
+
+
+def thumbnail_view(request):
+    return render(request, 'thumbnail.html')
+
+
+def login_view(request):
+    return render(request, 'login.html')
+```
+
+
 # Ajax  
 
 ## 实践笔记    
@@ -260,6 +291,19 @@ function user_info() {
     }
   })
 }
+```
+
+#### 视图函数   
+
+```python 
+from django.http import JsonResponse   
+
+def detail_view(request):
+    """详情页面视图函数"""
+    origin_img_list = RecognizeResult.objects.filter(video_id=17)
+    img_list = get_img_list(origin_img_list)
+    result_dict = {'data': img_list, 'status': 200}
+    return JsonResponse(result_dict)
 ```
 
 
