@@ -1,4 +1,117 @@
 
+## jQuery 实践笔记       
+
+### 语法   
+
+#### for 循环   
+
+```js 
+for (let i=0; i<res.data.length; ++i) {
+            
+}
+```
+
+
+### 项目   
+
+#### 执行函数    
+
+只定义函数是不会执行的，要执行的话，就要用 $ 符号，加载完毕执行   
+
+```js 
+$(function get_detail_data() {
+  $.ajax({
+    type: "GET",
+    url: "/true_detail",
+    async: false,
+    success: function (res) {
+        console.log(res)
+    },
+    error: function (e) {
+      console.log(e)
+    }
+  })
+})
+```
+
+
+#### 引入 html 文件    
+
+顺序是 url -> views 视图 -> 找到 html -> html 中引入 jQuery     
+
+核心是通过视图函数连接各个部分。      
+
+```python 
+from django.shortcuts import render
+from django.http import JsonResponse
+
+
+def list_view(request):
+    return render(request, 'list.html')
+
+
+def detail_view(request):
+    return render(request, 'detail.html')
+
+
+def thumbnail_view(request):
+    return render(request, 'thumbnail.html')
+
+
+def login_view(request):
+    return render(request, 'login.html')
+```
+
+
+# Ajax  
+
+## 实践笔记    
+
+#### 参数   
+
+async：异步。True 的时候是异步，不等待，False 的时候是同步，同步就是等待。   
+sync：同步   
+
+dataType:'json'   
+headers: {'token': localStorage.getItem("Authorization")}    
+
+
+#### 用法  
+
+GET 请求   
+
+```javascript  
+function user_info() {
+  $.ajax({
+    type: "GET",
+    url: "/account/info/",
+    async: false,
+    success: function (res) {
+      console.log(res)
+    },
+    error: function (e) {
+      console.log(e)
+    }
+  })
+}
+```
+
+#### 视图函数   
+
+```python 
+from django.http import JsonResponse   
+
+def detail_view(request):
+    """详情页面视图函数"""
+    origin_img_list = RecognizeResult.objects.filter(video_id=17)
+    img_list = get_img_list(origin_img_list)
+    result_dict = {'data': img_list, 'status': 200}
+    return JsonResponse(result_dict)
+```
+
+
+***     
+
 可以通过浏览器的 Network 查看下载 jQuery 文件     
 
 click 事件不起作用，很可能就是因为没有写在 $(fucntion) 里    
@@ -230,81 +343,6 @@ location.reload() 重新加载页面
 
 
 
-## jQuery 实践笔记       
-
-#### 引入 html 文件    
-
-顺序是 url -> views 视图 -> 找到 html -> html 中引入 jQuery     
-
-核心是通过视图函数连接各个部分。      
-
-```python 
-from django.shortcuts import render
-from django.http import JsonResponse
-
-
-def list_view(request):
-    return render(request, 'list.html')
-
-
-def detail_view(request):
-    return render(request, 'detail.html')
-
-
-def thumbnail_view(request):
-    return render(request, 'thumbnail.html')
-
-
-def login_view(request):
-    return render(request, 'login.html')
-```
-
-
-# Ajax  
-
-## 实践笔记    
-
-#### 参数   
-
-async：异步。True 的时候是异步，不等待，False 的时候是同步，同步就是等待。   
-sync：同步   
-
-dataType:'json'   
-headers: {'token': localStorage.getItem("Authorization")}    
-
-
-#### 用法  
-
-GET 请求   
-
-```javascript  
-function user_info() {
-  $.ajax({
-    type: "GET",
-    url: "/account/info/",
-    async: false,
-    success: function (res) {
-      console.log(res)
-    },
-    error: function (e) {
-      console.log(e)
-    }
-  })
-}
-```
-
-#### 视图函数   
-
-```python 
-from django.http import JsonResponse   
-
-def detail_view(request):
-    """详情页面视图函数"""
-    origin_img_list = RecognizeResult.objects.filter(video_id=17)
-    img_list = get_img_list(origin_img_list)
-    result_dict = {'data': img_list, 'status': 200}
-    return JsonResponse(result_dict)
-```
 
 
 ## 原来笔记   
