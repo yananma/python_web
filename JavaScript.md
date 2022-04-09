@@ -1,7 +1,7 @@
 
-## jQuery 实践笔记       
+# jQuery 实践笔记       
 
-### 语法   
+## 语法   
 
 #### for 循环   
 
@@ -11,11 +11,48 @@ for (let i=0; i<res.data.length; ++i) {
 }
 ```
 
+### 字符串    
+
+#### [replace](https://www.w3school.com.cn/js/js_string_methods.asp)      
+
+默认 replace 只替换第一个，如果替换所有就要加 g 参数。   
+
+比如全部的单引号替换成双引号    
+
+```js  
+str.replace(/'/g, "\"")
+```
+
+
+
+
 #### 字符串转数字   
 
 数字和字符串 + 的时候，会自动把数字转成字符串。      
 
 或者使用 String(数字)     
+
+
+#### 字符串转 JSON   
+
+```js   
+JSON.parse(str)   
+```
+
+#### 查看类型   
+
+```js 
+typeof obj
+```
+
+#### 判断非空，不等于 null   
+
+```js  
+obj !== "null"(双引号)
+```
+
+
+
 
 
 ### 项目   
