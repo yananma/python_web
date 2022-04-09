@@ -44,15 +44,23 @@ str.replace(/'/g, "\"")
 JSON.parse(str)   
 ```
 
-有一个 JSON 一直弄不成，最后是用了一个 replace，和两层 JSON.parse 才解决       
+有一个 JSON 一直弄不成，最后是用了一个 replace，而且双引号用了三个斜线，和两层 JSON.parse 才解决       
 
 ```js    
 let res_logo = res.data[i].logo
 if (res_logo !== "null") {
-    let json_logo = JSON.parse(res_logo.replace(/'/g, "\\\""))
-    console.log(JSON.parse(json_logo))
+    let json_logo = JSON.parse(JSON.parse(res_logo.replace(/'/g, "\\\"")))
 }
 ```
+
+上面的这种解决方法走了弯路了，因为视图函数返回之前做了 json.dumps() 操作，使得多了一层双引号，去掉 json.dumps() 以后就容易多了    
+```js 
+let res_logo = res.data[i].logo
+if (res_logo !== null) {
+    let json_logo_arr = JSON.parse(res_logo.replace(/'/g, "\""))
+}
+```
+
 
 
 #### 查看类型   
