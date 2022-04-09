@@ -31,8 +31,6 @@ str.replace(/'/g, "\"")
 ```
 
 
-
-
 #### 字符串转数字   
 
 数字和字符串 + 的时候，会自动把数字转成字符串。      
@@ -45,6 +43,17 @@ str.replace(/'/g, "\"")
 ```js   
 JSON.parse(str)   
 ```
+
+有一个 JSON 一直弄不成，最后是用了一个 replace，和两层 JSON.parse 才解决       
+
+```js    
+let res_logo = res.data[i].logo
+if (res_logo !== "null") {
+    let json_logo = JSON.parse(res_logo.replace(/'/g, "\\\""))
+    console.log(JSON.parse(json_logo))
+}
+```
+
 
 #### 查看类型   
 
