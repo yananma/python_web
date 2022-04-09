@@ -6,10 +6,17 @@
 #### for 循环   
 
 ```js 
-for (let i=0; i<res.data.length; ++i) {
+for (let i=0; i<res.data.length; i++) {
             
 }
 ```
+
+```js 
+for (i = 0; i < cars.length; i++) { 
+    text += cars[i] + "<br>";
+ }
+```
+
 
 ### 字符串    
 
