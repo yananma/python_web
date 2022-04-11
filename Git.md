@@ -61,7 +61,7 @@ git push
 1. 在 gitlab 上 new project，选择 Create blank project  
 2. 创建仓库，不勾选 Initialize repository with a README  
 3. 看 Push an existing folder，按照提示，复制命令运行
-4. vim .gitignore，添加 .idea/   
+4. vim .gitignore，添加 .idea/，添加 \_\_pycache__/   
 5. 低版本没有 `git init --initial-branch=main`，要自己修改分支名    
 6. 先 `git init` 创建仓库，然后 `git add` 和 `git commit -m` 以后才会有 master 分支   
 7. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)   
