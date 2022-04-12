@@ -89,6 +89,16 @@ obj !== "null"(双引号)
 正确用法：`<a href=\"javascript:void(0)\" onclick=jump_to_detail_page(" + ")>" + res.data[i]['title'] + "</a>" +`    
 
 
+#### [localStorage](https://www.w3school.com.cn/js/js_api_web_storage.asp)
+
+```js 
+localStorage.setItem('video_id', vid)  
+localStorage.getItem('video_id')
+localStorage.removeItem('video_id')  
+localStorage.clear()
+```
+
+
 ### 项目   
 
 #### 执行函数    
