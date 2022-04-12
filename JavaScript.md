@@ -72,11 +72,21 @@ typeof obj
 #### 判断非空，不等于 null   
 
 ```js  
+obj !== null
+```
+
+
+如果是 JSON 格式    
+```js  
 obj !== "null"(双引号)
 ```
 
 
+#### 拼接 onclick  
 
+错误用法：`<a href=\"javascript:void(0)\" onclick=(" + jump_to_detail_page() + ">" + res.data[i]['title'] + "</a>" +`，这么写会自动调用函数    
+
+正确用法：`<a href=\"javascript:void(0)\" onclick=jump_to_detail_page(" + ")>" + res.data[i]['title'] + "</a>" +`    
 
 
 ### 项目   
