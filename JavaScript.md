@@ -3,6 +3,14 @@
 
 ## 语法   
 
+#### 获取 input 框里的值   
+
+```js 
+let search_input_id = $("#detail-search")
+console.log(search_input_id.val())
+```
+
+
 #### for 循环   
 
 ```js 
@@ -121,6 +129,26 @@ $(function get_detail_data() {
 })
 ```
 
+可以先定义函数，再这样调用函数   
+
+```js  
+$(function () {
+    get_detail_data()
+})
+```
+
+
+#### 事件函数  
+
+```js 
+$(function () {
+    $("#detail-search-btn").click(function () {
+        let search_input_id = $("#detail-search")
+        console.log(search_input_id.val())
+    })
+})
+```
+
 
 #### 引入 html 文件    
 
@@ -171,6 +199,7 @@ GET 请求
 function user_info() {
   $.ajax({
     type: "GET",
+    //  可以拼接 url，添加 query_string：url: "/true_detail?" + "vid=" + localStorage.getItem('video_id'),   
     url: "/account/info/",
     async: false,
     success: function (res) {
