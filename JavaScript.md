@@ -102,6 +102,24 @@ obj !== "null"(双引号)
 ```
 
 
+#### 选择 select 下的 option    
+
+使用 [:eq()](https://www.w3school.com.cn/jquery/selector_eq.asp)选择器。     
+
+```js 
+$("#detail-logo-select option:eq(1)")
+```   
+
+
+#### 获取 option 的 text   
+
+```js  
+$("#detail-logo-select option:eq(1)").text()  
+```
+
+
+
+
 #### 拼接 onclick  
 
 错误用法：`<a href=\"javascript:void(0)\" onclick=(" + jump_to_detail_page() + ">" + res.data[i]['title'] + "</a>" +`，这么写会自动调用函数    
