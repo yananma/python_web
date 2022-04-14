@@ -111,12 +111,20 @@ $("#detail-logo-select option:eq(1)")
 ```   
 
 
-#### 获取 option 的 text   
+#### 获取 [text](https://www.w3school.com.cn/jquery/manipulation_text.asp)   
 
 ```js  
 $("#detail-logo-select option:eq(1)").text()  
 ```
 
+
+#### 获取属性值 [attr](https://www.w3school.com.cn/jquery/attributes_attr.asp)   
+
+```js 
+$("#detail-ocr-select option:selected").attr("value")    
+
+$("#detail-ocr-select option:selected").attr("id")  
+```
 
 
 
