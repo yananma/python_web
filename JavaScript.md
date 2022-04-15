@@ -102,6 +102,22 @@ obj !== "null"(双引号)
 ```
 
 
+### 下拉框   
+
+#### 点击下拉框选项，触发事件   
+
+选择选项以后，触发的是 select 的 change 事件，而不是 option 的 click 事件。   
+
+```js 
+$(function () {
+    $("#detail-logo-select").change(function () {
+        let selected_option = $(this).children("option:selected")
+        console.log(selected_option.text())
+    })
+})
+```
+
+
 #### 选择 select 下的 option    
 
 使用 [:eq()](https://www.w3school.com.cn/jquery/selector_eq.asp)选择器。     
