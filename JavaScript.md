@@ -26,9 +26,20 @@ for (let i = 0; i < cars.length; i++) {
 ```
 
 
-### 字符串    
+#### each 遍历   
 
-#### [replace](https://www.w3school.com.cn/js/js_string_methods.asp)      
+动态添加 id   
+```js 
+$(".button-rows-wrapper").each(function (i) {
+    let id = 'list-right-button-rows-wrapper-' + i
+    $(this).attr('id', id)
+})
+```
+
+
+### [字符串](https://www.w3school.com.cn/js/js_string_methods.asp)    
+
+#### replace
 
 默认 replace 只替换第一个，如果替换所有就要加 g 参数。   
 
@@ -36,6 +47,16 @@ for (let i = 0; i < cars.length; i++) {
 
 ```js  
 str.replace(/'/g, "\"")
+```
+
+
+#### split   
+
+```js  
+'logo_status'.split('_')
+['logo', 'status']
+'logo_status'.split('_')[0]
+'logo'
 ```
 
 
