@@ -190,17 +190,17 @@ localStorage.clear()
 
 ```js 
 $(function get_detail_data() {
-  $.ajax({
-    type: "GET",
-    url: "/true_detail",
-    async: false,
-    success: function (res) {
-        console.log(res)
-    },
-    error: function (e) {
-      console.log(e)
-    }
-  })
+    $.ajax({
+        type: "GET",
+        url: "/true_detail",
+        async: false,
+        success: function (res) {
+            console.log(res)
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
 })
 ```
 
@@ -272,18 +272,18 @@ GET 请求
 
 ```javascript  
 function user_info() {
-  $.ajax({
-    type: "GET",
-    //  可以拼接 url，添加 query_string：url: "/true_detail?" + "vid=" + localStorage.getItem('video_id'),   
-    url: "/account/info/",
-    async: false,
-    success: function (res) {
-      console.log(res)
-    },
-    error: function (e) {
-      console.log(e)
-    }
-  })
+    $.ajax({
+        type: "GET",
+        //  可以拼接 url，添加 query_string：url: "/true_detail?" + "vid=" + localStorage.getItem('video_id'),   
+        url: "/account/info/",
+        async: false,
+        success: function (res) {
+            console.log(res)
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
 }
 ```
 
