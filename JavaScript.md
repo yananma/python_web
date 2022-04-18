@@ -164,6 +164,21 @@ $("#detail-ocr-select option:selected").attr("id")
 ```
 
 
+#### 判断属性值  
+
+正确的写法  
+
+```js 
+selected_option.attr('value') !== '0'
+```
+
+错误的写法  
+
+```js  
+selected_option.attr('value' !== '0')
+```
+
+
 
 #### 拼接 onclick  
 
