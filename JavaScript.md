@@ -103,6 +103,21 @@ arr.push(item)  // 添加元素到数组中
 
 
 
+### 选择器   
+
+#### 多 id 选择器  
+
+可以减少很多重复代码   
+
+```js  
+$(function () {
+    $("#detail-ocr-select,#detail-logo-select,#detail-breed-select").change(function () {
+        let arr = get_text()
+        get_detail_ajax(arr[0], arr[1], arr[2])
+    })
+})
+```
+
 
 #### 查看类型   
 
