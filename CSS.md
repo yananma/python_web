@@ -103,14 +103,7 @@ div.img-area {
 }
 ```
 
-可以通过形容词指定大小，默认 medium，可选项：xx-small、x-small、small、medium、large、x-large、xx-large   
-```css
-div.img-area {
-    font-size:large; 
-}
-```
-
-还可以指定百分比    
+可以通过形容词指定大小，默认 medium，还可以指定百分比    
 
 
 #### [font-weight](https://www.w3school.com.cn/cssref/pr_font-weight.asp)   
@@ -124,7 +117,7 @@ font-weight:bold;
 
 #### 搜索框   
 
-要下载 [icon](https://icons.bootcss.com/#install) 文件，不要全部都下载，数量太多了，上传下载到服务器，同步 gitlab 都很不方便，只下载需要的一两张 icon 就可以了    
+要下载 [icon](https://icons.bootcss.com/#install) 文件，只下载需要的一两张 icon 就可以了    
 
 ```css
 <div class="input-group input-group" id="list-search-div">
@@ -174,11 +167,21 @@ table{
 
 `<td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">`  
 
-white-space:nowrap; 文本以单行显示，不换行   
 
-overflow:hidden;      超出部分隐藏   
+#### 图片自适应   
 
-text-overflow:ellipsis;  超出部分以省略号显示   
+不是要在后台算宽高比，而是前端自适应   
+
+```css 
+.img-area-left-upper-wrapper {
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+```
+
+
 
 
 
@@ -194,9 +197,7 @@ CSS 主要由两个部分构成：**选择器，以及一条或多条声明**，
 
 h1(选择器) {color:red(这两个是一条声明，color 是属性，red 是值);font-size:14px;}  
 
-`p {color:red;text-align:center;}`  
 
-或  
 ```css
 p {
     color:red;
@@ -235,71 +236,10 @@ body {background-image:url("images/back40.gif");}
 要使用内联样式，需要在相关的标签内使用样式（style）属性。Style 属性可以包含任何 CSS 属性：`<p style="color:sienna;margin-left:20px">这是一个段落。</p>`  
 
   
-#### CSS 选择器
+#### [CSS 选择器](https://www.w3school.com.cn/cssref/css_selectors.asp)   
 
-如果要在 HTML 元素中设置 CSS 样式，就需要在元素中设置 "id" 和 "class" 选择器。  
+看文档   
 
-通用选择器，就是选择文件所有的内容，用 \*  
-
-类型选择器，比如 a 标签，li 等等  
-
-id 选择器，用的是 id 属性，以 "\#" 来定义  
-
-样式规则应用于元素属性 id="para1":
-```css
-#para1 {
-    text-align:center;
-    color:red;
-}
-```
-
-类选择器，用 class 选择，用的符号是一个点 .  
-
-`.center {text-align:center;}`  
-
-所有的 p 元素使用 class="center" 让该元素的文本居中：`p.center {text-align:center;}`  
-
-
-
-属性选择器，根据属性选择元素，符号是 []  
-
-分组选择器  
-
-包含选择器  
-
-子元素选择器  
-
-:first-line 选择器  
-
-:first-letter 选择器  
-
-:before 和 :after 选择器  
-
-### CSS 选择器-伪类  
-
-根元素选择器(:root)  
-
-子元素选择器(:xx-child)  
-
-索引选择器(nth-child)  
-
-启用禁用某个元素 enabled、disabled  
-
-checked  
-
-valid、invalid  
-
-in-range、out-of-range  
-
-required、optional  
-
-动态选择器：  
-
-:link、:visited、:hover  
-
-:active  
-
-:focus  
 
 ### CSS 属性和属性值  
 
@@ -401,33 +341,14 @@ a:active {background-color:#FF704D;}
 
 
 
-
-
-
-
 position: fixed 是说固定在窗口的某个地方，是相对于浏览器的定位，位置是 left、right、bottom、top 等所指定的  
   
 opacity：透明度  
   
 z-index：层级，上下优先级，相当于加了一个 z 轴    
 
-  
-颜色属性值  
-
-长度单位，绝对长度单位(in, cm, nn, pt 用得不多)；相对长度单位(px像素, em, ex)  
-
-url、关键字(none， inherit)  
-
-使用边框和背景  
-
-盒子阴影  
-
-盒子模型  
-
-文本样式  
 
 
-
-获取颜色：先用 QQ 截图，鼠标悬停会显示 RGB 值，取 https://tool.css-js.com/rgba.php 把 RGB 替换成 16 进制，写到 CSS 里就可以了  
+获取颜色：飞书截图   
 
 
