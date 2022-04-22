@@ -95,6 +95,8 @@ if (res_logo !== null) {
 
 ### 如果没有动态数据，就不要用这种方法，直接 append 字符串。这种形式也非常消耗时间。   
 
+## 要加 $() 否则不生效   
+
 ```js  
 function get_detail_select_logo(res) {
     let detail_logo_select = $("#detail-logo-select")
