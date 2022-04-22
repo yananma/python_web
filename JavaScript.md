@@ -91,6 +91,27 @@ if (res_logo !== null) {
 ```
 
 
+### 如果有动态的数据，或者是动态调用函数，尽量不用拼字符串的方法   
+
+```js  
+function get_detail_select_logo(res) {
+    let detail_logo_select = $("#detail-logo-select")
+    detail_logo_select.empty()
+    detail_logo_select.append($('<option />', {text: 'LOGO', value: '0'}))
+    for (let i = 0; i < res.data.length; i++) {
+        let detail_option = $('<option />', {text: res.data[i], value: i + 1})
+        detail_logo_select.append(detail_option)
+    }
+}
+```
+
+可以给属性上加双引号，比如自定义属性是 data- 开头，直接写会报语法错误，可以加上双引号。    
+
+```js  
+let detail_option = $('<option />', {text: res.data[i], value: i + 1, "data-breed-position": json_arr[0][1]})
+```
+
+
 ### 数组     
 
 #### 判断元素是否在数组中   
@@ -193,6 +214,15 @@ selected_option.attr('value') !== '0'
 selected_option.attr('value' !== '0')
 ```
 
+
+#### 自定义属性以 data- 开头   
+
+解析自定义属性   
+
+```js   
+let postion = $("[data-breed-position]:first").attr("data-breed-position")    
+JSON.parse(postion)  
+```
 
 
 #### 拼接 onclick  
