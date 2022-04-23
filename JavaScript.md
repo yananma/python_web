@@ -163,6 +163,21 @@ obj !== "null"(双引号)
 ```
 
 
+#### [=>](https://blog.csdn.net/ppwwp/article/details/82593905)   
+
+```js  
+(x) => x + 6   
+```
+
+等价于   
+
+```js  
+function(x){
+    return x + 6;
+}
+```
+
+
 ### 下拉框   
 
 #### 点击下拉框选项，触发事件   
