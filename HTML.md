@@ -224,6 +224,11 @@ Canvas 就是画布的意思
 RGBA 的意思是（Red-Green-Blue-Alpha）它是在 RGB 上扩展包括了 “alpha” 通道，运行对颜色值设置透明度。  
 
 
+#### [绘制图形 canvas](https://www.w3school.com.cn/html/html5_canvas.asp)   
+
+
+
+
 #### 多媒体  
 
 video 视频，src 写文件名，poster 封面，autoplay 自动播放，controls 底下出现进度条暂停播放按钮音量全屏，source 格式  
