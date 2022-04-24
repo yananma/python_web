@@ -132,6 +132,11 @@ arr.indexOf(item) === -1  // 不在数组中
 arr.push(item)  // 添加元素到数组中   
 ```
 
+#### 获取数组最后一个元素   
+
+1. arr[arr.length-1]   
+2. arr.slice(-1)   
+3. arr.pop()   
 
 
 ### 选择器   
