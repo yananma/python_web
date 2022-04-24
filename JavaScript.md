@@ -115,6 +115,12 @@ function get_detail_select_logo(res) {
 let detail_option = $('<option />', {text: res.data[i], value: i + 1, "data-breed-position": json_arr[0][1]})
 ```
 
+如果要添加 style 属性，就使用 css 方法。   
+
+```js  
+$("<Canvas />", {"id": "detail-canvas-" + i}).css({width: "265px", height: "472px", "margin-left": "45px"})  
+```
+
 
 ### 数组     
 
@@ -129,6 +135,15 @@ arr.push(item)  // 添加元素到数组中
 
 
 ### 选择器   
+
+#### find   
+
+```js  
+$(this).find(":first").addClass("active")
+$(this).find("ul li a").addClass("active").css({"cursor": "pointer"})
+$(this).siblings().find("ul").css({"display": "none"})
+```
+
 
 #### 多 id 选择器  
 
@@ -231,6 +246,20 @@ selected_option.attr('value') !== '0'
 
 ```js  
 selected_option.attr('value' !== '0')
+```
+
+#### [css](https://www.w3school.com.cn/jquery/jquery_css.asp)   
+
+获取属性   
+
+```js  
+$("p").css("background-color");   
+```
+
+设置属性   
+
+```js  
+$("p").css({"background-color":"yellow","font-size":"200%"});   
 ```
 
 
