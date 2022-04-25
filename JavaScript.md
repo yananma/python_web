@@ -121,6 +121,12 @@ let detail_option = $('<option />', {text: res.data[i], value: i + 1, "data-bree
 $("<Canvas />", {"id": "detail-canvas-" + i}).css({width: "265px", height: "472px", "margin-left": "45px"})  
 ```
 
+### [数字](https://www.w3school.com.cn/js/js_number_methods.asp)   
+
+#### 字符串转数字   
+
+parseInt()     
+
 
 ### 数组     
 
