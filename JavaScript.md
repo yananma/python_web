@@ -147,9 +147,10 @@ arr.push(item)  // 添加元素到数组中
 
 ### 选择器   
 
-#### find   
+#### [find](https://www.w3school.com.cn/jquery/jquery_traversing_descendants.asp)   
 
 ```js  
+$("#detail-right-ocr-area-51936").find(".one-line-input:first")   
 $(this).find(":first").addClass("active")
 $(this).find("ul li a").addClass("active").css({"cursor": "pointer"})
 $(this).siblings().find("ul").css({"display": "none"})
