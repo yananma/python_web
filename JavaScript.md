@@ -138,10 +138,25 @@ arr.indexOf(item) === -1  // 不在数组中
 arr.push(item)  // 添加元素到数组中   
 ```
 
+#### 转化数组中元素的类型 [map](https://www.w3school.com.cn/js/js_array_iteration.asp)  
+
+字符串转数字：  
+```js   
+const value= ['1', '2', '3']
+value = value.map(Number) // [1, 2, 3]
+```
+
+字符串 => 数字：   
+```js 
+const value= [1, 2, 3]
+value = value.map(String) // ['1', '2', '3']
+```
+
+
 #### 获取数组最后一个元素   
 
-1. arr[arr.length-1]   
-2. arr.slice(-1)   
+1. arr.slice(-1)   
+2. arr[arr.length-1]   
 3. arr.pop()   
 
 
@@ -154,6 +169,16 @@ $("#detail-right-ocr-area-51936").find(".one-line-input:first")
 $(this).find(":first").addClass("active")
 $(this).find("ul li a").addClass("active").css({"cursor": "pointer"})
 $(this).siblings().find("ul").css({"display": "none"})
+```
+
+#### 父级选择器    
+
+parent() 上一级元素。     
+
+parents() 所有的父级元素。然后再在括号里指定条件，找到需要的父级元素。      
+
+```js   
+img.parents("div.one-img-row")   
 ```
 
 
@@ -190,7 +215,7 @@ obj !== "null"(双引号)
 ```
 
 
-#### [=>](https://blog.csdn.net/ppwwp/article/details/82593905)   
+#### [=> 就是 lambda 表达式](https://blog.csdn.net/ppwwp/article/details/82593905)   
 
 ```js  
 (x) => x + 6   
@@ -202,6 +227,11 @@ obj !== "null"(双引号)
 function(x){
     return x + 6;
 }
+```
+
+数组内的所有元素同时除以 2    
+```js  
+ocr_area.find(".one-line-input:first").find("p").attr("data-ocr-position").split(",").map(Number).map(value => value / 2)   
 ```
 
 
@@ -262,13 +292,13 @@ selected_option.attr('value' !== '0')
 
 #### [css](https://www.w3school.com.cn/jquery/jquery_css.asp)   
 
-获取属性   
+获取 css 属性   
 
 ```js  
 $("p").css("background-color");   
 ```
 
-设置属性   
+设置 css 属性   
 
 ```js  
 $("p").css({"background-color":"yellow","font-size":"200%"});   
@@ -282,6 +312,19 @@ $("p").css({"background-color":"yellow","font-size":"200%"});
 ```js   
 let postion = $("[data-breed-position]:first").attr("data-breed-position")    
 JSON.parse(postion)  
+```
+
+
+### 图片   
+
+#### 图片加载完执行   
+
+按理说应该是 load()，但是没有效果。最后用的是 on("load")   
+
+```js   
+$("img").on('load',function () {
+
+}   
 ```
 
 
@@ -490,7 +533,7 @@ console.log() 在控制台输出，控制台在浏览器 F12 打开
 
 js 没有 int short 这些，都是写 var  
 
-str.length 就是 len()  
+str.length  
 
 数字、字符串、布尔类型  
 
