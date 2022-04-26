@@ -196,45 +196,6 @@ $(function () {
 ```
 
 
-#### 查看类型   
-
-```js 
-typeof obj
-```
-
-#### 判断非空，不等于 null   
-
-```js  
-obj !== null
-```
-
-
-如果是 JSON 格式    
-```js  
-obj !== "null"(双引号)
-```
-
-
-#### [=> 就是 lambda 表达式](https://blog.csdn.net/ppwwp/article/details/82593905)   
-
-```js  
-(x) => x + 6   
-```
-
-等价于   
-
-```js  
-function(x){
-    return x + 6;
-}
-```
-
-数组内的所有元素同时除以 2    
-```js  
-ocr_area.find(".one-line-input:first").find("p").attr("data-ocr-position").split(",").map(Number).map(value => value / 2)   
-```
-
-
 ### 下拉框   
 
 #### 点击下拉框选项，触发事件   
@@ -266,6 +227,27 @@ $("#detail-logo-select option:eq(1)")
 $("#detail-logo-select option:eq(1)").text()  
 ```
 
+
+### [canvas](https://www.w3school.com.cn/html/html5_canvas.asp)   
+
+#### canvas 要通过 attr 指定 width 和 height，不要通过 style 指定，因为通过 style 指定，canvas 会变形。   
+
+```js 
+$("<canvas />", {"id": "detail-canvas-" + sql_id}).css({border: "1px solid red", position: "absolute"}).attr('width',image[0].width).attr('height',image[0].height);
+```
+
+#### 画矩形框   
+
+```js 
+let ctx = $('#canvas')[0].getContext('2d')       
+ctx.strokeStyle="#0000ff";     
+ctx.lineWidth=5;   
+ctx..strokeRect(x,y,width,height);    
+```
+
+
+
+### 属性   
 
 #### 获取属性值 [attr](https://www.w3school.com.cn/jquery/attributes_attr.asp)   
 
@@ -314,6 +296,13 @@ let postion = $("[data-breed-position]:first").attr("data-breed-position")
 JSON.parse(postion)  
 ```
 
+#### hasAttribute()   
+
+有一个 [0]   
+```js  
+$(this)[0].hasAttribute("data-ocr-position")   
+```
+
 
 ### 图片   
 
@@ -326,6 +315,9 @@ $("img").on('load',function () {
 
 }   
 ```
+
+
+
 
 
 #### 拼接 onclick  
@@ -343,6 +335,57 @@ localStorage.getItem('video_id')
 localStorage.removeItem('video_id')  
 localStorage.clear()
 ```
+
+
+### tips   
+
+
+#### 查看类型   
+
+```js 
+typeof obj
+```
+
+#### 判断非空，不等于 null   
+
+```js  
+obj !== null
+```
+
+
+如果是 JSON 格式    
+```js  
+obj !== "null"(双引号)
+```
+
+
+#### [=> 就是 lambda 表达式](https://blog.csdn.net/ppwwp/article/details/82593905)   
+
+```js  
+(x) => x + 6   
+```
+
+等价于   
+
+```js  
+function(x){
+    return x + 6;
+}
+```
+
+数组内的所有元素同时除以 2    
+```js  
+ocr_area.find(".one-line-input:first").find("p").attr("data-ocr-position").split(",").map(Number).map(value => value / 2)   
+```
+
+#### log()   
+
+log 可以打印多个值。   
+
+```js  
+console.log("ratio:", ratio)
+```
+
 
 
 ### 项目   
