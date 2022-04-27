@@ -132,7 +132,7 @@ font-weight:bold;
 
 ## 样式代码片段  
 
-#### 多个类之间用逗号分隔    
+#### 多个选择器之间用逗号分隔    
 
 ```css  
 .detail-delete-icon, .detail-arrow-icon, .detail-plus-icon {
