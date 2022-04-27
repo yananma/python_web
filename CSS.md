@@ -132,6 +132,20 @@ font-weight:bold;
 
 ## 样式代码片段  
 
+#### 多个类之间用逗号分隔    
+
+```css  
+.detail-delete-icon, .detail-arrow-icon, .detail-plus-icon {
+    cursor: pointer;
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-left: 1%;
+    margin-top: 3px;
+}
+```
+
+
 #### 去除 a 标签默认样式  
 
 ```css
@@ -151,6 +165,7 @@ a {
     box-shadow: none!important;  /*取消 button 阴影*/
 }
 ```
+
 
 #### [table 超出部分省略号](https://www.cnblogs.com/suni/p/8902249.html)   
 
