@@ -321,7 +321,7 @@ $("img").on('load',function () {
 ```
 
 
-### [文档操作 API](https://www.w3school.com.cn/jquery/jquery_ref_manipulation.asp)   
+### [事件](https://www.w3school.com.cn/jquery/jquery_ref_manipulation.asp)   
 
 #### [remove()](https://www.w3school.com.cn/jquery/jquery_dom_remove.asp)   
 
@@ -335,6 +335,31 @@ $(".detail-delete-icon").click(function () {
 ```
 
 #### 复制 DOM 对象 [clone()](https://www.w3school.com.cn/jquery/manipulation_clone.asp)     
+
+
+#### 调整顺序   
+
+```js 
+$(document).on("click", ".detail-arrow-up-icon", function () {
+    let this_line_input = $(this).parent()
+    let prev_line = this_line_input.prev()
+    if (prev_line.html() !== undefined) {
+        prev_line.fadeOut("fast", function () {
+	    $(this).before(this_line_input)
+        }).fadeIn()
+    }
+})
+
+$(document).on("click", ".detail-arrow-down-icon", function () {
+    let this_line_input = $(this).parent()
+    let next_line = this_line_input.next()
+    if (next_line.html() !== undefined) {
+        next_line.fadeOut("fast", function () {
+	    $(this).after(this_line_input)
+        }).fadeIn()
+    }
+})
+```
 
 
 #### 在元素之后添加 [insertAfter()](https://www.w3school.com.cn/jquery/manipulation_insertafter.asp)  
