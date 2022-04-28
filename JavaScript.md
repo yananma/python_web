@@ -493,6 +493,20 @@ $("#detail-search").bind("keypress", function (event) {
 });
 ```
 
+#### 修改 button 类别  
+
+```js  
+$(document).on("click", ".ocr-small-button", function () {
+    if ($(this).hasClass("inactive-button") && $(this).text()==="字幕") {
+        $(this).removeClass("inactive-button").addClass("active-zimu-button")
+        $(this).siblings(".ocr-small-button").removeClass("active-huazi-button").addClass("inactive-button")
+    } else if ($(this).hasClass("inactive-button") && $(this).text()==="花字") {
+        $(this).removeClass("inactive-button").addClass("active-huazi-button")
+        $(this).siblings(".ocr-small-button").removeClass("active-zimu-button").addClass("inactive-button")
+    }
+})
+```
+
 
 #### 引入 html 文件    
 
@@ -572,6 +586,7 @@ def detail_view(request):
 
 ***     
 
+
 可以通过浏览器的 Network 查看下载 jQuery 文件     
 
 click 事件不起作用，很可能就是因为没有写在 $(fucntion) 里    
@@ -607,6 +622,8 @@ send_list
 
 
 简单写一点笔记，一节课一两行，遇到了不懂的再查，再补充  
+
+
 
 #### 简介
 
