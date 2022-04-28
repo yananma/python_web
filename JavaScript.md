@@ -345,11 +345,12 @@ $($(this).parent().clone()).insertAfter($(this).parent())
 
 
 
-#### 拼接 onclick  
+#### onclick  
 
-错误用法：`<a href=\"javascript:void(0)\" onclick=(" + jump_to_detail_page() + ">" + res.data[i]['title'] + "</a>" +`，这么写会自动调用函数    
+```js 
+$("<a />", {href: "javascript:void(0)", text: res.data[i]['title']}).click(function () {jump_to_detail_page(res.data[i]["id"])})
+```
 
-正确用法：`<a href=\"javascript:void(0)\" onclick=jump_to_detail_page(" + ")>" + res.data[i]['title'] + "</a>" +`    
 
 
 #### [localStorage](https://www.w3school.com.cn/js/js_api_web_storage.asp)
@@ -454,6 +455,17 @@ $(function () {
         console.log(search_input_id.val())
     })
 })
+```
+
+
+#### 回车搜索   
+
+```js 
+$("#detail-search").bind("keypress", function (event) {
+    if (event.keyCode === 13) {
+        $("#detail-search-btn").trigger("click");
+    }
+});
 ```
 
 
