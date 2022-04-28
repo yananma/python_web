@@ -146,7 +146,7 @@ const value= ['1', '2', '3']
 value = value.map(Number) // [1, 2, 3]
 ```
 
-字符串 => 数字：   
+数字转字符串：   
 ```js 
 const value= [1, 2, 3]
 value = value.map(String) // ['1', '2', '3']
@@ -310,6 +310,10 @@ $(this)[0].hasAttribute("data-ocr-position")
 
 按理说应该是 load()，但是没有效果。最后用的是 on("load")   
 
+load 已经移除了。    
+
+Note: This API has been removed in jQuery 3.0; please use .on( "load", handler ) instead of .load( handler ) and .trigger( "load" ) instead of .load().   
+
 ```js   
 $("img").on('load',function () {
 
@@ -317,6 +321,27 @@ $("img").on('load',function () {
 ```
 
 
+### [文档操作 API](https://www.w3school.com.cn/jquery/jquery_ref_manipulation.asp)   
+
+#### [remove()](https://www.w3school.com.cn/jquery/jquery_dom_remove.asp)   
+
+remove() - 删除被选元素及其子元素   
+empty() - 从被选元素中删除子元素    
+
+```js 
+$(".detail-delete-icon").click(function () {
+    $(this).parent().remove()
+})
+```
+
+#### 复制 DOM 对象 [clone()](https://www.w3school.com.cn/jquery/manipulation_clone.asp)     
+
+
+#### 在元素之后添加 [insertAfter()](https://www.w3school.com.cn/jquery/manipulation_insertafter.asp)  
+
+在自己之后添加自己，一定要先用 clone() 复制。    
+
+$($(this).parent().clone()).insertAfter($(this).parent())   
 
 
 
@@ -335,6 +360,7 @@ localStorage.getItem('video_id')
 localStorage.removeItem('video_id')  
 localStorage.clear()
 ```
+
 
 
 ### tips   
