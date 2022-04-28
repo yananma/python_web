@@ -1,6 +1,16 @@
 
 容器元素一般叫 wrapper   
 
+## 实践笔记   
+
+#### [a](https://www.w3school.com.cn/tags/tag_a.asp)  
+
+在新窗口打开，target="\_blank"    
+
+
+
+## 原来笔记   
+
 ### 工作的时候，没事就去审查别人的网站，然后把样式 copy 过来就行了  
 
 HTML 非常简单，很容易学会，HTML 不是一种编程语言，而是一种标记语言  
