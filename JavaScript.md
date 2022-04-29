@@ -508,6 +508,25 @@ $(document).on("click", ".ocr-small-button", function () {
 })
 ```
 
+#### 给动态添加的 DOM 元素添加事件   
+
+核心是用 .on('click') 绑定，不要用 .click() 这些。   
+
+而且要用 $(document)   
+
+```js 
+$(document).on("click", ".detail-delete-icon", function () {
+    $(this).parent().remove()  
+})
+```
+
+#### 监听 contenteditable="true" 的元素的事件   
+
+不是 change 事件，change 事件不起作用，是 input 事件。   
+
+
+
+
 
 #### 引入 html 文件    
 
@@ -714,6 +733,7 @@ jQuery 是 JavaScript 的一个类库，非常强大，write less，do more.
 
 
 #### jQuery 的语法风格  
+
 用的最多的就是 `$` 符号，这个符号就是 jQuery 的缩写  
 通用模板就是 `$(selector).action(function)`  
 
