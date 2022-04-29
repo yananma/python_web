@@ -1,4 +1,5 @@
 
+
 # jQuery 实践笔记       
 
 ## 语法   
@@ -188,7 +189,7 @@ img.parents("div.one-img-row")
 
 ```js  
 $(function () {
-    $("#detail-ocr-select,#detail-logo-select,#detail-breed-select").change(function () {
+    $("#detail-ocr-select, #detail-logo-select, #detail-breed-select").change(function () {
         let arr = get_text()
         get_detail_ajax(arr[0], arr[1], arr[2])
     })
