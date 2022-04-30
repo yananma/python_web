@@ -520,6 +520,17 @@ $(document).on("click", ".detail-delete-icon", function () {
 })
 ```
 
+**会有事件重复调用问题，解决办法是先加 .off() 解除绑定。**  
+
+
+```js 
+$(document).off("click"）.on("click", ".detail-delete-icon", function () {
+    $(this).parent().remove()  
+})
+```
+
+
+
 #### 监听 contenteditable="true" 的元素的事件   
 
 不是 change 事件，change 事件不起作用，是 input 事件。   
