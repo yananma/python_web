@@ -68,7 +68,7 @@ str.replace(/'/g, "\"")
 或者使用 String(数字)     
 
 
-#### 字符串转 JSON   
+#### JSON 字符串转 JavaScript 对象    
 
 ```js   
 JSON.parse(str)   
@@ -90,6 +90,10 @@ if (res_logo !== null) {
     let json_logo_arr = JSON.parse(res_logo.replace(/'/g, "\""))
 }
 ```
+
+#### JavaScript 对象转 JSON 字符串  
+
+JSON.stringify()   
 
 
 #### 如果有动态的数据，或者是动态调用函数，尽量不用拼字符串的方法   
@@ -156,7 +160,7 @@ value = value.map(String) // ['1', '2', '3']
 
 #### 获取数组最后一个元素   
 
-1. arr.slice(-1)   
+1. arr.slice(-1)  [slice()](https://www.w3school.com.cn/js/js_array_methods.asp)，如果只写一个数字，表示获取从这个数字开始到后面所有的元素，结果是一个数组。 
 2. arr[arr.length-1]   
 3. arr.pop()   
 
@@ -256,6 +260,29 @@ ctx..strokeRect(x,y,width,height);
 $("#detail-ocr-select option:selected").attr("value")    
 
 $("#detail-ocr-select option:selected").attr("id")  
+```
+
+
+#### [设置属性](https://www.w3school.com.cn/jquery/attributes_attr.asp)
+
+[设置单个属性](https://www.w3school.com.cn/jquery/jquery_dom_set.asp)    
+
+```js 
+$("button").click(function(){
+  $("#w3s").attr("href","http://www.w3school.com.cn/jquery");
+});
+```
+
+
+设置多个属性  
+
+```js 
+$("button").click(function(){
+  $("#w3s").attr({
+    "href" : "http://www.w3school.com.cn/jquery",
+    "title" : "W3School jQuery Tutorial"
+  });
+});
 ```
 
 
@@ -437,6 +464,14 @@ log 可以打印多个值。
 
 ```js  
 console.log("ratio:", ratio)
+```
+
+#### debugger  
+
+```js
+var x = 15 * 5;
+debugger;
+document.getElementbyId("demo").innerHTML = x; 
 ```
 
 
