@@ -636,6 +636,31 @@ function user_info() {
 }
 ```
 
+POST 请求  
+
+```js 
+let input_data = {
+    "pid": pid,
+    "input_category": input_category,
+    "input_lines": JSON.stringify(input_lines_arr)
+}
+
+function detail_save_ajax(input_data) {
+    $.ajax({
+	type: "POST",
+	url: "/detail_save",
+	data: input_data,
+	async: false,
+	success: function (res) {
+	    get_detail_search_word_and_select_text()
+	},
+	error: function (e) {
+	    console.log(e)
+	}
+    })
+}
+```
+
 #### 视图函数   
 
 ```python 
