@@ -40,6 +40,14 @@ $(".button-rows-wrapper").each(function (i) {
 
 ### [字符串](https://www.w3school.com.cn/js/js_string_methods.asp)    
 
+#### 拼接字符串  
+
+```js 
+abc = 'abc'  
+s = `<h1>${abc}</h1>`    
+```
+
+
 #### replace
 
 默认 replace 只替换第一个，如果替换所有就要加 g 参数。   
