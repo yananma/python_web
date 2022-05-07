@@ -19,6 +19,7 @@
 1. 在 gitlab 上 new project，选择 Create blank project  
 2. 创建仓库，不勾选 Initialize repository with a README  
 3. 看 Push an existing folder，按照提示，复制命令运行    
+4. vim .gitignore，添加 .idea/，添加 \_\_pycache__/   
 
 
 
