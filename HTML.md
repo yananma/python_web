@@ -9,6 +9,21 @@
 
 
 
+# 代码   
+
+### textarea   
+
+```html
+<form method="post" id="search_urls_form" enctype="multipart/form-data" action="/cyberin/save_new_year_fixed_word/" >
+    <div>
+        <label>长城日报3导出url查询配置(每行一条)</label><br/>
+        <textarea id='search_urls' name='search_urls' rows="10" cols="80"></textarea><br/>  # 指定宽高   
+        <button id="btn_save" type="button" onclick="save_fixed()">查询</button>
+    </div>
+</form>
+```
+
+
 ## 原来笔记   
 
 ### 工作的时候，没事就去审查别人的网站，然后把样式 copy 过来就行了  
