@@ -21,6 +21,10 @@
         <button id="btn_save" type="button" onclick="save_fixed()">查询</button>
     </div>
 </form>
+
+function save_fixed(){
+    $("#search_urls_form").submit();
+}
 ```
 
 
