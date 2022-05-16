@@ -427,6 +427,12 @@ localStorage.clear()
 
 ### tips   
 
+#### a 链接禁止跳转   
+
+```js 
+href="javascript:void(0)"
+```  
+
 
 #### 查看类型   
 
