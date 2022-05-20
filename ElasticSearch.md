@@ -13,6 +13,31 @@
 查看数量  
 `GET /kejisousou-testv5/_count`  
 
+
+### term   
+
+完全匹配，全部都是，而不是包含   
+
+```python   
+GET page,wei,community2/_search 
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "title.keyword": {
+              "value": "条款不平等，多家新能源车企被点名！比亚迪、小鹏问题率超53%"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+
 多用 filter，会大幅提高查询速度，因为不用评分   
 ```python 
 query_dict = {
