@@ -241,6 +241,34 @@ $("#detail-logo-select option:eq(1)").text()
 ```
 
 
+### 复选框   
+
+#### jQuery 获取复选框勾选状态   
+
+```js 
+$('#choose-update-interaction-num-daily-3').is(':checked') ? 1 : 0    
+```
+
+如果复选框是在 form 表单里，在后台可以直接拿到    
+
+```html
+    <form method="post" id="query_urls_form" enctype="multipart/form-data" action="/notice/do_export_changcheng_daily_3_query_urls" >
+        <div>
+            <label>长城日报3导出url查询配置(每行一条)</label><br/>
+            <textarea id='query_urls' name='query_urls' rows="10" cols="80"></textarea><br/>
+            <button id="btn_save" class="btn btn-primary" onclick="save_fixed()">查询导出</button>
+            <label style="margin-left: 1%" for="choose-update-interaction-num-1"><input type="checkbox" name="choose-update-interaction-num" id="choose-update-interaction-num-1" class="icheckbox_flat-blue" value="1">更新互动数</label>
+        </div>
+    </form>
+```
+
+后台判断   
+
+```python 
+if request.POST.get(u'choose-update-interaction-num') == u'1':
+```   
+
+
 ### [canvas](https://www.w3school.com.cn/html/html5_canvas.asp)   
 
 #### canvas 要通过 attr 指定 width 和 height，不要通过 style 指定，因为通过 style 指定，canvas 会变形。   
