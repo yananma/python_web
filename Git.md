@@ -95,6 +95,10 @@ git push -f
 
 ## 报错解决   
 
+### pycharm git push 不成功  
+
+push 不成功，看左下角的 git 的 log  
+
 ### protect branch   
 
 在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
