@@ -80,10 +80,10 @@ git push
 
 ## 功能   
 
-### 回滚到指定分支   
+### 回滚到指定位置   
 
 ```python 
-git log -n 5  # 看数字   
+git log -n 5  # 看要到的那个 commit 的数字   
 git reset --hard 数字   
 git push -f   
 
