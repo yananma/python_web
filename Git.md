@@ -93,7 +93,16 @@ git push -f
 ```
 
 
-## 报错解决   
+## 报错
+
+### git pull aborting   
+
+因为服务器上的代码有改动，git pull 不成功。   
+
+先用 git diff 文件名，比如 git diff xposts/management/commands/crisis_warning_send.py 看这个文件的修改的地方，然后复制备份文件，然后把 + 的地方删除，把 - 的地方恢复。然后再 git pull。   
+
+git pull 成功以后，再把备份文件替换，再 git pull。   
+
 
 ### pycharm git push 不成功  
 
