@@ -15,7 +15,21 @@
 
 ### term   
 
-完全匹配，全部都是，而不是包含   
+完全匹配，严格相等     
+
+```python 
+GET zjgdk-v2/_search
+{
+  "query": {
+    "term": {
+      "url": {
+        "value": "http://mp.weixin.qq.com/s?__biz=MzA4NTM5OTQxOQ==&mid=2447600578&idx=1&sn=5c54dfaf53065154cd93ee2220eca6be"
+      }
+    }
+  }
+}
+```
+
 
 ```python   
 GET page,wei,community2/_search 
