@@ -92,6 +92,25 @@ git push -f
 
 ```
 
+### git pull 不要每次都输入密码   
+
+先在命令行输入 
+```python 
+git config --global credential.helper store  
+```
+
+再 git pull，再输一次用户名密码，以后就不用输了。    
+
+可以通过 
+
+```python 
+vim ~/.git-credentials
+``` 
+
+查看里面存的用户名密码。    
+
+如果要清除，就用 vim 打开文件，手动删除。   
+
 
 ## 报错
 
