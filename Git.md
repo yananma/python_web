@@ -111,6 +111,12 @@ vim ~/.git-credentials
 
 如果要清除，就用 vim 打开文件，手动删除。   
 
+查看当前策略：`git config --global credential.helper`   
+
+暂停存储策略：`git config --global credential.helper wincred`(不知道为什么报错，不知道是不是版本的问题)   
+
+设置缓存，默认 15 分钟内不用重复输入密码：`git config --global credential.helper cache`   
+
 
 ## 报错
 
