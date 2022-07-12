@@ -211,6 +211,18 @@ $(function () {
 
 ### 下拉框   
 
+[下拉框 HTML]()   
+
+```html  
+<select>
+  <option value ="volvo">Volvo</option>
+  <option value ="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+```  
+
+
 #### 点击下拉框选项，触发事件   
 
 选择选项以后，触发的是 select 的 change 事件，而不是 option 的 click 事件。   
@@ -239,6 +251,10 @@ $("#detail-logo-select option:eq(1)")
 ```js  
 $("#detail-logo-select option:eq(1)").text()  
 ```
+
+如果不用 Ajax，普通的 form 表单，要把 select 写到 form 表单里，提交以后，在后台可以通过 request.POST.get(name) 获取 option 的 value。   
+
+
 
 
 ### 复选框   
