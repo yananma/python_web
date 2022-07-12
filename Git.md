@@ -152,6 +152,11 @@ push 不成功，看左下角的 git 的 log
 3. 协同开发  
 
 
+## gitlab 相关  
+
+在 gitlab 中搜代码，可以在右上角搜，然后选择项目就可以在这个项目下搜索     
+
+
 ## [玩转 Git 三剑客](https://time.geekbang.org/course/intro/100021601?tab=catalog)  
 
 
