@@ -1,6 +1,5 @@
 
 
-
 ## 低版本 git，本地已有项目 push 到远程 （服务器）  
 
 1. 在 gitlab 上 new project，选择 Create blank project  
@@ -141,6 +140,11 @@ push 不成功，看左下角的 git 的 log
 ### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
 
 在命令中添加用户名密码：`git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git`，只要配置一次，以后就都可以了。   
+
+
+### git pull 的时候报错：fatal: repository 'http://gitlab.maixunbytes.com/doukuan/crisis_admin.git/' not found 其实和上面的一样，也是服务器上默认的用户改变了   
+
+`git pull http://user:password@gitlab.maixunbytes.com/doukuan/crisis_admin.git/`    
 
 
 *** 
