@@ -185,7 +185,7 @@ GET zjgdk-v2/_search
 print("\\\"" + ('\\" OR \\"').join(word_list) + "\\\"")   
 ```
 
-print 完，最后还要前后再加一层双引号   
+print 完，最后还要前后再加一层双引号，每个词的引号是保证这个词是一个整体，不会被拆，最外层的引号是所有词的 OR 组合成一起以后的引号。    
 
 ```python 
 GET zjgdk-v2/_count
