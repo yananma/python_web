@@ -181,10 +181,38 @@ GET zjgdk-v2/_search
 ```
 
 
-拼接用 print，不过前后要手动加上引号  
 ```python 
-print(('\\" OR \\"').join(li)) 
+print("\\\"" + ('\\" OR \\"').join(word_list) + "\\\"")   
 ```
+
+print 完，最后还要前后再加一层双引号   
+
+```python 
+GET zjgdk-v2/_count
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "default_field": "talent_text",
+            "query": "\"元宇宙\" OR \"Metaverse\" OR \"虚拟现实\" OR \"VR\" OR \"云计算\" OR \"人工智能\" OR \"AI\" OR \"虚拟世界\""
+          }
+        },
+        {
+          "range": {
+            "post_time": {
+              "gte": "2021-01-01 00:00:00",
+              "lte": "2022-07-15 00:00:00"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 
 ```python 
 GET kejisousou-en-testv3/_search
