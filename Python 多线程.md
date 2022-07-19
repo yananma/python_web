@@ -1,4 +1,14 @@
 
+开多线程：   
+
+```python 
+for i in range(1, 11):
+    query_month = '2021{:02d}'.format(i)
+    t = threading.Thread(target=main, args=(query_month, ))
+    t.start()
+```
+
+
 ```python
 from time import time 
 
