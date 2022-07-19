@@ -490,11 +490,20 @@ typeof obj
 obj !== null
 ```
 
-
 如果是 JSON 格式    
 ```js  
 obj !== "null"(双引号)
 ```
+
+#### 判断不存在  
+
+```js 
+if(this.districtArr[1] !== undefined) {
+    this.district = this.districtArr[1].name;
+} else {
+    this.district = this.districtArr[0].name;
+}
+``` 
 
 
 #### [=> 就是 lambda 表达式](https://blog.csdn.net/ppwwp/article/details/82593905)   
