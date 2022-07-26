@@ -24,6 +24,8 @@
 
 ## 基础命令  
 
+![Git](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/img/git_command.png)  
+
 ```linux  
 git status  
 
