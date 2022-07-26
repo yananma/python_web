@@ -70,6 +70,8 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 
 #### float left   
 
+**注意：float left 并不是当前元素 float 到前面元素的左边，而是下一个元素 float 到当前元素的右边。**     
+
 父元素：`position: relative`   
 所有子元素：`float: left`   
 
