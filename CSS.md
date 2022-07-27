@@ -112,10 +112,11 @@ div 中包含 span，要让 span 居中，就要在 div 中添加样式：`verti
 假如在一行之上只有极少的空间可供浮动元素，那么这个元素会跳至下一行，这个过程会持续到某一行拥有足够的空间为止。    
 
 
-#### float left   
+#### [float left](https://www.cnblogs.com/iyangyuan/archive/2013/03/27/2983813.html)   
 
-**注意：float left 并不是当前元素 float 到前面元素的左边，而是下一个元素 float 到当前元素的右边。**     
+核心是理解标准流，加了 float 以后，就脱离了标准流，其他的标准流的元素还是按照标准流的方式排列。    
 
+(有时候不是很灵，暂时还不知道原因)       
 父元素：`position: relative`   
 所有子元素：`float: left`   
 
