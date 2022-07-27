@@ -55,6 +55,25 @@ style 写在 head 里
 </html>
 ```
 
+危机预警，继承 base.html，添加 css   
+
+```html
+{% extends "base.html" %}
+
+{% block head_css %}
+<style>
+    .type-group {
+        padding-top: 5px;
+    }
+</style>
+{% endblock%}
+
+{% block content %}
+
+{% endblock %}
+```  
+
+
 ## 元素样式   
 
 #### a 链接  
