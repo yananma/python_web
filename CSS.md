@@ -11,6 +11,50 @@
 
 *** 
 
+### 引入外部 CSS   
+
+```html  
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+<body>
+
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+
+</body>
+</html>
+```   
+
+
+### 在 HTML 文件中写 CSS  
+
+style 写在 head 里    
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        #div1 {
+            width: 300px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+```
+
 ## 元素样式   
 
 #### a 链接  
