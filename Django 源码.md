@@ -1,4 +1,32 @@
 
+### 具体源码内容
+Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
+源码在 django/core/management/commands/runserver.py 中  
+在 django/core/servers/basehttp.py 最后的 run 方法中实现了 httpd.serve_forever()  
+本质上是 TCP，源码在 django/Lib/socketserver.py 中  
+`python manage.py runserver` 可以自动刷新，不需要重启服务器，是通过线程实现的，源码在 django/utils/autoreload.py 中  
+一直刷新的 log 日志信息的实现在 django/core/servers/basehttp.py 的 WSGIRequestHandler 的 log_message() 方法中   
+HTTP 请求和响应报文，都是在 django/Lib/http/server.py 中实现的  
+
+django 最开始的欢迎页面在 django/views/templates/default_urlconf.html  
+
+makemigrations 命令，源码会通过 os.mkdir() 创建 migrations 文件夹，生成 \_\_init__.py 文件，写文件。写详细文件在 django/db/migrations/writers.py 中  
+
+
+Mixin 是组件的意思  
+
+
+### 学到的好的东西   
+
+1. try except 防错式编程   
+
+2. os.mkdir()   
+
+3. subprocess()  
+
+
+
+
 会源码就不用记了，比如 Django REST framework 的方法很多，会了源码，万变不离其宗，直接看源码就行了，所有的东西都在源码里。    
 
 而且即使当时记住了，过一段时间肯定也忘了，有源码就不会有这个问题   
@@ -64,24 +92,7 @@ import 的时候，可以看一看用到的文件，可以看整篇 .py 文件
 
 读源码核心在 try 里面，不是在 except 里面  
 
-assert 后面的内容不重要  
-
 熟悉了以后还是应该 debug，多 debug 几遍就好了  
 
 
-### 具体源码内容
-Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
-源码在 django/core/management/commands/runserver.py 中  
-在 django/core/servers/basehttp.py 最后的 run 方法中实现了 httpd.serve_forever()  
-本质上是 TCP，源码在 django/Lib/socketserver.py 中  
-`python manage.py runserver` 可以自动刷新，不需要重启服务器，是通过线程实现的，源码在 django/utils/autoreload.py 中  
-一直刷新的 log 日志信息的实现在 django/core/servers/basehttp.py 的 WSGIRequestHandler 的 log_message() 方法中   
-HTTP 请求和响应报文，都是在 django/Lib/http/server.py 中实现的  
-
-django 最开始的欢迎页面在 django/views/templates/default_urlconf.html  
-
-makemigrations 命令，源码会通过 os.mkdir() 创建 migrations 文件夹，生成 \_\_init__.py 文件，写文件。写详细文件在 django/db/migrations/writers.py 中  
-
-
-Mixin 是组件的意思  
 
