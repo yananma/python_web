@@ -1,8 +1,9 @@
 
-一遍一遍过，一遍学几个知识点，一遍学几个知识点。三年时间肯定能吃透。    
+一遍一遍过，一遍学几个知识点，一遍学几个知识点。东西就这么多，三年时间肯定能吃透。    
 
 
 ### 具体源码内容
+
 Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
 源码在 django/core/management/commands/runserver.py 中  
 在 django/core/servers/basehttp.py 最后的 run 方法中实现了 httpd.serve_forever()  
@@ -17,6 +18,18 @@ makemigrations 命令，源码会通过 os.mkdir() 创建 migrations 文件夹�
 
 
 Mixin 是组件的意思  
+
+
+### 要学的内容   
+
+前两遍主要要学的就是熟悉目录结构，熟悉文件所在的位置。   
+
+1. 学习命名   
+2. 学习标准库函数用法   
+3. 学习错误处理  
+4. 学习函数调用  
+5. 学习类的使用   
+6. 
 
 
 ### 学到的好的东西   
