@@ -2,6 +2,16 @@
 一遍一遍过，一遍学几个知识点，一遍学几个知识点。东西就这么多，三年时间肯定能吃透。    
 
 
+
+
+python manage.py 和 django-admin 走的是相同的内部代码，所以 startapp 的时候，是可以互换的。   
+
+python manage.py 后面没有命令的时候，会打印 help     
+
+每条命令都会检查 INSTALLED_APPS。   
+
+
+
 ### 具体源码内容
 
 Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
