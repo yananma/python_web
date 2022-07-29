@@ -8,6 +8,8 @@ python manage.py 和 django-admin 走的是相同的内部代码，所以 starta
 
 python manage.py 后面没有命令的时候，会打印 help     
 
+每条命令都可以添加 \-\-settings 参数    
+
 每条命令都会检查 INSTALLED_APPS。   
 
 
