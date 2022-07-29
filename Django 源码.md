@@ -8,16 +8,6 @@
 第二遍和第三遍视频一起看，每个视频看两遍。    
 
 
-python manage.py 和 django-admin 走的是相同的内部代码，所以 startapp 的时候，是可以互换的。   
-
-python manage.py 后面没有命令的时候，会打印 help     
-
-每条命令都可以添加 \-\-settings 参数    
-
-每条命令都会检查 INSTALLED_APPS。   
-
-
-
 ### 具体源码内容
 
 Django 自己有一个简单的开发环境的 server，通过 `python manage.py runserver`启动  
