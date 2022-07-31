@@ -35,14 +35,14 @@ Django 源码会成为自己今后几十年的练习的程序。
 前两遍主要要学的就是熟悉目录结构，熟悉文件所在的位置。   
 
 1. 学习命名   
-* 重复 duplicates，django\apps\registry.py `duplicates = [name for name, count in counts.most_common() if count > 1]`   
-* 不带文件名的叫 dir，带文件名的叫 path    
+    * 重复 duplicates，django\apps\registry.py `duplicates = [name for name, count in counts.most_common() if count > 1]`   
+    * 不带文件名的叫 dir，带文件名的叫 path    
 
 2. 学习标准库函数用法   
-* traceback.print_exc()    
-* 标准库 code 模块、rlcompleter、    
-* os.environ.get("PYTHONSTARTUP"),     
-* os.path.expanduser("~/.pythonrc.py")    
+    * traceback.print_exc()    
+    * 标准库 code 模块、rlcompleter、    
+    * os.environ.get("PYTHONSTARTUP"),     
+    * os.path.expanduser("~/.pythonrc.py")    
 
 5. 学习错误处理  
 6. 学习函数调用  
