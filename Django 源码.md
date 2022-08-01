@@ -61,6 +61,13 @@ Django 源码会成为自己今后几十年的练习的程序。
 
 
 
+### 实际中的帮助   
+
+1. 2022.07.30 解决了长期困扰自己的 settings 和 app load 的报错。   
+2. 2022.08.01 pycharm 的 shell 没有办法重启，自己在测试上创建 shell，知道所有的命令都可以配置 \-\-settings，如鱼得水   
+3. 
+
+
 可以带动学习 Python 文档。    
 
 既可以学 Python，实现 Python 进阶，又可以学 Django，了解框架原理。     
