@@ -38,7 +38,8 @@ Django 源码会成为自己今后几十年的练习的程序。
     * 重复 duplicates，django\apps\registry.py `duplicates = [name for name, count in counts.most_common() if count > 1]`   
     * 不带文件名的叫 dir，带文件名的叫 path    
 
-2. 学习标准库函数用法   
+2. 学习标准库函数用法 
+**标准库很多是有源码的，读源码，学习标准库的用法**      
     * exec()
     * traceback.print_exc()    
     * 标准库 code 模块、rlcompleter、    
@@ -55,11 +56,9 @@ Django 源码会成为自己今后几十年的练习的程序。
 
 ### 学到的好的东西   
 
-1. try except 防错式编程   
+1. `seen_apps.setdefault(app_label, set()).add(migration_name)`   django/db/migrations/loader.py    
+2. 
 
-2. os.mkdir()   
-
-3. subprocess()  
 
 
 可以带动学习 Python 文档。    
