@@ -72,8 +72,17 @@ Django 源码会成为自己今后几十年的练习的程序。
 
 ### 学到的好的东西   
 
+**代码**    
 1. `seen_apps.setdefault(app_label, set()).add(migration_name)`   django/db/migrations/loader.py    
 2. 
+
+
+**非代码**  
+1. django 命令，不加命令名的时候，打印 help    
+2. 所有的命令都可以加 \-\-settings 参数   
+3. 自己在 python 里可以启动 ipython   
+4. makemigrations 可以跟 app_label(最开始学 django 的时候就好奇的一个问题)   
+5. 
 
 
 
