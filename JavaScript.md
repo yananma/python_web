@@ -712,6 +712,12 @@ let input_data = {
     "input_lines": JSON.stringify(input_lines_arr)
 }
 
+如果没有注释 csrftoken，data 里就要传 csrftoken 的值    
+data: {
+    'input-area': input_area,
+    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+},
+
 function detail_save_ajax(input_data) {
     $.ajax({
 	type: "POST",
