@@ -722,6 +722,8 @@ PUT mayanan
 ```
 
 直接添加数据  
+
+**原索引为空时，可以这么写。如果原来索引里有数据，这么写就会先抹除原来的数据，再写入新的数据，最后就只剩下新添加的字段，原来的字段就没有了。**      
 PUT /索引名/类型名（可以不写）/id  
 
 ```python 
@@ -732,7 +734,25 @@ PUT /test1/type1/1
 }
 ```
 
-添加字段  
+#### 添加新的字段，并且不影响原有的字段   
+
+还是要读官方文档     
+```python 
+POST test/_update/1
+{
+  "doc": {
+    "name": "new_name"
+  }
+}
+```
+
+
+#### 添加字段  
+
+查看已有字段类型    
+
+`GET changcheng_model/_mapping`      
+
 ```python 
 PUT 索引名/_mapping/类型名  
 {
@@ -745,6 +765,18 @@ PUT 索引名/_mapping/类型名
 }
 ```
 
+ES7  
+
+```python 
+PUT changcheng_model/_mapping  # 这里没有了类型名
+{
+  "properties": {
+    "model1_export_count": {
+      "type": "long"
+    }
+  }
+}
+```
 
 
 删除索引
@@ -753,6 +785,7 @@ PUT 索引名/_mapping/类型名
 
 删除查询的结果  
 ```python 
+     索引名
 POST suoyinming/_delete_by_query
 {
   "query": { 
