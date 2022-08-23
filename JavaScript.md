@@ -632,12 +632,38 @@ $(document).off("click"）.on("click", ".detail-delete-icon", function () {
 ```
 
 
-
 #### 监听 contenteditable="true" 的元素的事件   
 
 不是 change 事件，change 事件不起作用，是 input 事件。   
 
 
+#### 提示消息    
+
+```js 
+    function showTips(txt,time,status)
+        {
+            let htmlCon = '';
+            if(txt !== ''){
+                if(status !== 0 && status !== undefined){
+                    htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#4AAF33;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
+                }else{
+                    htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#D84C31;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
+                }
+                $('body').prepend(htmlCon);
+                if(time === '' || time === undefined){
+                    time = 1500;
+                }
+                setTimeout(function(){ $('.tipsBox').remove(); },time);
+            }
+        }
+
+
+        <!-- 调用 -->   
+        $("#copy-btn").click(function () {
+            showTips('复制成功',2000,1);
+        });
+
+```
 
 
 
