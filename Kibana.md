@@ -7,7 +7,7 @@ ES 应用场景：搜索、日志、可视化
 标签云 | 存储桶 -> 标签 -> 重要词 -> DestCityName -> 10 | 选择时间跨度<br>修改标题
 饼图  | 存储桶 -> 拆分切片 -> 重要词 -> DestCountry -> 10 | 显示图例    
 指标  |  |    
-目标图  | 添加筛选 -> Cancelled -> 是 -> true<br>选项 -> 取消百分比 |  
+目标图  | 选项 -> 取消百分比<br>添加筛选 -> Cancelled -> 是 -> true |  
 水平条形图  | 存储桶 -> X 轴 -> 重要词 -> FlightDelayType -> 10 |  
 垂直条形图  | 存储桶 -> X 轴 -> 重要词 -> DestAirportID -> 20 | 可以改图例颜色  
 垂直条形图  | 存储桶 -> X 轴 -> Date Histogram -> 更新<br>添加 -> 拆分序列 -> 重要序列 -> FlightDelayType -> 20 | 选中图例<br>检查聚合请求  
