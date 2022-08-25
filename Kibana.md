@@ -14,5 +14,5 @@ ES 应用场景：搜索、日志、可视化
 热图  | 存储桶 -> X 轴 -> 重要词 -> OriginCountry -> 10<br>存储桶 -> Y 轴 -> 重要词 -> DestCountry -> 10 |  
 折线图  | 存储桶 -> X 轴 -> Date Histogram -> 更新<br>指标 -> 添加 -> Y 轴 -> 平均值 -> AvgTicketPrice<br>指标和轴 Tab -> 计数 -> 值轴 -> 新建轴<br>点击图例可以不显示<br>指标 -> 添加 -> 圆点大小 -> 平均值 -> AVGTicketPrice<br>指标和轴 Tab -> 指标 -> 计数 -> RightAxis-1 -> 面积图 -> 取消显示点线<br>指标和轴 Tab -> 指标 -> AVGTicketPrice 平均值 -> 取消显示线条 |  
 Maps  | 添加图层 -> Elasticsearch -> 集群和网格 -> 添加图层 -> Origin -> 指标 -> 平均值 -> AVGTicketPrice<br>添加图层 -> Elasticsearch -> 集群和网格 -> 添加图层 -> Dest -> 指标 -> 平均值 -> AVGTicketPrice | 修改圆圈颜色  
-Discover  | 右侧可以展开<br>左侧可以看前 5 个<br>可以 Visualize：DestRegion -> Visualize -> 拖拽 -> DestCountry<br>可以在左侧点击加号，往右侧添加字段 |  
+Discover  | 右侧可以展开<br>左侧可以看前 5 个<br>可以 Visualize：DestRegion -> Visualize -> 拖拽 -> DestCountry<br>可以在左侧点击加号，往右侧添加字段<br>FlightNum -> OriginCityName -> OriginWeather -> DestCityName -> DestWeather -> AvgTicketPrice -> FlightDelay |  
 其他功能  | 更多 -> 最大化面板<br>可以筛选一个，其他的一起跟着变<br>可以设置刷新频率 |  
