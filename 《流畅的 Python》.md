@@ -74,6 +74,45 @@ print(tag(**my_tag))
 
 #### 第7章 函数装饰器和闭包  
 
+装饰器执行顺序   
+
+```python 
+registry = []  # 第一个断点
+
+
+def register(func):
+    print('running register(%s)' % func)  # 第二个断点
+    registry.append(func)
+    return func
+
+
+@register
+def f1():
+    print('running f1()')
+
+
+@register
+def f2():
+    print('running f2()')
+
+
+def f3():
+    print('running f3()')
+
+
+def main():
+    print('running main()')
+    print('registry->', registry)
+    f1()  # 步入
+    f2()  # 步入
+    f3()  # 步入
+
+
+if __name__ == '__main__':
+    main()  # 第三个断点，步入
+```  
+
+
 [装饰器](https://www.bilibili.com/video/BV1Vv411x7hj?p=1)非常重要  
 
 装饰器实现原理：基于 @ 语法和函数闭包，将原函数封装在闭包中，然后将函数赋值为一个新的函数（内层函数），执行函数时再在内层函数中执行闭包中的原函数    
