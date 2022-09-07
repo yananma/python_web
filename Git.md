@@ -121,6 +121,15 @@ vim ~/.git-credentials
 
 ## 报错
 
+### gitlab、pycharm 和远程服务器的关系   
+
+运行的时候，运行的是远程服务器上的代码，也就是点 run 的时候，会连接远程，然后运行远程代码。      
+
+git pull 的时候，pycharm 的代码和 gitlab 上的代码是一样的，但是和远程服务器的代码不一样，还要上传才行。     
+
+如果 git push 的时候，提示 merge，merge 完以后，和上面的情况一样，远程服务器的代码是旧代码，看 merge 的文件，要从 pycharm 上传 merge 以后的文件才行。可能是一个很偏的自己不用的文件。    
+
+
 ### git pull aborting   
 
 因为服务器上的代码有改动，git pull 不成功。   
