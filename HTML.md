@@ -8,6 +8,14 @@
 在新窗口打开，target="\_blank"    
 
 
+#### [hidden 属性](https://www.w3school.com.cn/tags/att_global_hidden.asp)    
+
+不显示元素   
+
+```html
+<p hidden>这个段落应该被隐藏。</p>
+```
+
 
 # 代码   
 
