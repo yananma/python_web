@@ -16,7 +16,7 @@ def main():
 
     found = client.bucket_exists("mayanan-bucket")  
     if not found:
-        client.make_bucket("mayanan-bucket")   # bucket 名称不能有下划线
+        client.make_bucket("mayanan-bucket")   # bucket 名称不能有下划线，可以有中划线。
     else:
         print("Bucket already exists.")
 
