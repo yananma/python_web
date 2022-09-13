@@ -14,13 +14,13 @@ def main():
         secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",  # 密码   
     )
 
-    found = client.bucket_exists("mayananbucket")  
+    found = client.bucket_exists("mayanan-bucket")  
     if not found:
-        client.make_bucket("mayananbucket")   # bucket 名称不能有下划线
+        client.make_bucket("mayanan-bucket")   # bucket 名称不能有下划线
     else:
         print("Bucket already exists.")
 
-    client.fput_object("mayananbucket", "in_bucket_name_一二三级分类V17.xlsx",
+    client.fput_object("mayanan-bucket", "in_bucket_name_一二三级分类V17.xlsx",
                        r"C:\Users\mx\PycharmProjects\local_scripts\crisis_admin\data\一二三级分类V17.xlsx")  
     # fput_object() 上传文件，参数：self；bucket 名称；上传到 bucket 以后的，在 bucket 里的文件名；本地文件。    
     print("uploaded.")
@@ -46,7 +46,7 @@ def main():
         access_key="Q3AM3UQ867SPQQA43P2F",
         secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",
     )
-    client.fget_object("mayananbucket", "in_bucket_name_一二三级分类V17.xlsx",
+    client.fget_object("mayanan-bucket", "in_bucket_name_一二三级分类V17.xlsx",
                        r"C:\Users\mx\PycharmProjects\local_scripts\crisis_admin\data\一二三级分类V16.xlsx")
     print("download.")
 
