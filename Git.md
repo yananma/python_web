@@ -157,6 +157,13 @@ push 不成功，看左下角的 git 的 log
 
 `git pull http://user:password@gitlab.maixunbytes.com/doukuan/crisis_admin.git/`    
 
+### git 拉代码报错  
+
+fatal: Not a git repository (or any parent up to mount point /home)     
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).    
+
+应该用 git clone 命令拉代码，却用了 git pull    
+
 
 *** 
 
