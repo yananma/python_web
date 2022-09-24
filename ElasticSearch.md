@@ -541,6 +541,16 @@ GET kejisousou-zhili-formal-v3/_search
 ```
 
 
+## Python ES 相关  
+
+查询的时候传的 search_after 是列表   
+
+```python 
+search_after = requests.GET.get("search_after", None)
+if search_after:
+    search_after = [int(search_after)]
+```
+
 
 ### 查  
 查看所有索引，得出结果以后 Ctrl + F 搜索索引名    
