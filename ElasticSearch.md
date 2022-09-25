@@ -551,6 +551,70 @@ if search_after:
     search_after = [int(search_after)]
 ```
 
+### ES 查询接口   
+
+```python 
+retry_count = 0
+
+
+def get_es_data_interface(requests):
+    """调用 ES 数据接口"""
+    conn = ConnectManager.ES.get_setting('DEBUG')
+    search_after = requests.GET.get("cursor", None)
+    if search_after:
+        search_after = json.loads(search_after)
+    query_dict = {
+        "query": {
+            "bool": {
+                "filter": {
+                    "bool": {
+                        "must": [
+                            {
+                                "range": {
+                                    "post_time": {
+                                        "gte": "2020-01-01 00:00:00",
+                                        "lt": "2022-01-01 00:00:00"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+    try:
+        for batch_data in conn.search_by_page_with_searchafter(
+            index=settings.ZKY_INDEX,
+            search_after=search_after,
+            query=query_dict,
+            sort_fields=[{'post_time': "desc", "include_time": "desc"}],
+            fields=["title", "text", "post_time", "site_name"],
+            size=10000,
+            return_sort=True,
+        ):
+            posts = batch_data[0]
+            res_search_after = json.dumps(batch_data[1])
+            res_data = []
+            for post in posts:
+                d = {"title": post["title"],
+                     "full-text": post["text"],
+                     "pub-date": post["post_time"].split()[0],
+                     "pub-datetime": post["post_time"],
+                     "source": post["site_name"]}
+                res_data.append(d)
+            return JsonResponse({"data": res_data, "cursor": res_search_after, "status": 200})
+    except Exception as e:
+        traceback.print_exc()
+        # 现在 ES 服务不稳定，如果报错就重试 3 次
+        global retry_count
+        if retry_count <= 3:
+            retry_count += 1
+            print(f"{'=' * 120} {retry_count}")
+            get_es_data_interface(requests)
+        return JsonResponse({"data": [], "status": 500})
+```
+
 
 ### 查  
 查看所有索引，得出结果以后 Ctrl + F 搜索索引名    
