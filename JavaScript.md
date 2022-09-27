@@ -2,6 +2,18 @@
 
 # jQuery 实践笔记       
 
+CDN  
+
+写在 head 中   
+
+```js 
+<head>
+    <meta charset="UTF-8">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+```
+
 ## 语法   
 
 #### 获取 input 框里的值   
