@@ -1,4 +1,46 @@
 
+#### redis 去重   
+
+```python  
+# cyberin  
+
+from django_redis import get_redis_connection  
+
+cache = get_redis_connection("default")
+
+
+if cache.sismember(u"urls-info-dedupe", trans_to_md5(d[u"url"])):
+    continue
+else:
+    cache.sadd(u"urls-info-dedupe", trans_to_md5(d[u"url"]))
+```
+
+
+#### redis 批量 push（花费的时间从十几个小时降到了不到 10 分钟）   
+
+```python  
+    def handle(self, *args, **options):
+        url_data_map = self.get_url_data_map(options)
+        rpush_data = []
+        for key, data in sorted(url_data_map.items(), key=lambda x: x[1][u"temp_id"]):
+            rpush_dict = {
+                u"url": data[u"url"],
+                u"title": data[u"title"],
+                u"fids": u",".join(data[u"facetid"])
+            }
+            rpush_data.append(json.dumps(rpush_dict))
+            if len(rpush_data) >= 2000:
+                cache.rpush(u"crawlcomments:urls-info", *rpush_data)
+                rpush_data.clear()  
+            count = data[u"temp_id"]
+            if count % 1000 == 0:
+                logger.info(u"数量 {}".format(count))
+        cache.rpush(u"crawlcomments:urls-info", *rpush_data)
+        logger.info(u"done.")
+```
+
+
+
 查看键中的值：`GET "键名"`  
 
 
