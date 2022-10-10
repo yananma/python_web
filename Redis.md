@@ -1,4 +1,7 @@
 
+搜索工具集和 cyberin     
+
+
 #### redis 去重   
 
 ```python  
@@ -16,7 +19,7 @@ else:
 ```
 
 
-#### redis 批量 push（花费的时间从十几个小时降到了不到 10 分钟）   
+#### redis 批量 push（速度提高几十倍）    
 
 ```python  
     def handle(self, *args, **options):
