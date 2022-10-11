@@ -2,6 +2,13 @@
 搜索工具集和 cyberin     
 
 
+#### 删除    
+
+```python  
+cache.delete(key)  
+```
+
+
 #### redis 缓存   
 
 ```python  
