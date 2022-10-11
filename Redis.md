@@ -2,7 +2,32 @@
 搜索工具集和 cyberin     
 
 
-#### redis 去重   
+#### redis 缓存   
+
+```python  
+def redis_cache(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        request = args[0]
+        oid = request.GET.get(u"objectid")
+        start_date = request.GET.get(u'start_date')
+        end_date = request.GET.get(u'end_date')
+        key = u"cyberin_tongyong_dashboard::" + oid + u'_' + start_date + u"_" + end_date + u"_" + func.func_name
+        cache_res = cache.get(key)
+        if cache_res:
+            logger.info(u"get {} result from redis cache.".format(func.func_name))
+            cache_res = json.loads(cache_res)
+            return JsonResponse(cache_res)
+        else:
+            res = func(*args, **kwargs)
+            cache.set(key, res.content, 5*60)
+            logger.info(u"get {} result from view function.".format(func.func_name))
+            return res
+    return wrapper
+```
+
+
+#### redis 去重，一般不用，千万数量级以上才用   
 
 ```python  
 # cyberin  
