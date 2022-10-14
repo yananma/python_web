@@ -321,7 +321,32 @@ GET kejisousou-test/_search
 }
 ```
 
+多字段排序   
+
+```python 
+GET kejisousou-formal/_search
+{
+  "query": {
+    "range": {
+      "post_time": {
+        "gte": "2020-01-01 00:00:00",
+        "lt": "2022-01-01 00:00:00"
+      }
+    }
+  },
+  "size": 10000,
+  "sort": [
+    {
+      "post_time": "desc",
+      "include_time": "desc"
+    }
+  ]
+}
+``` 
+
+
 按字段是否存在查询  
+
 ```python 
 GET kejisousou-yuce-formal-v4/_search 
 {
@@ -482,6 +507,32 @@ GET /kejisousou-en-testv1/_search
   "size": 0
 }
 ```
+
+按 include_time 和 post_time 排序，按 sort（也就是 search_after） 聚合        
+
+```python  
+GET kejisousou-formal/_search
+{
+  "size": 0,
+  "sort": [
+    {
+      "post_time": "desc", 
+      "include_time": "desc"
+    }
+    ],
+    "aggs": {
+      "NAME": {
+        "terms": {
+          "size": 100000,
+          "script": {
+            "inline": "doc['post_time'].value +'-split-'+ doc['include_time'].value"
+          }
+        }
+      }
+    }
+}
+```
+
 
 按照 id 筛选，再按照时间排序，就可以看到这个 id 下的按顺序排列的结果  
 
