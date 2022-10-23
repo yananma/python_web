@@ -12,6 +12,9 @@
 查看数量  
 `GET /kejisousou-testv5/_count`  
 
+查看字段类型  
+`GET changcheng_model/_mapping`    
+
 
 ### term   
 
