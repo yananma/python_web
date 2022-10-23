@@ -1335,6 +1335,8 @@ GET /vip/_search
 
 #### 新建模板  
 
+需要按月份建索引，就要写模板。    
+
 比如照着 kejisousou-test 新建一个 kejisousou-testv2  
 
 先 GET 原来的模板  
