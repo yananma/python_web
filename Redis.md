@@ -79,6 +79,26 @@ else:
 查看键中的值：`GET "键名"`  
 
 
+
+
+### 列表   
+
+#### 查看列表长度   
+
+```python  
+from hill.models.connections import lazy
+
+lazy.rc.llen(u"crawlcomments:urls-info")
+```
+
+
+#### 清空列表  
+
+```python  
+lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)   
+```
+
+
 ### Redis 简介  
 
 #### NoSQL 概述  
