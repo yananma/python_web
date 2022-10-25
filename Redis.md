@@ -51,6 +51,25 @@ else:
 ```
 
 
+#### redis 用有序集合去重，保留一个小时内的数据，超过一个小时的数据过期   
+
+```python  
+redis_dedup_key = u"crawlcomments:urls-info-url-dedup"
+cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
+rpush_data = []
+for key, data in sorted(url_data_map.items(), key=lambda x: x[1][u"sort_id"]):
+    # url 去重
+    md5_url = trans_to_md5(data[u"url"])
+    time_stamp = cache.zscore(redis_dedup_key, md5_url)
+    if time_stamp:
+        continue
+    else:
+        cache.zadd(redis_dedup_key, {md5_url: time.time()})
+        # 低版本 redis（比如 Cyberin）（应该是 3.0 以下）不支持上面这种写法，低版本要用下面这种写法
+        cache.zadd(redis_dedup_key, md5_url, time.time())
+```
+
+
 #### redis 批量 push（速度提高几十倍）    
 
 ```python  
@@ -97,6 +116,32 @@ lazy.rc.llen(u"crawlcomments:urls-info")
 ```python  
 lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)   
 ```
+
+
+#### 查数量  
+
+```python  
+lazy.rc.zcard("crawlcomments:urls-info-url-dedup")   
+```
+
+
+### 有序集合  
+
+#### 添加元素   
+
+```python  
+cache.zadd(redis_dedup_key, {md5_url: time.time()})
+# 低版本 redis（比如 Cyberin）（应该是 3.0 以下）不支持上面这种写法，低版本要用下面这种写法
+cache.zadd(redis_dedup_key, md5_url, time.time())
+```
+
+#### 只保留一个小时以内的元素   
+
+```python  
+# zremrangebyscore 移除给定的分数区间的所有成员
+cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
+```
+
 
 
 ### Redis 简介  
