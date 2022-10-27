@@ -1,7 +1,9 @@
 
 ### 手写查询     
 
-查询 text 类型，使用 query_string 或 match_phrase，完全匹配关键字类型，用 term.  
+查询 text 类型，使用 query_string 或 match_phrase，完全匹配关键字类型，用 term.   
+
+最重要的 3 个索引：page、wei、community2     
 
 查看索引字段  
 `GET kejisousou`  
