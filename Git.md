@@ -119,6 +119,7 @@ vim ~/.git-credentials
 设置缓存，默认 15 分钟内不用重复输入密码：`git config --global credential.helper cache`   
 
 
+
 ## 报错
 
 ### gitlab、pycharm 和远程服务器的关系   
@@ -143,6 +144,23 @@ git pull 成功以后，再把备份文件替换，再 git pull。
 
 push 不成功，看左下角的 git 的 log  
 
+
+### git push 报错：kex_exchange_identification: Connection closed by remote host   
+
+可能是原来是 ssh，但是服务器不再允许通过 ssh 访问了，要改成 http   
+
+```python 
+# 1. 查看当前remote
+git remote -v
+
+# 2. 切换到http：
+git remote set-url origin https://github.com/username/repository.git
+
+# 3. 切换到ssh：
+git remote set-url origin git@github.com:username/repository.git
+``` 
+
+
 ### protect branch   
 
 在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
@@ -163,6 +181,11 @@ fatal: Not a git repository (or any parent up to mount point /home)
 Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).    
 
 应该用 git clone 命令拉代码，却用了 git pull    
+
+
+
+
+
 
 
 *** 
