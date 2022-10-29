@@ -149,7 +149,7 @@ push 不成功，看左下角的 git 的 log
 
 可能是原来是 ssh，但是服务器不再允许通过 ssh 访问了，要改成 http   
 
-```python 
+```git 
 # 1. 查看当前remote
 git remote -v
 
