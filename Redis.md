@@ -144,6 +144,14 @@ cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
 
 
 
+### 安装 redis   
+
+安装 redis 注意事项：     
+（高版本 redis 已经集成了 cluster 了，试试只装高版本）     
+1. 先装 redis，再装 hiredis，再装 rediscluster，再装 redis-py-cluster，顺序不能颠倒。  
+2. 注意版本。找一个能用的环境，看那个环境里的包的对应的版本。    
+
+
 ### Redis 简介  
 
 #### NoSQL 概述  
