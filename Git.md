@@ -140,6 +140,13 @@ git pull 的时候，pycharm 的代码和 gitlab 上的代码是一样的，但�
 git pull 成功以后，再把备份文件替换，再 git pull。   
 
 
+### git pull aborting, git diff No newline at end of file   
+
+`git reset --hard HEAD` 撤销所有未提交改动。     
+
+或者删除本地文件，再去 git 下原文件，上传。      
+
+
 ### pycharm git push 不成功  
 
 push 不成功，看左下角的 git 的 log  
