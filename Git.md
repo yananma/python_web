@@ -131,6 +131,22 @@ git pull 的时候，pycharm 的代码和 gitlab 上的代码是一样的，但�
 如果 git push 的时候，提示 merge，merge 完以后，和上面的情况一样，远程服务器的代码是旧代码，看 merge 的文件，要从 pycharm 上传 merge 以后的文件才行。可能是一个很偏的自己不用的文件。    
 
 
+### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
+
+在命令中添加用户名密码：`git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git`，只要配置一次，以后就都可以了。   
+
+
+### git pull 的时候报错：fatal: repository 'http://gitlab.maixunbytes.com/doukuan/crisis_admin.git/' not found 其实和上面的一样，也是服务器上默认的用户改变了(感觉这种方法没效果)   
+
+`git pull http://user:password@gitlab.maixunbytes.com/doukuan/crisis_admin.git/`    
+
+### git 拉代码报错  
+
+fatal: Not a git repository (or any parent up to mount point /home)     
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).    
+
+应该用 git clone 命令拉代码，却用了 git pull    
+
 ### git pull aborting   
 
 因为服务器上的代码有改动，git pull 不成功。   
@@ -173,24 +189,9 @@ git remote set-url origin git@github.com:username/repository.git
 在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect    
 
 
-### 服务器没有配置用户名密码，git clone 的时候报错说，仓库不存在    
+### git push 报错说请联系 maintainer   
 
-在命令中添加用户名密码：`git clone http://user:password@gitlab.maixunbytes.com/media-library/mxlabeltool.git`，只要配置一次，以后就都可以了。   
-
-
-### git pull 的时候报错：fatal: repository 'http://gitlab.maixunbytes.com/doukuan/crisis_admin.git/' not found 其实和上面的一样，也是服务器上默认的用户改变了(感觉这种方法没效果)   
-
-`git pull http://user:password@gitlab.maixunbytes.com/doukuan/crisis_admin.git/`    
-
-### git 拉代码报错  
-
-fatal: Not a git repository (or any parent up to mount point /home)     
-Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).    
-
-应该用 git clone 命令拉代码，却用了 git pull    
-
-
-
+没有权限，当前是 developer，应该改成 maintainer       
 
 
 
