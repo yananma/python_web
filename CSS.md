@@ -78,12 +78,25 @@ style 写在 head 里
 
 #### a 链接  
 
-所有的 a 标签全部都取消下划线，全部都修改颜色   
+所有的 a 标签全部都取消下划线   
 ```css 
 a {
     text-decoration: none;
 }
 ```
+
+不生效的话，改 css，比如   
+
+```css
+.content .content-text .content-artical a:hover{
+  text-decoration: none; 
+}
+
+.content .content-text .content-artical a {
+  color: #666;
+}
+```
+
 
 
 #### [button](https://www.w3school.com.cn/jsref/dom_obj_pushbutton.asp)  
