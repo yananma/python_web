@@ -3,6 +3,8 @@
 
 查询 text 类型，使用 query_string 或 match_phrase，完全匹配关键字类型，用 term.   
 
+match 会使用分词器，会拆词，一般不用。     
+
 最重要的 3 个索引：page、wei、community2     
 
 查看索引字段  
@@ -124,6 +126,84 @@ GET kejisousou-en-formal/_search
   }
 }
 ```
+
+math_phrase    
+
+例子，工具集 ES 导出工具，导包含排除逻辑这些词。       
+
+导出工具，数量要选择 -1，否则数量会限制成 1 万；导出内容格式，如果选择导出摘要，摘要要处理生成，会慢，选择导出全文会快，全文是直接从 ES 里取的值。      
+
+在高级模式里写 query。    
+
+例子：   
+
+```python 
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "post_time": {
+              "gte": "2023-03-01 00:00:00",
+              "lte": "2023-03-31 23:59:59"
+            }
+          }
+        }
+      ],
+      "should": [
+        { "match_phrase": { "text": "东风日产" } },
+        { "match_phrase": { "text": "Nissan" } },
+        { "match_phrase": { "text": "e-POWER轩逸" } },
+        {
+          "bool": {
+            "must": [{ "match_phrase": { "text": "奇骏" } }],
+            "must_not": [{ "match_phrase": { "text": "宫奇骏" } }]
+          }
+        },
+        { "match_phrase": { "text": "逍客" } },
+        {
+          "bool": {
+            "must": [
+              { "match_phrase": { "text": "劲客" } },
+              { "match_phrase": { "text": "日产" } }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "must": [
+              { "match_phrase": { "text": "天籁" } },
+              { "match_phrase": { "text": "日产" } }
+            ]
+          }
+        },
+        { "match_phrase": { "text": "轩逸" } },
+        { "match_phrase": { "text": "骐达" } },
+        {
+          "bool": {
+            "must": [
+              { "match_phrase": { "text": "楼兰" } },
+              { "match_phrase": { "text": "日产" } }
+            ]
+          }
+        },
+        { "match_phrase": { "text": "轩逸∙纯电" } },
+        {
+          "bool": {
+            "must": [
+              { "match_phrase": { "text": "Ariya" } },
+              { "match_phrase": { "text": "日产" } }
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  }
+}
+```
+
 
 按时间日期范围查询   
 ```python 
