@@ -541,6 +541,42 @@ GET /kejisousou-en-test/_search
 }
 ```
 
+```python 
+GET page,wei,community2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "include_time": {
+              "gte": "2023-05-05 00:00:00",
+              "lte": "2023-05-15 00:00:00"
+            }
+          }
+        },
+        {
+          "term": {
+            "spider_source": {
+              "value": "b63_yqt_sub_api_consume"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "time_aggs": {
+      "date_histogram": {
+        "field": "include_time",
+        "interval": "day"
+      }
+    }
+  }
+}
+```
+
 聚合后根据聚合结果的数量排序  
 
 ```python 
