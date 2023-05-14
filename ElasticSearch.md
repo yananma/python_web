@@ -20,6 +20,35 @@ match 会使用分词器，会拆词，一般不用。
 `GET changcheng_model/_mapping`    
 
 
+最常用的是包含，包含用 match_phrase    
+
+### match_phrase   
+
+```python 
+GET page,wei,community2/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "include_time": {
+              "gte": "2023-05-13 00:00:00",
+              "lte": "2023-05-15 00:00:00"
+            }
+          }
+        },
+        {
+          "match_phrase": {
+            "text": "梦廊坊"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 ### term   
 
 完全匹配，严格相等     
