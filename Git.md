@@ -81,6 +81,16 @@ git push
 
 ## 功能   
 
+
+### 撤销服务器上没有提交的改动    
+
+比如在服务器临时改了 file_tools.py，要撤销
+
+git checkout ../xposts/file_tools.py    
+
+或者用 git reset --hard HEAD     
+
+
 ### 回滚到指定位置   
 
 ```python 
