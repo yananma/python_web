@@ -99,9 +99,10 @@ git reset --hard 数字
 git push -f   
 
 # 如果报错，protect branch 
-在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers 或者选择 Unprotect      
+在 settings -> Repository -> Protected branches 底下表格选择 Allowed to push 下拉框，可以选择 developers + maintainers，有一个 Allow force push 要选上允许，或者选择 Unprotect      
 
 ```
+
 
 ### git pull 不要每次都输入密码   
 
