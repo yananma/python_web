@@ -1,4 +1,8 @@
 
+git --help     
+git --help a   
+git config     
+
 
 ## 低版本 git，本地已有项目 push 到远程 （服务器）  
 
