@@ -155,12 +155,14 @@ git pull 的时候，pycharm 的代码和 gitlab 上的代码是一样的，但�
 
 `git pull http://user:password@gitlab.maixunbytes.com/doukuan/crisis_admin.git/`    
 
+
 ### git 拉代码报错  
 
 fatal: Not a git repository (or any parent up to mount point /home)     
 Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).    
 
 应该用 git clone 命令拉代码，却用了 git pull    
+
 
 ### git pull aborting   
 
@@ -178,9 +180,43 @@ git pull 成功以后，再把备份文件替换，再 git pull。
 或者删除本地文件，再去 git 下原文件，上传。      
 
 
+### git pull aborting   
+
+error: The following untracked working tree files would be overwritten by merge:
+	models/models/origin_models.py
+Please move or remove them before you merge.
+Aborting    
+
+本地文件没 git add，对比本地和远程，如果一样就删除本地，然后再 git pull       
+
+
 ### pycharm git push 不成功  
 
 push 不成功，看左下角的 git 的 log  
+
+
+### git push 报错   
+
+```shell
+(cyberin_env) [deploy@b79 cyberin_backend]$ git push
+warning: push.default is unset; its implicit value is changing in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the current behavior after the default changes, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Everything up-to-date
+```
+
+文件没有 commit 成功      
 
 
 ### git push 报错：kex_exchange_identification: Connection closed by remote host   
