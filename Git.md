@@ -88,9 +88,9 @@ git push
 
 ### 撤销服务器上没有提交的改动    
 
-比如在服务器临时改了 file_tools.py，要撤销
+用 git status 看，看提示信息。      
 
-git checkout ../xposts/file_tools.py    
+git checkout -- xposts/management/commands/push_hefushe.py    
 
 或者用 git reset --hard HEAD     
 
