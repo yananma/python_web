@@ -15,7 +15,8 @@ git config
 7. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)
 8. 然后接着按 gitlab 的步骤添加 git remote add origin，不过要注意 gitlab 上的步骤默认是 ssh，要改成 http。    
 9. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （用 git config -l 看配置，如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
-10. 不用 add 和 commit，直接 push：`git push -u origin main`   
+10. 不用 add 和 commit，直接 push：`git push -u origin main`
+11. 如果报错 fatal: unable to access 'http://gitlab.com/ua.git/': The requested URL returned error: 403，就在 remote origin 的 URL 里加上 username:password
 
 
 #### 高版本 git，本地已有项目 push 到远程  
