@@ -4,17 +4,18 @@ git --help a
 git config     
 
 
-## 低版本 git，本地已有项目 push 到远程 （服务器）  
+## 低版本 git，本地已有项目 push 到 gitlab      
 
-1. 在 gitlab 上 new project，选择 Create blank project  
-2. 创建仓库，不勾选 Initialize repository with a README  
+1. 在 gitlab 上顶栏 + 号，选择 new project，选择 Create blank project  
+2. 创建仓库，填写 Project name，不勾选 Initialize repository with a README，点 create project     
 3. 看 Push an existing folder，按照提示，复制命令运行（在 git add . 之前添加 .gitignore）
 4. vim .gitignore，添加 .idea/，添加 \_\_pycache__/   
-5. 低版本没有 `git init --initial-branch=main`，要自己修改分支名    
-6. 先 `git init` 创建仓库，然后 `git add` 和 `git commit -m` 以后才会有 master 分支   
-7. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)   
-8. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
-9. 不用 add 和 commit，直接 push：`git push -u origin main`   
+5. 低版本 git （比如 b51）没有 `git init --initial-branch=main`，执行以后会报错 error: unknown option `initial-branch=main'，要自己修改分支名    
+6. 先 `git init` 创建仓库，然后 `git add .` 和 `git commit -m "create project"` 以后才会有 master 分支    
+7. `git branch -M main`(把当前分支重命名为 main) (如果是修改任意分支命令是：`git branch -m old_name new_name`)
+8. 然后接着按 gitlab 的步骤添加 git remote add origin，不过要注意 gitlab 上的步骤默认是 ssh，要改成 http。    
+9. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （用 git config -l 看配置，如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
+10. 不用 add 和 commit，直接 push：`git push -u origin main`   
 
 
 #### 高版本 git，本地已有项目 push 到远程  
