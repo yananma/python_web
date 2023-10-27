@@ -34,7 +34,7 @@ def redis_cache(func):
 ```
 
 
-#### redis 去重，一般不用，千万数量级以上才用   
+#### redis 集合去重，一般不用，千万数量级以上才用   
 
 ```python  
 # cyberin  
@@ -51,7 +51,30 @@ else:
 ```
 
 
-#### redis 用有序集合去重，保留一个小时内的数据，超过一个小时的数据过期   
+```python
+def dedup(self, datas):
+    start_time = time.time()
+    redis_dedup_key = u"dazhong_author_set_mayanan:urls-dedup"
+    deduped_data = []
+    local_urls = set()
+    for data in datas:
+        if data['url'] in local_urls:
+            continue
+        local_urls.add(data['url'])
+        if cache.sismember(redis_dedup_key, data['url']):
+            continue
+        deduped_data.append(data)
+        if len(local_urls) >= 10000:
+            cache.sadd(redis_dedup_key, *local_urls)
+            local_urls = set()
+    cache.sadd(redis_dedup_key, *local_urls)
+    logger.info(u"dedup cost {}s".format(time.time() - start_time))
+    return deduped_data
+```
+
+
+
+#### redis 用有序集合去重，有序集合是一种比较重的数据结构，一般去重用 set 即可，保留一个小时内的数据，超过一个小时的数据过期       
 
 ```python  
 redis_dedup_key = u"crawlcomments:urls-info-url-dedup"
@@ -67,6 +90,30 @@ for key, data in sorted(url_data_map.items(), key=lambda x: x[1][u"sort_id"]):
         cache.zadd(redis_dedup_key, {md5_url: time.time()})
         # 低版本 redis（比如 Cyberin）（应该是 3.0 以下）不支持上面这种写法，低版本要用下面这种写法
         cache.zadd(redis_dedup_key, md5_url, time.time())
+```
+
+#### 有序集合的一种比较好的写法   
+
+```python
+def dedup_data(self):
+    if self.options["cancel_dedup"]:
+        return self.get_url_data_map()
+    redis_dedup_key = u"crawlcomments:urls-info-url-dedup"
+    cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)  # 近一个小时的 url 做去重
+    deduped_url_data_map = {}
+    for key, data in self.get_url_data_map().items():
+        try:
+            md5_url = trans_to_md5(data[u"url"])
+        except UnicodeEncodeError:
+            logger.exception(u"UnicodeEncodeError {}".format(data[u"url"]))
+            continue
+        time_stamp = cache.zscore(redis_dedup_key, md5_url)
+        if time_stamp:
+            continue
+        else:
+            cache.zadd(redis_dedup_key, md5_url, time.time())
+        deduped_url_data_map[key] = data
+    return deduped_url_data_map
 ```
 
 
@@ -100,7 +147,7 @@ for key, data in sorted(url_data_map.items(), key=lambda x: x[1][u"sort_id"]):
 
 
 
-### 列表   
+## 列表   
 
 #### 查看列表长度   
 
@@ -125,7 +172,38 @@ lazy.rc.zcard("crawlcomments:urls-info-url-dedup")
 ```
 
 
-### 有序集合  
+## 集合   
+
+#### 添加元素   
+
+```python
+cache.sadd(u"urls-info-dedupe", trans_to_md5(d[u"url"]))
+``` 
+
+
+#### 判断元素在不在集合    
+
+```python
+cache.sismember(u"urls-info-dedupe", trans_to_md5(d[u"url"]))    
+```
+
+
+#### 查询数量   
+
+```python
+cache.scard("dazhong_author_set_mayanan:urls-dedup")
+```
+
+
+#### 清空集合   
+
+```python
+cache.delete("dazhong_author_set_mayanan:urls-dedup")  # 有时候键太大，删除以后不会立即生效，就重新换一个键      
+```
+
+
+
+## 有序集合  
 
 #### 添加元素   
 
