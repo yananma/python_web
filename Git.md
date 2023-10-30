@@ -236,6 +236,17 @@ git remote set-url origin https://github.com/username/repository.git
 git remote set-url origin git@github.com:username/repository.git
 ``` 
 
+### git push 报错    
+
+```shell
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+```
+
+把 git push 改成 git push origin master      
+
 
 ### protect branch   
 
