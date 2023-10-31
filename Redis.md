@@ -2,7 +2,7 @@
 搜索工具集和 cyberin     
 
 
-#### 删除    
+#### 删除，量大的时候不要自己删，找树兵删     
 
 ```python  
 cache.delete(key)  
