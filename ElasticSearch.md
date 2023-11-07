@@ -20,7 +20,24 @@ match 会使用分词器，会拆词，一般不用。
 `GET changcheng_model/_mapping`    
 
 
+分词  
+
+```python
+GET /_analyze
+{
+  "text": "晚上睡,不着",
+  "analyzer": "jieba_search"
+}
+```
+
+查看都有什么 analyzer    
+`GET /_template`    
+搜 analyzer    
+
+
+
 最常用的是包含，包含用 match_phrase    
+
 
 ### match_phrase   
 
