@@ -1,4 +1,6 @@
 
+把配置文件放到项目里，提到 Git 上。     
+
 git --help     
 git --help a   
 git config     
