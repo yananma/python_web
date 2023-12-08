@@ -5,6 +5,8 @@ git --help
 git --help a   
 git config     
 
+`git log master --author "mayanan" --pretty="%s" | grep "优化" | wc -l`      
+
 
 ## 低版本 git，本地已有项目 push 到 gitlab      
 
@@ -86,6 +88,7 @@ git commit -m "delete .idea"
 
 git push   
 ```
+
 
 ## 功能   
 
