@@ -264,6 +264,18 @@ To push the current branch and set the remote as upstream, use
 
 
 
+### git log    
+
+git log --help    
+
+git log master  主分支   
+\-\-author="mayanan"  
+\-\-since="2023-12-08"      
+\-\-until="2023-12-09"      
+
+`git log master --author "mayanan" --pretty="%s" | grep "优化" | wc -l`      
+
+
 
 *** 
 
