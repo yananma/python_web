@@ -122,7 +122,7 @@ git push -f
 git config --global credential.helper store  
 ```
 
-再 git pull，再输一次用户名密码，以后就不用输了。    
+再 git pull，再输一次用户名密码，以后就不用输了。是永久生效的。    
 
 可以通过 
 
