@@ -1,5 +1,105 @@
 
-搜索工具集和 cyberin     
+搜工具集和 cyberin，看用法       
+
+
+查看键中的值：`GET "键名"`  
+
+
+
+
+## 列表   
+
+#### 查看列表长度   
+
+```python  
+from hill.models.connections import lazy
+
+lazy.rc.llen(u"crawlcomments:urls-info")
+```
+
+
+#### 清空列表  
+
+```python  
+lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)   
+```
+
+#### 添加元素    
+
+```python
+rpush     
+```
+
+
+#### 查数量  
+
+```python  
+lazy.rc.zcard("crawlcomments:urls-info-url-dedup")   
+```
+
+
+## 集合   
+
+#### 添加元素   
+
+```python
+cache.sadd(u"urls-info-dedupe", trans_to_md5(d[u"url"]))
+``` 
+
+
+#### 判断元素在不在集合    
+
+```python
+cache.sismember(u"urls-info-dedupe", trans_to_md5(d[u"url"]))    
+```
+
+
+#### 查询数量   
+
+```python
+cache.scard("dazhong_author_set_mayanan:urls-dedup")
+```
+
+
+#### 清空集合   
+
+```python
+cache.delete("dazhong_author_set_mayanan:urls-dedup")  # 有时候键太大，删除以后不会立即生效，就重新换一个键      
+```
+
+
+
+## 有序集合  
+
+#### 添加元素   
+
+```python  
+cache.zadd(redis_dedup_key, {md5_url: time.time()})
+# 低版本 redis（比如 Cyberin）（应该是 3.0 以下）不支持上面这种写法，低版本要用下面这种写法
+cache.zadd(redis_dedup_key, md5_url, time.time())
+```
+
+#### 只保留一个小时以内的元素   
+
+```python  
+# zremrangebyscore 移除给定的分数区间的所有成员
+cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
+```
+
+#### 查询数量  
+
+```python
+from rediscluster import RedisCluster, StrictRedisCluster
+from mx_config import mxconfig
+
+startup_nodes = mxconfig('[redis_cluster_nodes]$/connection/redis$redis.servers')
+cache = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True)
+redis_dedup_key = u"crawlinteraction:urls-info"
+
+cache.zscan(redis_dedup_key)
+```
+
+
 
 
 #### 删除，量大的时候不要自己删，找树兵删     
@@ -140,98 +240,6 @@ def dedup_data(self):
         logger.info(u"done.")
 ```
 
-
-
-查看键中的值：`GET "键名"`  
-
-
-
-
-## 列表   
-
-#### 查看列表长度   
-
-```python  
-from hill.models.connections import lazy
-
-lazy.rc.llen(u"crawlcomments:urls-info")
-```
-
-
-#### 清空列表  
-
-```python  
-lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)   
-```
-
-
-#### 查数量  
-
-```python  
-lazy.rc.zcard("crawlcomments:urls-info-url-dedup")   
-```
-
-
-## 集合   
-
-#### 添加元素   
-
-```python
-cache.sadd(u"urls-info-dedupe", trans_to_md5(d[u"url"]))
-``` 
-
-
-#### 判断元素在不在集合    
-
-```python
-cache.sismember(u"urls-info-dedupe", trans_to_md5(d[u"url"]))    
-```
-
-
-#### 查询数量   
-
-```python
-cache.scard("dazhong_author_set_mayanan:urls-dedup")
-```
-
-
-#### 清空集合   
-
-```python
-cache.delete("dazhong_author_set_mayanan:urls-dedup")  # 有时候键太大，删除以后不会立即生效，就重新换一个键      
-```
-
-
-
-## 有序集合  
-
-#### 添加元素   
-
-```python  
-cache.zadd(redis_dedup_key, {md5_url: time.time()})
-# 低版本 redis（比如 Cyberin）（应该是 3.0 以下）不支持上面这种写法，低版本要用下面这种写法
-cache.zadd(redis_dedup_key, md5_url, time.time())
-```
-
-#### 只保留一个小时以内的元素   
-
-```python  
-# zremrangebyscore 移除给定的分数区间的所有成员
-cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
-```
-
-#### 查询数量  
-
-```python
-from rediscluster import RedisCluster, StrictRedisCluster
-from mx_config import mxconfig
-
-startup_nodes = mxconfig('[redis_cluster_nodes]$/connection/redis$redis.servers')
-cache = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True)
-redis_dedup_key = u"crawlinteraction:urls-info"
-
-cache.zscan(redis_dedup_key)
-```
 
 
 ### 安装 redis   
