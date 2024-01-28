@@ -20,14 +20,22 @@ lazy.rc.llen(u"crawlcomments:urls-info")
 
 #### 清空列表  
 
+让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。
 ```python  
-lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)   
+lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0(start), 0(stop))      
 ```
+
+#### pop 最后一个元素，并且返回结果值    
+
+```python
+r = cache.rpop(redis_dedup_key)    
+```
+
 
 #### 添加元素    
 
 ```python
-cache.rpush(key, *[{}, {}, ...](列表套字典))      
+cache.rpush(key, *[{}, {}, ...](列表套字典，每个字典都要用 json dumps 才行))      
 ```
 
 
