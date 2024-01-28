@@ -27,7 +27,7 @@ lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0, 0)
 #### 添加元素    
 
 ```python
-rpush     
+cache.rpush(key, *[{}, {}, ...](列表套字典))      
 ```
 
 
