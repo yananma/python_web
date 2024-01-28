@@ -310,7 +310,10 @@ sudo service redis-server stop
 
 连接 redis-server：  
 `ps -aux | grep redis`    
-`redis-cli -h [ip] -p [端口]`  
+`redis-cli -h [ip] -p [端口]`   
+b7 dingyong      
+`redis-cli -c -h 192.168.241.7 -p 16379`       
+
 
 添加：  
 `set key value`  
