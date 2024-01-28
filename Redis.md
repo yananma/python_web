@@ -220,6 +220,18 @@ cache.zadd(redis_dedup_key, md5_url, time.time())
 cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
 ```
 
+#### 查询数量  
+
+```python
+from rediscluster import RedisCluster, StrictRedisCluster
+from mx_config import mxconfig
+
+startup_nodes = mxconfig('[redis_cluster_nodes]$/connection/redis$redis.servers')
+cache = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True)
+redis_dedup_key = u"crawlinteraction:urls-info"
+
+cache.zscan(redis_dedup_key)
+```
 
 
 ### 安装 redis   
