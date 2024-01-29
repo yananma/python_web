@@ -102,9 +102,9 @@ from mx_config import mxconfig
 
 startup_nodes = mxconfig('[redis_cluster_nodes]$/connection/redis$redis.servers')
 cache = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=True)
-redis_dedup_key = u"crawlinteraction:urls-info"
+redis_key = u"crawlinteraction:urls-info"
 
-cache.zscan(redis_dedup_key)
+cache.zscan(redis_key)
 ```
 
 
