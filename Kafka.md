@@ -1,4 +1,19 @@
 
+ipython 生产数据    
+
+```python
+from mx_config import mxconfig
+bootstrap_servers = mxconfig('/connection/kafka$kafka.servers')
+from confluent_kafka import Producer
+
+TOPIC = "interaction"
+producer = Producer(**{"bootstrap.servers": bootstrap_servers})
+
+d = {"url": "http://www.douyin.com/video/7329708531983174927", "read_num": -1, "like_num": 2, "collect_num": 0, "comment_num": 0, "repost_num": 0, "watch_num": -1, "extra": "{}", "include_time": "2024-01-31 16:05:15"}
+
+import json
+producer.produce(TOPIC, json.dumps(d))
+``` 
 
 
 
