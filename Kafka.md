@@ -230,15 +230,14 @@ from mx_config import mxconfig
 bootstrap_servers = mxconfig('/connection/kafka$kafka.servers')
 client = KafkaClient(hosts=bootstrap_servers, broker_version='1.1.1')
 
-dir(client)  # 看方法
+# dir(client)  # 看方法
 
-client.topics  # 看所有的 topic   
+# client.topics  # 看所有的 topic   
 Out[6]: 
 {'page': <pykafka.topic.Topic at 0x7fefe96be090 (name=page)>,
  'page2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=page2)>,
  'tidb-feed': <pykafka.topic.Topic at 0x7fefe96be090 (name=tidb-feed)>,
  'tidb-feed2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-feed2)>}
-```
 
 def make_consumer(client, topic, group):
     # 创建连接
@@ -259,8 +258,11 @@ def make_consumer(client, topic, group):
 
 consumer = make_consumer(client, "tidb-feed", "upload_feed_tidb")
 
-for i in range(3000000):
+for i in range(3000000):  # 这种只能拿到空闲的进程的数据
      consumer.consume()
      if i % 100000 == 0:
          consumer.commit_offsets()
          print i
+
+```
+
