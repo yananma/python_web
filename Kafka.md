@@ -219,74 +219,48 @@ if __name__ == "__main__":
 
 
 
-### 查看所有的 topic   
+### 清空 feed 所有的积压数据   
 
 ```python
-In [1]: from pykafka import KafkaClient
+from pykafka import KafkaClient
+from pykafka.common import OffsetType
+from mx_config import mxconfig
 
-In [2]: from mx_config import mxconfig
 
-In [3]: bootstrap_servers = mxconfig('/connection/kafka$kafka.servers')
+bootstrap_servers = mxconfig('/connection/kafka$kafka.servers')
+client = KafkaClient(hosts=bootstrap_servers, broker_version='1.1.1')
 
-In [4]: client = KafkaClient(hosts=bootstrap_servers, broker_version='1.1.1')
+dir(client)  # 看方法
 
-In [5]: dir(client)
-Out[5]: 
-['__class__',
- '__delattr__',
- '__dict__',
- '__doc__',
- '__format__',
- '__getattribute__',
- '__hash__',
- '__init__',
- '__module__',
- '__new__',
- '__reduce__',
- '__reduce_ex__',
- '__repr__',
- '__setattr__',
- '__sizeof__',
- '__str__',
- '__subclasshook__',
- '__weakref__',
- '_handler',
- '_offsets_channel_socket_timeout_ms',
- '_seed_hosts',
- '_socket_timeout_ms',
- '_source_address',
- 'brokers',
- 'cluster',
- 'topics',
- 'update_cluster']
-
-In [6]: client.topics
+client.topics  # 看所有的 topic   
 Out[6]: 
-{'author': <pykafka.topic.Topic at 0x7fefe96be090 (name=author)>,
- 'autohome': <pykafka.topic.Topic at 0x7fefe96ae710 (name=autohome)>,
- 'cctv_weibo_02': <pykafka.topic.Topic at 0x7fefe96be090 (name=cctv_weibo_02)>,
- 'cctv_weibo_original': <pykafka.topic.Topic at 0x7fefe96be090 (name=cctv_weibo_original)>,
- 'comment': <pykafka.topic.Topic at 0x7fefe96aef90 (name=comment)>,
- 'community': <pykafka.topic.Topic at 0x7fefe96aef90 (name=community)>,
- 'community_high': <pykafka.topic.Topic at 0x7fefe96be090 (name=community_high)>,
- 'delay_page2': <pykafka.topic.Topic at 0x7fefe96aef90 (name=delay_page2)>,
- 'elk-spider': <pykafka.topic.Topic at 0x7fefe96be090 (name=elk-spider)>,
- 'hbas': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=hbas)>,
- 'interaction': <pykafka.topic.Topic at 0x7fefe96be090 (name=interaction)>,
- 'meta': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=meta)>,
- 'ocr-media': <pykafka.topic.Topic at 0x7fefe96be090 (name=ocr-media)>,
- 'online_data-yjs': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=online_data-yjs)>,
- 'page': <pykafka.topic.Topic at 0x7fefe96be090 (name=page)>,
+{'page': <pykafka.topic.Topic at 0x7fefe96be090 (name=page)>,
  'page2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=page2)>,
  'tidb-feed': <pykafka.topic.Topic at 0x7fefe96be090 (name=tidb-feed)>,
- 'tidb-feed2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-feed2)>,
- 'tidb-xpost': <pykafka.topic.Topic at 0x7fefe96be090 (name=tidb-xpost)>,
- 'tidb-xpost-increment': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-xpost-increment)>,
- 'video_ocr': <pykafka.topic.Topic at 0x7fefea0a8150 (name=video_ocr)>,
- 'warning-xpost': <pykafka.topic.Topic at 0x7fefea0a8150 (name=warning-xpost)>,
- 'wei': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=wei)>,
- 'wei-comminuty': <pykafka.topic.Topic at 0x7fefea0a8150 (name=wei-comminuty)>,
- 'yqt_sub_data': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=yqt_sub_data)>,
- 'zky-now': <pykafka.topic.Topic at 0x7fefea0a8150 (name=zky-now)>}
+ 'tidb-feed2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-feed2)>}
 ```
 
+def make_consumer(client, topic, group):
+    # 创建连接
+    tpc = client.topics[topic]
+    return tpc.get_balanced_consumer(
+        consumer_group=group,
+        managed=True,  # use kafka manager
+        fetch_message_max_bytes=10240 * 1024,  # 获取到的数据最大 10M
+        num_consumer_fetchers=1,  # 1个数据获取线程
+        auto_commit_enable=False,  # 自动设置成已经消费
+        queued_max_messages=2000,  # buffer 中的数据量
+        auto_offset_reset=OffsetType.EARLIEST,  # 当数据出界时的行为
+        consumer_timeout_ms=1000,  # 没有数据，多长时间返回一次 None
+        auto_start=True,  # 初始化后不调用 start 就启动
+        reset_offset_on_start=False,  # 默认从上一个没有 commit 的地方启动
+        use_rdkafka=False,  # 不使用 C 扩展的 librdkafka，默认在可用时使用
+    )
+
+consumer = make_consumer(client, "tidb-feed", "upload_feed_tidb")
+
+for i in range(3000000):
+     consumer.consume()
+     if i % 100000 == 0:
+         consumer.commit_offsets()
+         print i
