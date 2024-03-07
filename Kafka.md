@@ -216,3 +216,77 @@ def start_consumer():
 if __name__ == "__main__":
     start_consumer()
 ```
+
+
+
+### 查看所有的 topic   
+
+```python
+In [1]: from pykafka import KafkaClient
+
+In [2]: from mx_config import mxconfig
+
+In [3]: bootstrap_servers = mxconfig('/connection/kafka$kafka.servers')
+
+In [4]: client = KafkaClient(hosts=bootstrap_servers, broker_version='1.1.1')
+
+In [5]: dir(client)
+Out[5]: 
+['__class__',
+ '__delattr__',
+ '__dict__',
+ '__doc__',
+ '__format__',
+ '__getattribute__',
+ '__hash__',
+ '__init__',
+ '__module__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__',
+ '_handler',
+ '_offsets_channel_socket_timeout_ms',
+ '_seed_hosts',
+ '_socket_timeout_ms',
+ '_source_address',
+ 'brokers',
+ 'cluster',
+ 'topics',
+ 'update_cluster']
+
+In [6]: client.topics
+Out[6]: 
+{'author': <pykafka.topic.Topic at 0x7fefe96be090 (name=author)>,
+ 'autohome': <pykafka.topic.Topic at 0x7fefe96ae710 (name=autohome)>,
+ 'cctv_weibo_02': <pykafka.topic.Topic at 0x7fefe96be090 (name=cctv_weibo_02)>,
+ 'cctv_weibo_original': <pykafka.topic.Topic at 0x7fefe96be090 (name=cctv_weibo_original)>,
+ 'comment': <pykafka.topic.Topic at 0x7fefe96aef90 (name=comment)>,
+ 'community': <pykafka.topic.Topic at 0x7fefe96aef90 (name=community)>,
+ 'community_high': <pykafka.topic.Topic at 0x7fefe96be090 (name=community_high)>,
+ 'delay_page2': <pykafka.topic.Topic at 0x7fefe96aef90 (name=delay_page2)>,
+ 'elk-spider': <pykafka.topic.Topic at 0x7fefe96be090 (name=elk-spider)>,
+ 'hbas': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=hbas)>,
+ 'interaction': <pykafka.topic.Topic at 0x7fefe96be090 (name=interaction)>,
+ 'meta': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=meta)>,
+ 'ocr-media': <pykafka.topic.Topic at 0x7fefe96be090 (name=ocr-media)>,
+ 'online_data-yjs': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=online_data-yjs)>,
+ 'page': <pykafka.topic.Topic at 0x7fefe96be090 (name=page)>,
+ 'page2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=page2)>,
+ 'tidb-feed': <pykafka.topic.Topic at 0x7fefe96be090 (name=tidb-feed)>,
+ 'tidb-feed2': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-feed2)>,
+ 'tidb-xpost': <pykafka.topic.Topic at 0x7fefe96be090 (name=tidb-xpost)>,
+ 'tidb-xpost-increment': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=tidb-xpost-increment)>,
+ 'video_ocr': <pykafka.topic.Topic at 0x7fefea0a8150 (name=video_ocr)>,
+ 'warning-xpost': <pykafka.topic.Topic at 0x7fefea0a8150 (name=warning-xpost)>,
+ 'wei': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=wei)>,
+ 'wei-comminuty': <pykafka.topic.Topic at 0x7fefea0a8150 (name=wei-comminuty)>,
+ 'yqt_sub_data': <pykafka.topic.Topic at 0x7fefe96b2bd0 (name=yqt_sub_data)>,
+ 'zky-now': <pykafka.topic.Topic at 0x7fefea0a8150 (name=zky-now)>}
+```
+
