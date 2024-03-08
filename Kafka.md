@@ -219,7 +219,7 @@ if __name__ == "__main__":
 
 
 
-### 清空 feed 所有的积压数据   
+### 清空 feed 所有的积压数据（下面这种方法不行，下面这种方法只能拿到一个空闲的进程，要一直等。好的办法是用在 abstract 里改最后的 reset commit）     
 
 ```python
 from pykafka import KafkaClient
