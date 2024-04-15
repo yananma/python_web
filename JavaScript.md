@@ -387,6 +387,12 @@ $("p").css({"background-color":"yellow","font-size":"200%"});
 $('#oids').val().split(',').length
 ```
 
+转换为数字  
+
+```js
+$('#oids').val().split(',').map(item => parseInt(item, 10))   
+```
+
 
 #### 自定义属性以 data- 开头   
 
