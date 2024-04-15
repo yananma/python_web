@@ -113,7 +113,9 @@ if (res_logo !== null) {
 
 #### JavaScript 对象转 JSON 字符串  
 
+```js
 JSON.stringify()   
+```
 
 
 #### 如果有动态的数据，或者是动态调用函数，尽量不用拼字符串的方法   
@@ -376,6 +378,13 @@ $("p").css("background-color");
 
 ```js  
 $("p").css({"background-color":"yellow","font-size":"200%"});   
+```
+
+
+#### 判断传入的元素个数  
+
+```js
+$('#oids').val().split(',').length
 ```
 
 
