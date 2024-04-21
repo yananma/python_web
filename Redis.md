@@ -14,7 +14,7 @@
 ```python  
 from hill.models.connections import lazy
 
-lazy.rc.llen(u"crawlcomments:urls-info")
+lazy.rc.llen(key)
 ```
 
 
@@ -22,7 +22,7 @@ lazy.rc.llen(u"crawlcomments:urls-info")
 
 让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除。
 ```python  
-lazy.rc.ltrim(u"crawl:comment:crawlcomments_weibo_com:urls", 0(start), 0(stop))      
+lazy.rc.ltrim(key, 0(start), 0(stop))      
 ```
 
 #### pop 最后一个元素，并且返回结果值    
@@ -42,7 +42,7 @@ cache.rpush(key, *[{}, {}, ...](列表套字典，每个字典都要用 json dum
 #### 查数量  
 
 ```python  
-lazy.rc.zcard("crawlcomments:urls-info-url-dedup")   
+lazy.rc.zcard(key)   
 ```
 
 
