@@ -14,6 +14,22 @@ CDN
 </head>
 ```
 
+#### js 注释    
+
+```js
+// 这是一个单行注释  
+console.log("Hello, World!"); // 这部分也是注释
+```
+
+```js
+/*  
+这是一个多行注释  
+你可以在这里写多行文字来解释你的代码  
+*/  
+console.log("Hello, World!");
+```
+
+
 ## 语法   
 
 #### 获取 input 框里的值   
