@@ -6,7 +6,7 @@
 #### [a](https://www.w3school.com.cn/tags/tag_a.asp)  
 
 ```html
-<p>1. 新配的词要先重新加载上数据配置评论才能上到平台。如果新配的词一条数据都没有上到平台，就是这种情况。<a href="http://tools.mxspider.top/cyberin/updata_to_cyberin/" target="_blank">>跳转到加载配置页面</a></p>
+<a href="http://tools.mxspider.top/cyberin/updata_to_cyberin/" target="_blank">>跳转到加载配置页面</a>
 ```
 
 在新窗口打开，target="\_blank"    
