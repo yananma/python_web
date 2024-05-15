@@ -44,6 +44,10 @@ console.log(search_input_id.val())
 ```
 
 
+#### html 会转义，比如会把 & 符号当做有意义的符号，text 不会转义，所有都当做字符串来处理。 
+
+
+
 #### for 循环   
 
 ```js 
