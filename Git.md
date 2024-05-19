@@ -202,6 +202,12 @@ Aborting
 本地文件没 git add，对比本地和远程，如果一样就删除本地，然后再 git pull       
 
 
+### git pull 每次都提示 Merge branch 'master' of，每次都要 q! 退出   
+
+工具集原来一直是这样，办法是先看 git status，发现有一个删除的 .py 文件没有提交，就先用 git rm 删除，再 git push，再 git pull 就不提示了。      
+
+
+
 ### pycharm git push 不成功  
 
 push 不成功，看左下角的 git 的 log  
