@@ -95,6 +95,17 @@ git push
 ```
 
 
+
+### .idea 错误提交以后恢复   
+
+本地在 PyCharm 的 Tools -> Deployment -> Options 添加 exclude 文件类型：`.svn;.cvs;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc`，或者给项目添加 .gitignore    
+先在本地 `git reset --hard` 回退。   
+push 到 gitlab   
+服务器 git reset。   
+服务器拉代码。     
+
+
+
 ## 功能   
 
 
