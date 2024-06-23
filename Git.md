@@ -131,6 +131,14 @@ git push -f
 ```
 
 
+### 设置用户名密码    
+
+拉代码用，没有设置 Jenkins 就会一直等待。    
+
+`vim /home/dingyong/zxp/upload_to_community/.git/config`    
+在 `[remote "origin"]` 下的 url 写成 `http://deploy:thisisalongpassword@gitlab.maixunbytes.com/data-platform/upload_to_community.git`（或者找一台已经配置过的服务器，复制也可以，比照着写。）     
+
+
 ### git pull 不要每次都输入密码   
 
 先在命令行输入 
