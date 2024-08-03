@@ -33,7 +33,8 @@ git config
 1. 在 gitlab 上 new project，选择 Create blank project  
 2. 创建仓库，不勾选 Initialize repository with a README  
 3. 看 Push an existing folder，按照提示，复制命令运行（在 git add . 之前添加 .gitignore）    
-4. vim .gitignore，添加 .idea/，添加 \_\_pycache__/   
+4. vim .gitignore，添加 .idea/，添加 \_\_pycache__/
+5. 要用 http，不要用 ssh：`git remote add origin http://gitlab.maixunbytes.com/mayanan/extract_subtitles2.git` （用 git config -l 看配置，如果之前已经 remote add origin 为 ssh 了，要先删除：`git remote rm origin`，再执行 remote add origin）  
 
 
 
