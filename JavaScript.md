@@ -18,6 +18,11 @@ CDN
 </head>
 ```
 
+
+如果点击以后 console 报错 `TypeError: $.ajax is not a function` 很有可能是 jQuery 没有加载成功，有一次是因为网页是 https，但是 cdn 用的是 http 导致没有加载成功，改成 https 就好了。   
+
+
+
 #### html 注释  
 
 ```html
