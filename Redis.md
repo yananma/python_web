@@ -108,13 +108,43 @@ cache.zscan(redis_key)
 ```
 
 
+查询 key 包含 water 的 key 名：   
+
+```python
+In [5]: from hill.models.connections import lazy
+
+In [6]: lazy.rc.keys("water*")
+Out[6]: [u'water-2']
+
+In [8]: lazy.rc.type(u"water-2")
+Out[8]: u'zset'
+
+In [12]: lazy.rc.zcard(zset_key)
+Out[12]: 146754
+
+In [10]: lazy.rc.zrange(u"water-2", 0, 1000, withscores=True)
+Out[10]: 
+[(u'1000300905', 0.0),
+ (u'1000303992', 0.0),
+ (u'1000403003', 0.0),...] 
+
+```
 
 
-#### 删除，量大的时候不要自己删，找树兵删     
+
+
+
+#### 删除，量大的时候不要自己删，找运维删     
 
 ```python  
 cache.delete(key)  
 ```
+
+
+## 集群  
+
+空   
+
 
 
 #### redis 缓存   
