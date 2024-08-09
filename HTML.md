@@ -222,7 +222,9 @@ required='True' 必填
 
 上传文件，要设置 enctype='multipart/from-data'  
 
-textarea 文本框，比如留言板，评论区等等  
+textarea 文本框，比如留言板，评论区等等   
+
+不显示历史记录：autocomplete="off"   
 
 
 #### HTML5 语义元素  
