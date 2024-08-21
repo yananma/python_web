@@ -224,7 +224,9 @@ Aborting
 
 ### git pull 每次都提示 Merge branch 'master' of，每次都要 q! 退出   
 
-工具集原来一直是这样，办法是先看 git status，发现有一个删除的 .py 文件没有提交，就先用 git rm 删除，再 git push，再 git pull 就不提示了。      
+[csdn git pull 总提示让输入merge 信息](https://blog.csdn.net/luoluoyu2013/article/details/132577351)
+
+本质原因是本地代码和仓库代码版本不一致导致需要强制合并，解决办法就是 `git reset --hard` 到仓库最新版本。   
 
 
 
