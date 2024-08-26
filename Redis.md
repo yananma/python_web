@@ -6,6 +6,30 @@
 
 
 
+## 字符串   
+
+可以用来测试配置是不是能用。   
+
+```python
+import redis
+from mx_config import mxconfig
+
+redis_server = mxconfig("/connection/redis$redis_pubsub.host")
+
+cache = redis.Redis(redis_server, db=0, password="Lg0zZcIThYWHaiTXPM")
+
+cache.set(name="test_connection", value="abc")
+
+cache.get(name="test_connection")
+
+cache.exists(name="test_connection")
+
+cache.delete("test_connection")
+
+cache.exists(name="test_connection")
+```
+
+
 
 ## 列表   
 
