@@ -16,7 +16,7 @@ from mx_config import mxconfig
 
 redis_server = mxconfig("/connection/redis$redis_pubsub.host")
 
-cache = redis.Redis(redis_server, db=0, password="Lg0zZcIThYWHaiTXPM")
+cache = redis.Redis(redis_server, password="Lg0zZcIThYWHaiTXPM")
 
 cache.set(name="test_connection", value="abc")
 
