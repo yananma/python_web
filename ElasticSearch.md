@@ -1,4 +1,6 @@
 
+[常用 query](https://github.com/yananma/python_web/blob/main/%E4%B8%8D%E5%B8%B8%E7%94%A8/%E5%85%B6%E4%BB%96/elasticsearch_query.md)    
+
 ### 手写查询     
 
 查询 text 类型，使用 query_string 或 match_phrase，完全匹配关键字类型，用 term.   
