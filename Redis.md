@@ -5,6 +5,13 @@
 查看键中的值：`GET "键名"`  
 
 
+查看键的类型     
+
+```python
+In [2]: cache.type("crawl:comment:crawlcomments_mp_weixin_qq_com:urls")
+Out[2]: u'list'
+```
+
 
 ## 字符串   
 
