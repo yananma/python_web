@@ -11,7 +11,7 @@ client = Minio(
     endpoint=mxconfig('{cyberin_minio}.host'),
     access_key=mxconfig('{cyberin_minio}.access_key'),
     secret_key=mxconfig('{cyberin_minio}.secret_key'),
-    secure=False  # 如果启用 SSL，请将此选项设���为 True
+    secure=False  # 如果启用 SSL，请将此选项设为 True
 )
 
 # 设置要删除的文件夹路径和时间戳
