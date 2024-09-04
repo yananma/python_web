@@ -1,4 +1,32 @@
 
+pandas 读取 minio 文件：   
+
+```python
+from minio import Minio
+from mx_config import mxconfig
+import pandas as pd
+
+# 设置 Minio 客户端
+client = Minio(
+    endpoint=mxconfig('{cyberin_minio}.host'),
+    access_key=mxconfig('{cyberin_minio}.access_key'),
+    secret_key=mxconfig('{cyberin_minio}.secret_key'),
+    secure=False  # 如果启用 SSL，请将此选项设���为 True
+)
+
+# 设置要删除的文件夹路径和时间戳
+bucket = mxconfig('{cyberin_minio}.bucket')
+file_name = "static/offline/1821/测试离线匹配.csv"
+client.get_object(bucket, object_name=file_name)
+obj = client.get_object(bucket, object_name=file_name)
+
+
+df = pd.read_csv(obj, encoding="gbk")
+
+df.head()
+```
+
+
 
 QuickStart   
 
