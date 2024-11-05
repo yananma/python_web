@@ -112,6 +112,28 @@ if __name__ == "__main__":
 进程可以使用多核，线程不可以使用多核  
 
 
+#### 线程池  
+
+```python
+from concurrent.futures import ThreadPoolExecutor
+
+
+def task(self, url):
+    res = self.judgedelete.judge_single_url(url)
+    return int(res)
+
+
+def get_delete_info(self, df):
+    r = []
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(self.task, url) for url in df[u"链接"]]
+        for idx, future in enumerate(futures):
+            r.append({"url": df[u"链接"].iloc[idx], "res": future.result()})
+    return r
+``` 
+
+
+
 ## [Python 并发编程实战，用多线程、多进程、多协程](https://www.bilibili.com/video/BV1bK411A7tV?p=13&spm_id_from=pageDriver)  
 
 多任务，比如百度网盘同时下载多部电影  
