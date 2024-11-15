@@ -114,6 +114,24 @@ if __name__ == "__main__":
 
 #### 线程池  
 
+规范写法：   
+
+```python
+def get_delete_incr(self, df):
+    self.delete_incr = []
+    # 使用进程池执行
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        tasks = []
+        for url in df[u"链接"]:
+            tasks.append(executor.submit(self.task, url))
+        for task in as_completed(tasks):
+            if task.result() == 1:
+                self.delete_incr.append({"url": df[u"链接"].iloc[tasks.index(task)], "res": 1})
+```
+
+
+原来写法。    
+
 ```python
 from concurrent.futures import ThreadPoolExecutor
 
