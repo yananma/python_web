@@ -58,7 +58,8 @@ git diff -- 文件名
 ```
 
 
-分支  
+### 分支  
+
 ```linux 
 # 拉取特定分支  
 git clone -b branch-name url   
@@ -82,7 +83,90 @@ git branch -D mayanan-book
 git push origin --delete mayanan-project-patch-27407  
 ```
 
-删除远程 .idea 文件夹   
+
+### 分支重命名   
+
+在Git中，重命名分支的操作可以通过一系列命令来完成。以下是将 main 分支重命名为 master 的具体步骤：
+
+‌确保你在 main 分支上‌：
+
+sh
+git checkout main
+
+
+‌重命名本地分支‌：
+使用 -m 选项来重命名当前分支。
+
+sh
+git branch -m master
+
+
+‌更新远程分支‌：
+
+首先，删除远程的 main 分支。
+sh
+git push origin --delete main   # 这一步删不掉，看下面的步骤     
+
+然后，将新的本地 master 分支推送到远程仓库。
+sh
+git push origin master
+
+
+‌设置默认的上游分支（可选）‌：
+如果你希望以后 push 和 pull 命令默认使用新的 master 分支，可以设置上游分支：
+
+sh
+git push --set-upstream origin master
+
+完整命令示例
+sh
+# Step 1: Checkout to the main branch
+git checkout main
+
+# Step 2: Rename the local branch to master
+git branch -m master
+
+# Step 3: Delete the old remote main branch
+git push origin --delete main
+
+# Step 4: Push the new master branch to the remote repository
+git push origin master
+
+# Step 5: (Optional) Set the upstream branch for the new master
+git push --set-upstream origin master
+
+
+执行完这些步骤后，你的远程仓库将会有一个名为 master 的分支，而原来的 main 分支将会被删除。
+
+注意事项
+确保你在执行这些操作之前已经提交并推送了所有在 main 分支上的更改。
+如果你的仓库中有其他人协作，请通知他们分支已经重命名，以便他们更新自己的本地仓库。
+一些Git托管平台（如GitHub、GitLab）可能有默认的分支名称（如main），请确认这些平台的设置是否需要相应调整。
+
+
+删除报错 remote: GitLab: The default branch of a project cannot be deleted.    
+
+当遇到报错信息“remote: GitLab: The default branch of a project cannot be deleted.”时，意味着你正在尝试删除GitLab项目中的默认分支，这是不被允许的。为了解决这个问题，你可以按照以下步骤操作：
+
+‌更改默认分支‌
+
+‌进入GitLab项目页面‌：首先，登录到你的GitLab账户，并打开你想要更改默认分支的项目页面。
+‌修改默认分支设置‌：点击“Settings”（设置）->“Repository”（仓库），在“Default branch”（默认分支）部分，选择一个新的默认分支（例如master或其他你希望设置为默认的分支）。
+‌保存更改‌：点击“Save changes”（保存更改）按钮，以应用新的默认分支设置。
+
+‌删除原默认分支‌
+
+‌取消分支保护‌（如果适用）：如果原默认分支（如main）被设置为受保护分支，你需要先取消其保护。在“Settings”->“Repository”->“Protected branches”部分，找到该分支并取消保护。
+‌删除分支‌：现在你可以安全地删除原默认分支了。你可以通过GitLab的Web界面，在“Repository”->“Branches”页面找到该分支，并点击右侧的垃圾桶图标进行删除。或者，你也可以使用Git命令行工具执行git push origin --delete main命令来删除远程的main分支。
+
+请注意，在删除任何分支之前，请确保你已经备份了所有重要的代码和提交记录，以防万一。同时，如果你正在与其他团队成员协作，请确保他们已经知晓这一更改，并更新了他们的本地仓库。
+
+
+
+
+
+### 删除远程 .idea 文件夹     
+
 ```python 
 vim .gitignore   
 
