@@ -119,7 +119,7 @@ sh
 git push --set-upstream origin master
 
 完整命令示例
-sh
+```linux
 # Step 1: Checkout to the main branch
 git checkout main
 
@@ -134,7 +134,7 @@ git push origin master
 
 # Step 5: (Optional) Set the upstream branch for the new master
 git push --set-upstream origin master
-
+```
 
 执行完这些步骤后，你的远程仓库将会有一个名为 master 的分支，而原来的 main 分支将会被删除。
 
