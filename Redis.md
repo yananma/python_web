@@ -70,12 +70,6 @@ cache.rpush(key, *[{}, {}, ...](列表套字典，每个字典都要用 json dum
 ```
 
 
-#### 查数量  
-
-```python  
-lazy.rc.zcard(key)   
-```
-
 
 ## 集合   
 
@@ -124,6 +118,14 @@ cache.zadd(redis_dedup_key, md5_url, time.time())
 # zremrangebyscore 移除给定的分数区间的所有成员
 cache.zremrangebyscore(redis_dedup_key, 0, time.time() - 60 * 60)
 ```
+
+
+#### 查数量  
+
+```python  
+lazy.rc.zcard(key)   
+```
+
 
 #### 查询数量  
 
