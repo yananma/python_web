@@ -313,7 +313,7 @@ Aborting
 
 [csdn git pull 总提示让输入merge 信息](https://blog.csdn.net/luoluoyu2013/article/details/132577351)
 
-本质原因是本地代码和仓库代码版本不一致导致需要强制合并，解决办法就是 `git reset --hard` 到仓库最新版本。   
+本质原因是本地代码和仓库代码版本不一致导致需要强制合并，解决办法就是先 `git log`，看日志，然后复制 git log 的 id，再 `git reset --hard id` 到远程仓库最新版本。     
 
 
 
