@@ -396,6 +396,21 @@ git log master  主分支
 `git log master --author "mayanan" --pretty="%s" | grep "优化" | wc -l`      
 
 
+看某个项目中的某个python脚本的git log.     
+
+```shell
+git log --follow --pretty=format:"%h - %an, %ar : %s" path/to/your_script.py     
+
+参数说明：
+--follow：跟踪文件重命名历史（重要！如果文件曾被重命名过）
+--pretty=format:"..."：自定义输出格式
+%h：简短哈希
+%an：作者名字
+%ar：相对时间（如"2周前"）
+%s：提交信息
+```
+
+
 
 *** 
 
