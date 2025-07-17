@@ -22,7 +22,7 @@ match 会使用分词器，会拆词，一般不用。
 `GET changcheng_model/_mapping`    
 
 
-查看 ES 版本    
+查看 ES 版本，也就是 version       
 `GET /`   
 
 
