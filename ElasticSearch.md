@@ -22,6 +22,10 @@ match 会使用分词器，会拆词，一般不用。
 `GET changcheng_model/_mapping`    
 
 
+查看 ES 版本    
+`GET /`   
+
+
 分词  
 
 ```python
