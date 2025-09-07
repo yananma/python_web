@@ -410,6 +410,10 @@ git log --follow --pretty=format:"%h - %an, %ar : %s" path/to/your_script.py
 %s：提交信息
 ```
 
+```python
+git log master --author "mayanan" | grep -v -E "commit.*|Author.*|Merge.*|Date.*" > logs/git_log1.txt
+``` 
+
 修改次数统计：    
 ```python
 git log --author="mayanan" --name-only --pretty=format: | grep -v '^$' | sort | uniq -c | sort -nr     
